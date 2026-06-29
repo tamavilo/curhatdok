@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layanan OCR Canggih</title>
+    <meta name="keywords" content="ocr, ocr online, ekstrak teks, konversi gambar ke teks, ocr gratis, ocr indonesia">
+    <meta name="description" content="Ekstrak teks dari gambar, dokumen, atau foto secara instan. Layanan OCR (Optical Character Recognition) gratis, cepat, dan akurat.">
+    
+    <!-- Tailwind CSS -->
+    <script src="/tailwind/tailwind.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Tesseract.js untuk OCR -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+<link rel="shortcut icon" href="/favicon/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+<link rel="manifest" href="/favicon/site.webmanifest" />
+
+    <style>
+        /* Animasi untuk FAQ Accordion */
+        .faq-content {
+            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        .faq-content.open {
+            max-height: 200px;
+            opacity: 1;
+        }
+        
+        /* Loading Spinner */
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .animate-spin-custom {
+            animation: spin 1s linear infinite;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-[#f0f2f7] font-sans text-gray-800">
+
+    <!-- Header Section -->
+    <div class="bg-gradient-to-br from-[#534BEA] to-[#4578F9] pt-12 pb-32 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto">
+            <a href="/" class="inline-flex items-center gap-1.5 bg-white/20 text-white rounded-full px-3 py-1 text-xs font-semibold backdrop-blur-sm mb-4">
+                <i data-lucide="home" class="w-3.5 h-3.5 fill-white"></i>
+                <span>HOME</span>
+            </a>
+            <h1 class="text-3xl md:text-4xl font-bold text-white mb-3">Layanan OCR CurhatDok</h1>
+            <div class="flex items-center gap-2 text-white/90 text-sm md:text-base">
+                <i data-lucide="wrench" class="w-4 h-4"></i>
+                <p>Ekstrak teks dari gambar, dokumen, atau foto dengan mudah dan cepat.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 -mt-20 pb-16">
+        
+        <!-- OCR Card -->
+        <div class="bg-white rounded-2xl shadow-sm p-5 md:p-8 mb-8">
+            
+            <!-- Upload Section -->
+            <div class="mb-6">
+                <div class="flex items-center gap-2 mb-3">
+                    <i data-lucide="cloud-upload" class="w-[18px] h-[18px] text-blue-600"></i>
+                    <h2 class="text-sm font-semibold text-gray-800">Unggah Gambar</h2>
+                </div>
+                
+                <!-- Dropzone -->
+                <div id="dropzone" class="border-2 border-dashed rounded-xl p-8 text-center transition-colors cursor-pointer border-gray-200 bg-[#F9FAFB] hover:bg-gray-50">
+                    <input type="file" id="fileInput" accept="image/png, image/jpeg, image/jpg, image/webp" class="hidden" />
+                    
+                    <!-- Upload Placeholder -->
+                    <div id="uploadPlaceholder" class="flex flex-col items-center justify-center">
+                        <div class="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center mb-4 shadow-sm">
+                            <i data-lucide="image" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-1">Seret & lepas gambar di sini</h3>
+                        <p class="text-sm text-gray-500">atau klik untuk memilih file · JPG, PNG</p>
+                    </div>
+
+                    <!-- Image Preview -->
+                    <div id="imagePreviewContainer" class="relative group rounded-lg overflow-hidden max-h-48 mx-auto w-max hidden">
+                        <img id="uploadedImage" src="" alt="Uploaded" class="max-h-48 rounded-lg object-contain" />
+                        <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                            <p class="text-white text-sm font-medium">Klik untuk mengubah gambar</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Result Section -->
+            <div class="mb-6">
+                <div class="flex items-center gap-2 mb-3">
+                    <i data-lucide="file-text" class="w-[18px] h-[18px] text-blue-600"></i>
+                    <h2 class="text-sm font-semibold text-gray-800">Hasil Ekstraksi</h2>
+                </div>
+                
+                <div class="relative">
+                    <!-- Processing Overlay -->
+                    <div id="processingOverlay" class="absolute inset-0 bg-white/70 backdrop-blur-[1px] flex flex-col items-center justify-center z-10 rounded-xl border border-gray-100 hidden">
+                        <i data-lucide="loader-2" class="w-8 h-8 text-blue-600 animate-spin-custom mb-2"></i>
+                        <p id="progressText" class="text-sm font-medium text-blue-800">Menyiapkan gambar...</p>
+                    </div>
+                    
+                    <textarea
+                        id="extractedText"
+                        class="w-full h-48 bg-[#F9FAFB] border border-gray-200 rounded-xl p-4 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none outline-none transition-all"
+                        placeholder="Hasil OCR akan muncul di sini..."
+                    ></textarea>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-wrap items-center gap-3">
+                <button id="copyBtn" disabled class="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-colors bg-gray-100 text-gray-400 cursor-not-allowed">
+                    <i id="copyIcon" data-lucide="copy" class="w-4 h-4"></i>
+                    <span id="copyText">Salin Hasil</span>
+                </button>
+                <button id="clearBtn" disabled class="flex items-center gap-2 px-5 py-2.5 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 text-sm font-medium transition-colors opacity-50 cursor-not-allowed">
+                    <i data-lucide="eraser" class="w-4 h-4"></i>
+                    Bersihkan
+                </button>
+            </div>
+        </div>
+
+        <!-- Feature Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+            <div class="bg-white rounded-xl shadow-sm p-6 text-center flex flex-col items-center">
+                <div class="w-12 h-12 bg-indigo-50 rounded-full flex items-center justify-center text-indigo-600 mb-4">
+                    <i data-lucide="timer" class="w-[22px] h-[22px]"></i>
+                </div>
+                <h3 class="font-semibold text-gray-800 mb-2">Cepat</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">Proses ekstraksi teks hanya dalam hitungan detik.</p>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-sm p-6 text-center flex flex-col items-center">
+                <div class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center text-blue-500 mb-4">
+                    <i data-lucide="shield-check" class="w-[22px] h-[22px]"></i>
+                </div>
+                <h3 class="font-semibold text-gray-800 mb-2">Aman</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">File diproses secara otomatis tanpa disimpan permanen.</p>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-sm p-6 text-center flex flex-col items-center">
+                <div class="w-12 h-12 bg-emerald-50 rounded-full flex items-center justify-center text-emerald-500 mb-4">
+                    <i data-lucide="gift" class="w-[22px] h-[22px]"></i>
+                </div>
+                <h3 class="font-semibold text-gray-800 mb-2">Gratis</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">Gunakan kapan saja, tanpa biaya dengan bijak</p>
+            </div>
+        </div>
+
+        <!-- Tentang Layanan Ini -->
+        <div class="mb-10">
+            <div class="flex items-center gap-2 mb-3">
+                <div class="bg-indigo-600 rounded-full p-1 text-white">
+                    <i data-lucide="info" class="w-4 h-4"></i>
+                </div>
+                <h2 class="text-xl font-bold text-gray-800">Tentang Layanan Ini</h2>
+            </div>
+            <p class="text-gray-600 text-sm md:text-base leading-relaxed text-justify">
+                OCR (<strong>Optical Character Recognition</strong>) adalah teknologi yang memungkinkan komputer untuk "membaca" teks dari gambar. Layanan kami memanfaatkan teknologi OCR terdepan untuk mengubah gambar menjadi teks yang dapat diedit dan disalin. Cukup unggah gambar yang Anda inginkan, dan biarkan kami yang bekerja!
+            </p>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="mb-12">
+            <div class="flex items-center gap-2 mb-4">
+                <div class="text-indigo-600">
+                    <i data-lucide="message-circle" class="w-[22px] h-[22px] fill-indigo-600 text-white"></i>
+                </div>
+                <h2 class="text-xl font-bold text-gray-800">Tanya Jawab (FAQ)</h2>
+            </div>
+            
+            <div class="space-y-3" id="faqContainer">
+                <!-- FAQs akan dirender via JS -->
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center pb-8 pt-4">
+            <p class="text-sm text-gray-500">
+                © 2026 <a href="/" class="text-indigo-600 font-medium">CurhatDok</a>. All rights reserved.
+            </p>
+        </footer>
+    </div>
+
+    <!-- Application Logic -->
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Data FAQ
+        const faqs = [
+            {
+                question: "Apakah layanan ini gratis?",
+                answer: "Ya, layanan OCR kami sepenuhnya gratis untuk digunakan tanpa batasan tersembunyi. Silakan gunakan dengan bijak."
+            },
+            {
+                question: "Format gambar apa yang didukung?",
+                answer: "Saat ini kami mendukung format gambar standar seperti JPG, JPEG, PNG, dan WebP."
+            },
+            {
+                question: "Apakah teks yang diekstrak akurat?",
+                answer: "Tingkat akurasi sangat bergantung pada kualitas gambar, pencahayaan, dan kejelasan font. Untuk hasil terbaik, pastikan teks pada gambar terlihat jelas dan tidak buram."
+            }
+        ];
+
+        // Render FAQs
+        const faqContainer = document.getElementById('faqContainer');
+        faqs.forEach((faq, index) => {
+            const faqHTML = `
+                <div class="bg-white rounded-xl shadow-sm border border-transparent overflow-hidden">
+                    <button class="faq-button w-full flex items-center justify-between p-4 text-left focus:outline-none bg-white z-10 relative">
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="help-circle" class="w-[18px] h-[18px] text-indigo-400"></i>
+                            <span class="font-semibold text-gray-800 text-sm md:text-base">${faq.question}</span>
+                        </div>
+                        <i data-lucide="chevron-down" class="faq-icon w-[18px] h-[18px] text-gray-400 transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content px-4 pb-4 pt-0 text-sm text-gray-600 ml-7">
+                        <div class="pt-1">${faq.answer}</div>
+                    </div>
+                </div>
+            `;
+            faqContainer.insertAdjacentHTML('beforeend', faqHTML);
+        });
+        
+        // Re-initialize icons for newly added FAQs
+        lucide.createIcons();
+
+        // FAQ Toggle Logic
+        document.querySelectorAll('.faq-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const icon = button.querySelector('.faq-icon');
+                const isOpen = content.classList.contains('open');
+
+                // Close all
+                document.querySelectorAll('.faq-content').forEach(c => c.classList.remove('open'));
+                document.querySelectorAll('.faq-icon').forEach(i => i.setAttribute('data-lucide', 'chevron-down'));
+
+                // Open clicked if it was closed
+                if (!isOpen) {
+                    content.classList.add('open');
+                    icon.setAttribute('data-lucide', 'chevron-up');
+                }
+                
+                lucide.createIcons();
+            });
+        });
+
+        // DOM Elements for OCR
+        const dropzone = document.getElementById('dropzone');
+        const fileInput = document.getElementById('fileInput');
+        const uploadPlaceholder = document.getElementById('uploadPlaceholder');
+        const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+        const uploadedImage = document.getElementById('uploadedImage');
+        const extractedText = document.getElementById('extractedText');
+        const processingOverlay = document.getElementById('processingOverlay');
+        const progressText = document.getElementById('progressText');
+        const copyBtn = document.getElementById('copyBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const copyIcon = document.getElementById('copyIcon');
+        const copyText = document.getElementById('copyText');
+
+        let isProcessing = false;
+
+        // Drag & Drop Events
+        dropzone.addEventListener('click', () => {
+            if (!isProcessing) fileInput.click();
+        });
+
+        dropzone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            if (isProcessing) return;
+            dropzone.classList.add('border-blue-500', 'bg-blue-50');
+            dropzone.classList.remove('border-gray-200', 'bg-[#F9FAFB]');
+        });
+
+        dropzone.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            dropzone.classList.remove('border-blue-500', 'bg-blue-50');
+            dropzone.classList.add('border-gray-200', 'bg-[#F9FAFB]');
+        });
+
+        dropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropzone.classList.remove('border-blue-500', 'bg-blue-50');
+            dropzone.classList.add('border-gray-200', 'bg-[#F9FAFB]');
+            
+            if (isProcessing) return;
+
+            if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                processFile(e.dataTransfer.files[0]);
+            }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files && e.target.files.length > 0) {
+                processFile(e.target.files[0]);
+            }
+        });
+
+        // Update Buttons State
+        function updateButtonStates() {
+            const hasText = extractedText.value.trim().length > 0;
+            const hasImage = !uploadPlaceholder.classList.contains('hidden');
+            
+            // Copy Button Logic
+            if (!hasText || isProcessing) {
+                copyBtn.disabled = true;
+                copyBtn.className = 'flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-colors bg-gray-100 text-gray-400 cursor-not-allowed';
+            } else {
+                copyBtn.disabled = false;
+                copyBtn.className = 'flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-colors bg-[#988EEB]/20 text-[#6754E2] hover:bg-[#988EEB]/30';
+            }
+
+            // Clear Button Logic
+            if (isProcessing || (hasImage && !hasText && uploadedImage.src === '')) {
+                clearBtn.disabled = true;
+                clearBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                clearBtn.disabled = false;
+                clearBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+        }
+
+        extractedText.addEventListener('input', updateButtonStates);
+
+        // Core OCR Processing Function
+        async function processFile(file) {
+            if (!file.type.startsWith('image/')) {
+                alert('Mohon unggah file gambar (JPG/PNG).');
+                return;
+            }
+
+            // Check if Tesseract is loaded
+            if (typeof Tesseract === 'undefined') {
+                extractedText.value = 'Sistem OCR sedang dimuat, mohon coba lagi dalam beberapa detik...';
+                return;
+            }
+
+            // Setup UI for processing
+            const imageUrl = URL.createObjectURL(file);
+            uploadedImage.src = imageUrl;
+            
+            uploadPlaceholder.classList.add('hidden');
+            imagePreviewContainer.classList.remove('hidden');
+            extractedText.value = '';
+            
+            isProcessing = true;
+            processingOverlay.classList.remove('hidden');
+            progressText.innerText = 'Menyiapkan gambar...';
+            updateButtonStates();
+
+            try {
+                // Gunakan syntax inisialisasi Tesseract.js v5 yang baru
+                const worker = await Tesseract.createWorker('ind+eng', 1, {
+                    logger: m => {
+                        if (m.status === 'recognizing text') {
+                            progressText.innerText = `Mengekstrak teks... ${Math.round(m.progress * 100)}%`;
+                        } else {
+                            progressText.innerText = 'Memproses gambar...';
+                        }
+                    }
+                });
+                
+                // Di v5, loadLanguage dan initialize otomatis dilakukan oleh createWorker
+                const { data: { text } } = await worker.recognize(file);
+                
+                extractedText.value = text;
+                await worker.terminate();
+            } catch (error) {
+                console.error(error);
+                extractedText.value = 'Terjadi kesalahan saat memproses gambar. Mohon coba lagi.';
+            } finally {
+                isProcessing = false;
+                processingOverlay.classList.add('hidden');
+                updateButtonStates();
+            }
+        }
+
+        // Copy Button Click
+        copyBtn.addEventListener('click', () => {
+            if (copyBtn.disabled) return;
+            
+            // Clipboard API fallback
+            try {
+                if (navigator.clipboard && window.isSecureContext) {
+                    navigator.clipboard.writeText(extractedText.value);
+                } else {
+                    // Fallback using execCommand
+                    const textArea = document.createElement("textarea");
+                    textArea.value = extractedText.value;
+                    textArea.style.position = "fixed";
+                    textArea.style.left = "-999999px";
+                    document.body.appendChild(textArea);
+                    textArea.focus();
+                    textArea.select();
+                    document.execCommand('copy');
+                    textArea.remove();
+                }
+                
+                // Show success state
+                copyText.innerText = 'Tersalin!';
+                copyIcon.setAttribute('data-lucide', 'check');
+                lucide.createIcons();
+                
+                setTimeout(() => {
+                    copyText.innerText = 'Salin Hasil';
+                    copyIcon.setAttribute('data-lucide', 'copy');
+                    lucide.createIcons();
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy text: ', err);
+            }
+        });
+
+        // Clear Button Click
+        clearBtn.addEventListener('click', () => {
+            if (clearBtn.disabled) return;
+            
+            fileInput.value = '';
+            uploadedImage.src = '';
+            extractedText.value = '';
+            
+            uploadPlaceholder.classList.remove('hidden');
+            imagePreviewContainer.classList.add('hidden');
+            
+            updateButtonStates();
+        });
+
+    </script>
+</body>
+</html>

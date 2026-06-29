@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Jadian Romantis - curhatdok.it.com</title>
+    <meta name="description" content="Tools Kalkulator Hari Jadian akurat untuk menghitung berapa lama kamu pacaran dalam tahun, bulan, hari, hingga detik. Cek tanggal anniversary kamu sekarang!">
+    <meta name="keywords" content="kalkulator hari jadian, hitung lama pacaran, anniversary calculator, hitung hari cinta, tanggal jadian">
+    <script src="/tailwind/tailwind.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Pacifico&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+<link rel="shortcut icon" href="/favicon/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+<link rel="manifest" href="/favicon/site.webmanifest" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+            min-height: 100vh;
+            scroll-behavior: smooth;
+        }
+        .font-pacifico {
+            font-family: 'Pacifico', cursive;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .heart-float {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            animation: float 6s ease-in infinite;
+            opacity: 0.3;
+        }
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+        .nav-sticky {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+    </style>
+</head>
+<body class="pb-12">
+
+    <nav class="nav-sticky w-full glass-card border-b border-pink-100 px-4 py-3 mb-8">
+        <div class="max-w-4xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-2 cursor-pointer" onclick="goHome()">
+                <i data-lucide="heart" class="w-6 h-6 text-pink-500 fill-pink-500"></i>
+                <span class="font-pacifico text-xl text-gray-800">CurhatDok</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <button onclick="goHome()" class="flex items-center gap-1 text-gray-600 hover:text-pink-500 transition-colors text-sm font-medium">
+                    <i data-lucide="home" class="w-4 h-4"></i>
+                    <span class="hidden sm:inline">Home</span>
+                </button>
+                <button onclick="resetAll()" class="flex items-center gap-1 bg-white border border-pink-200 px-3 py-1.5 rounded-full text-pink-500 hover:bg-pink-50 transition-all text-sm font-medium shadow-sm">
+                    <i data-lucide="refresh-ccw" class="w-4 h-4"></i>
+                    Reset
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div id="heart-container"></div>
+
+    <main class="max-w-4xl mx-auto px-4">
+        <div id="top" class="glass-card rounded-3xl shadow-2xl p-8 md:p-12 mb-12 transition-all hover:shadow-pink-200">
+            <header class="text-center mb-8">
+                <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Kalkulator Jadian</h1>
+                <p class="text-gray-500">Hitung setiap detik berharga yang telah Anda lalui bersama</p>
+            </header>
+
+            <div class="max-w-md mx-auto space-y-6 mb-10">
+                <div class="grid grid-cols-1 gap-4">
+                    <div class="flex flex-col">
+                        <label class="text-sm font-semibold text-gray-600 mb-1 ml-1">Tanggal Jadian</label>
+                        <input type="date" id="startDate" 
+                            class="w-full px-4 py-3 rounded-xl border border-pink-200 focus:ring-2 focus:ring-pink-400 focus:border-transparent outline-none transition-all"
+                            value="2023-01-01">
+                    </div>
+                    
+                    <div class="flex items-center gap-2 ml-1">
+                        <input type="checkbox" id="toggleTime" class="w-4 h-4 text-pink-500 rounded border-pink-300 focus:ring-pink-400">
+                        <label for="toggleTime" class="text-sm font-medium text-gray-600 cursor-pointer">Ingat jam jadiannya? (Opsional)</label>
+                    </div>
+
+                    <div id="timeInputContainer" class="hidden flex flex-col animate-in fade-in slide-in-from-top-2 duration-300">
+                        <label class="text-sm font-semibold text-gray-600 mb-1 ml-1">Jam Jadian</label>
+                        <input type="time" id="startTime" 
+                            class="w-full px-4 py-3 rounded-xl border border-pink-200 focus:ring-2 focus:ring-pink-400 focus:border-transparent outline-none transition-all"
+                            value="00:00">
+                    </div>
+                </div>
+                <button onclick="calculateAnniversary()" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-4 rounded-xl shadow-lg shadow-pink-200 transition-all active:scale-95 flex items-center justify-center gap-2">
+                    <i data-lucide="play" class="w-5 h-5"></i>
+                    Hitung Sekarang
+                </button>
+            </div>
+
+            <div id="resultArea" class="hidden animate-in fade-in duration-700 shadow-md border">
+                <h3 class="text-center font-pacifico text-2xl text-pink-600 mb-6">Kita sudah bersama selama...</h3>
+                
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <div class="bg-white p-4 rounded-2xl shadow-md border border-gray-400 text-center">
+                        <span id="years" class="block text-3xl font-bold text-gray-800">0</span>
+                        <span class="text-xs uppercase tracking-widest text-pink-400 font-semibold">Tahun</span>
+                    </div>
+                    <div class="bg-white p-4 rounded-2xl shadow-md border border-gray-400 text-center">
+                        <span id="months" class="block text-3xl font-bold text-gray-800">0</span>
+                        <span class="text-xs uppercase tracking-widest text-pink-400 font-semibold">Bulan</span>
+                    </div>
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-400 text-center">
+                        <span id="days" class="block text-3xl font-bold text-gray-800">0</span>
+                        <span class="text-xs uppercase tracking-widest text-pink-400 font-semibold">Hari</span>
+                    </div>
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-400 text-center">
+                        <span id="hours" class="block text-3xl font-bold text-gray-800">0</span>
+                        <span class="text-xs uppercase tracking-widest text-pink-400 font-semibold">Jam</span>
+                    </div>
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-400 text-center">
+                        <span id="minutes" class="block text-3xl font-bold text-gray-800">0</span>
+                        <span class="text-xs uppercase tracking-widest text-pink-400 font-semibold">Menit</span>
+                    </div>
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-50 text-center ring-2 ring-pink-500 ring-offset-2">
+                        <span id="seconds" class="block text-3xl font-bold text-pink-600">0</span>
+                        <span class="text-xs uppercase tracking-widest text-pink-400 font-semibold">Detik</span>
+                    </div>
+                </div>
+
+                <div class="mt-10">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="h-px bg-pink-200 flex-grow"></div>
+                        <h4 class="text-pink-400 font-semibold text-xs uppercase tracking-widest text-center">Akumulasi Total</h4>
+                        <div class="h-px bg-pink-200 flex-grow"></div>
+                    </div>
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                        <div class="bg-pink-50/50 p-3 rounded-xl border border-pink-100 text-center">
+                            <span id="totalDays" class="block text-xl font-bold text-gray-700">0</span>
+                            <span class="text-[10px] uppercase text-pink-400">Total Hari</span>
+                        </div>
+                        <div class="bg-pink-50/50 p-3 rounded-xl border border-pink-100 text-center">
+                            <span id="totalHours" class="block text-xl font-bold text-gray-700">0</span>
+                            <span class="text-[10px] uppercase text-pink-400">Total Jam</span>
+                        </div>
+                        <div class="bg-pink-50/50 p-3 rounded-xl border border-pink-100 text-center">
+                            <span id="totalMinutes" class="block text-xl font-bold text-gray-700">0</span>
+                            <span class="text-[10px] uppercase text-pink-400">Total Menit</span>
+                        </div>
+                        <div class="bg-pink-50/50 p-3 rounded-xl border border-pink-100 text-center">
+                            <span id="totalSeconds" class="block text-xl font-bold text-gray-700">0</span>
+                            <span class="text-[10px] uppercase text-pink-400">Total Detik</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 p-4 bg-white rounded-2xl border border-dashed border-pink-300 text-center">
+                    <p class="text-gray-600 italic" id="loveMessage">"Cinta tidak dihitung dari seberapa sering kamu bergandengan tangan, tapi dari seberapa lama kamu tidak melepaskannya."</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <section class="glass-card p-6 rounded-3xl">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-2 bg-blue-100 rounded-lg text-blue-600">
+                        <i data-lucide="info" class="w-6 h-6"></i>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-800">Kenapa Pakai Tools Ini?</h2>
+                </div>
+                <p class="text-gray-600 leading-relaxed mb-4">
+                    Terkadang kita terlalu sibuk dengan rutinitas hingga lupa sudah berapa lama kita melangkah bersama pasangan. Tools ini hadir untuk:
+                </p>
+                <ul class="space-y-2">
+                    <li class="flex items-start gap-2 text-sm text-gray-600">
+                        <i data-lucide="check-circle-2" class="w-4 h-4 mt-0.5 text-green-500"></i>
+                        <span>Menghargai setiap detik perjalanan cinta Anda.</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-sm text-gray-600">
+                        <i data-lucide="check-circle-2" class="w-4 h-4 mt-0.5 text-green-500"></i>
+                        <span>Mengingat momen penting (Anniversary) dengan lebih presisi.</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-sm text-gray-600">
+                        <i data-lucide="check-circle-2" class="w-4 h-4 mt-0.5 text-green-500"></i>
+                        <span>Memberikan kejutan kecil dengan data unik (seperti "Kita sudah 1 Juta menit bersama!").</span>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="glass-card p-6 rounded-3xl">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="p-2 bg-purple-100 rounded-lg text-purple-600">
+                        <i data-lucide="sparkles" class="w-6 h-6"></i>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-800">Fitur Utama</h2>
+                </div>
+                <div class="grid grid-cols-1 gap-3">
+                    <div class="p-3 bg-white/50 rounded-xl border border-purple-50">
+                        <h4 class="font-bold text-sm text-gray-800">Real-time Counter</h4>
+                        <p class="text-xs text-gray-500">Waktu berjalan terus tanpa perlu refresh halaman.</p>
+                    </div>
+                    <div class="p-3 bg-white/50 rounded-xl border border-purple-50">
+                        <h4 class="font-bold text-sm text-gray-800">Auto-Save</h4>
+                        <p class="text-xs text-gray-500">Tanggal Anda tetap aman meskipun browser ditutup.</p>
+                    </div>
+                    <div class="p-3 bg-white/50 rounded-xl border border-purple-50">
+                        <h4 class="font-bold text-sm text-gray-800">Presisi Tinggi</h4>
+                        <p class="text-xs text-gray-500">Menghitung hingga satuan terkecil (detik).</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <section class="glass-card p-8 rounded-3xl mb-12">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="p-2 bg-pink-100 rounded-lg text-pink-600">
+                    <i data-lucide="message-circle" class="w-6 h-6"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-800">Tips Menjalin Hubungan Bahagia</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="space-y-2">
+                    <div class="w-10 h-10 bg-pink-50 rounded-full flex items-center justify-center text-pink-500 font-bold">1</div>
+                    <h4 class="font-bold text-gray-800">Komunikasi Terbuka</h4>
+                    <p class="text-sm text-gray-600">Bicarakan perasaanmu, baik senang maupun sedih. Kejujuran adalah fondasi terkuat.</p>
+                </div>
+                <div class="space-y-2">
+                    <div class="w-10 h-10 bg-pink-50 rounded-full flex items-center justify-center text-pink-500 font-bold">2</div>
+                    <h4 class="font-bold text-gray-800">Quality Time</h4>
+                    <p class="text-sm text-gray-600">Luangkan waktu tanpa gadget. Fokus pada satu sama lain untuk mempererat ikatan.</p>
+                </div>
+                <div class="space-y-2">
+                    <div class="w-10 h-10 bg-pink-50 rounded-full flex items-center justify-center text-pink-500 font-bold">3</div>
+                    <h4 class="font-bold text-gray-800">Saling Menghargai</h4>
+                    <p class="text-sm text-gray-600">Apresiasi hal-hal kecil yang dilakukan pasangan. Kata "terima kasih" punya kekuatan besar.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center text-gray-500 text-sm">
+            Dibuat dengan <i data-lucide="heart" class="w-3 h-3 inline text-pink-500 fill-pink-500"></i> untuk pasangan bahagia &copy; 2026 curhatdok.it.com
+        </footer>
+    </main>
+
+    <script>
+        lucide.createIcons();
+
+        const toggleTime = document.getElementById('toggleTime');
+        const timeInputContainer = document.getElementById('timeInputContainer');
+        const startDateInput = document.getElementById('startDate');
+        const startTimeInput = document.getElementById('startTime');
+        let intervalId = null;
+
+        toggleTime.addEventListener('change', function() {
+            if (this.checked) {
+                timeInputContainer.classList.remove('hidden');
+            } else {
+                timeInputContainer.classList.add('hidden');
+                startTimeInput.value = "00:00";
+            }
+        });
+
+        function createHearts() {
+            const container = document.getElementById('heart-container');
+            if (container.children.length > 25) return; // Limit hearts
+            
+            const heart = document.createElement('div');
+            heart.className = 'heart-float';
+            heart.innerHTML = `<i data-lucide="heart" class="text-pink-300 fill-pink-300"></i>`;
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            container.appendChild(heart);
+            lucide.createIcons();
+            setTimeout(() => heart.remove(), 7000);
+        }
+
+        function updateCounter() {
+            const startDateVal = startDateInput.value;
+            const useTime = toggleTime.checked;
+            const startTimeVal = useTime ? (startTimeInput.value || "00:00") : "00:00";
+            
+            if (!startDateVal) return;
+
+            const anniversary = new Date(`${startDateVal}T${startTimeVal}`);
+            const now = new Date();
+
+            if (anniversary > now) {
+                document.getElementById('loveMessage').innerText = "Wah, tanggalnya di masa depan! Menantikan hari itu tiba ya? ✨";
+                return;
+            }
+
+            let diff = now - anniversary;
+
+            // Total units calculation
+            let secondsTotal = Math.floor(diff / 1000);
+            let minutesTotal = Math.floor(secondsTotal / 60);
+            let hoursTotal = Math.floor(minutesTotal / 60);
+            let daysTotal = Math.floor(hoursTotal / 24);
+
+            // Detailed breakdown (Years, Months, Days)
+            let years = now.getFullYear() - anniversary.getFullYear();
+            let months = now.getMonth() - anniversary.getMonth();
+            let days = now.getDate() - anniversary.getDate();
+
+            if (days < 0) {
+                months--;
+                const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+                days += prevMonth;
+            }
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            // Real-time ticking remaining units
+            const remHours = now.getHours() - anniversary.getHours();
+            const remMinutes = now.getMinutes() - anniversary.getMinutes();
+            const remSeconds = now.getSeconds() - anniversary.getSeconds();
+
+            const h = remHours < 0 ? 24 + remHours : remHours;
+            const m = remMinutes < 0 ? 60 + remMinutes : remMinutes;
+            const s = remSeconds < 0 ? 60 + remSeconds : remSeconds;
+
+            document.getElementById('years').innerText = years;
+            document.getElementById('months').innerText = months;
+            document.getElementById('days').innerText = days;
+            document.getElementById('hours').innerText = h;
+            document.getElementById('minutes').innerText = m;
+            document.getElementById('seconds').innerText = s;
+
+            document.getElementById('totalDays').innerText = daysTotal.toLocaleString('id-ID');
+            document.getElementById('totalHours').innerText = hoursTotal.toLocaleString('id-ID');
+            document.getElementById('totalMinutes').innerText = minutesTotal.toLocaleString('id-ID');
+            document.getElementById('totalSeconds').innerText = secondsTotal.toLocaleString('id-ID');
+        }
+
+        function calculateAnniversary() {
+            const resArea = document.getElementById('resultArea');
+            resArea.classList.remove('hidden');
+            
+            if (intervalId) clearInterval(intervalId);
+            updateCounter();
+            intervalId = setInterval(updateCounter, 1000);
+            
+            localStorage.setItem('jadianDate', startDateInput.value);
+            localStorage.setItem('jadianTime', startTimeInput.value);
+            localStorage.setItem('useTime', toggleTime.checked);
+            
+            resArea.scrollIntoView({ behavior: 'smooth' });
+            createHearts();
+        }
+
+        function resetAll() {
+            if (intervalId) clearInterval(intervalId);
+            localStorage.clear();
+            
+            startDateInput.value = "2023-01-01";
+            startTimeInput.value = "00:00";
+            toggleTime.checked = false;
+            timeInputContainer.classList.add('hidden');
+            document.getElementById('resultArea').classList.add('hidden');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function goHome() {
+             window.location.href = "/";
+        }
+
+        // Initial Load
+        window.onload = () => {
+            const savedDate = localStorage.getItem('jadianDate');
+            const savedTime = localStorage.getItem('jadianTime');
+            const savedUseTime = localStorage.getItem('useTime') === 'true';
+
+            if(savedDate) {
+                startDateInput.value = savedDate;
+                if(savedTime) startTimeInput.value = savedTime;
+                if(savedUseTime) {
+                    toggleTime.checked = true;
+                    timeInputContainer.classList.remove('hidden');
+                }
+                calculateAnniversary();
+            }
+        };
+
+        setInterval(createHearts, 3000);
+    </script>
+</body>
+</html>

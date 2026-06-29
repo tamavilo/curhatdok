@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Identitas Indonesia</title>
+    <meta name="description" content="Buat identitas palsu Indonesia (Fake ID) lengkap dengan nama, alamat, umur, dan foto profil secara instan. 100% Gratis &amp; Privasi Terjaga.">
+    <script src="tailwind/tailwind.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+<link rel="shortcut icon" href="/favicon/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+<link rel="manifest" href="/favicon/site.webmanifest" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#3b82f6', // blue-500
+                        secondary: '#ef4444', // red-500
+                        background: '#f8fafc', // slate-50
+                        card: '#ffffff',
+                    }
+                }
+            }
+        }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Generator Identitas Indonesia",
+      "url": "https://curhatdok.it.com/identitas-generator.html",
+      "description": "Alat pembuat identitas fiktif Indonesia lengkap.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "IDR" }
+    }
+    </script>
+    <style>
+        body {
+            background-color: #ebecec;
+            color: #334155;
+        }
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+        
+        .toast-notification {
+            transition: all 0.3s ease-in-out;
+            transform: translateY(100%);
+            opacity: 0;
+        }
+        .toast-notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+
+    <header class="bg-white shadow-sm py-6">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h1 class="text-3xl font-bold text-slate-800 flex items-center justify-center gap-3">
+                <i class="fa-solid fa-id-card text-primary"></i> Generator Identitas
+            </h1>
+            <p class="text-slate-500 mt-2 text-sm md:text-base">Buat data dummy penduduk Indonesia (Nama, Alamat, Email) instan.</p>
+            <a href="/"><button class="w-full md:w-auto px-8 py-3 rounded-xl font-medium border bg-secondary text-white hover:bg-primary transition-colors mt-3">
+                    <i class="fa-solid fa-home"></i> Home
+                </button></a>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-4xl mx-auto px-4 py-8 w-full space-y-12">
+
+        <section class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 md:p-8">
+            
+            <!-- Controls -->
+            <div class="flex flex-col md:flex-row gap-4 justify-center items-center mb-6">
+                <button id="btn-male" class="w-full md:w-auto px-8 py-3 rounded-xl font-medium border border-slate-200 text-primary hover:bg-blue-50 transition-colors flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-mars"></i> Pria
+                </button>
+                <button id="btn-random" class="w-full md:w-auto px-8 py-3 rounded-xl font-medium bg-primary text-white hover:bg-blue-600 transition-colors flex items-center justify-center gap-2 shadow-sm">
+                    <i class="fa-solid fa-shuffle"></i> Acak
+                </button>
+                <button id="btn-female" class="w-full md:w-auto px-8 py-3 rounded-xl font-medium border border-slate-200 text-secondary hover:bg-red-50 transition-colors flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-venus"></i> Wanita
+                </button>
+            </div>
+
+            <div class="text-center text-xs text-slate-400 mb-8 flex items-center justify-center gap-1">
+                <i class="fa-solid fa-lock text-green-500"></i> Privasi Aman (Client-Side)
+            </div>
+
+            <!-- Generated Data Container -->
+            <div id="result-container" class="hidden animate-[fadeIn_0.5s_ease-out]">
+                <div class="flex flex-col md:flex-row gap-8 items-start">
+                    
+                    <!-- Avatar Profile -->
+                    <div class="w-full md:w-1/3 flex flex-col items-center gap-4">
+                        <div class="relative w-48 h-48 rounded-full overflow-hidden border-4 border-slate-100 shadow-md">
+                            <img id="avatar-img" src="" alt="Profile Avatar" class="w-full h-full object-cover">
+                            <!-- Overlay for changing avatar type later if needed -->
+                        </div>
+                        <div class="text-center">
+                            <span id="gender-badge" class="inline-block px-3 py-1 rounded-full text-xs font-semibold"></span>
+                        </div>
+                    </div>
+
+                    <!-- Details Form -->
+                    <div class="w-full md:w-2/3 space-y-4">
+                        
+                        <!-- Helper function to generate input groups -->
+                        <script>
+                            function renderInputGroup(id, label, icon) {
+                                document.write(`
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1 ml-1">${label}</label>
+                                        <div class="relative">
+                                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                                <i class="${icon} text-slate-400"></i>
+                                            </div>
+                                            <input type="text" id="${id}" readonly 
+                                                class="w-full pl-10 pr-12 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 font-medium focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                            <button onclick="copyToClipboard('${id}')" 
+                                                class="absolute inset-y-0 right-0 pr-3 pl-3 flex items-center text-slate-400 hover:text-primary transition-colors tooltip" 
+                                                title="Salin">
+                                                <i class="fa-regular fa-copy"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                `);
+                            }
+                        </script>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <script>
+                                renderInputGroup('out-nama', 'Nama Lengkap', 'fa-solid fa-user');
+                                renderInputGroup('out-nik', 'NIK (Dummy)', 'fa-solid fa-id-card-clip');
+                            </script>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <script>
+                                renderInputGroup('out-tempat-lahir', 'Tempat Lahir', 'fa-solid fa-location-dot');
+                                renderInputGroup('out-tanggal-lahir', 'Tanggal Lahir', 'fa-solid fa-calendar-days');
+                            </script>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                             <script>
+                                renderInputGroup('out-agama', 'Agama', 'fa-solid fa-hands-praying');
+                                renderInputGroup('out-pekerjaan', 'Pekerjaan', 'fa-solid fa-briefcase');
+                            </script>
+                        </div>
+
+                        <div>
+                            <script>renderInputGroup('out-alamat', 'Alamat Lengkap', 'fa-solid fa-house');</script>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                             <script>
+                                renderInputGroup('out-email', 'Email', 'fa-solid fa-envelope');
+                                renderInputGroup('out-phone', 'No. Handphone', 'fa-solid fa-mobile-screen');
+                            </script>
+                        </div>
+                         <div>
+                            <script>renderInputGroup('out-username', 'Username', 'fa-solid fa-at');</script>
+                        </div>
+                        <div>
+                            <a id="btn-cek-inbox" href="#" target="_blank" class="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded bg-blue-100 text-blue-700 hover:bg-blue-200 transition-colors shadow-sm">
+                                    <svg class="mr-1.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                    </svg>
+                                    Cek Inbox Email
+                                </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Initial Empty State -->
+            <div id="empty-state" class="text-center py-12 text-slate-400">
+                <i class="fa-solid fa-robot text-5xl mb-4 opacity-50"></i>
+                <p>Klik tombol di atas untuk membuat identitas baru.</p>
+            </div>
+
+        </section>
+
+        <article class="prose prose-slate max-w-none space-y-16">
+            
+            <div class="space-y-4">
+                <span class="inline-block bg-yellow-100 text-yellow-800 text-xs font-semibold px-2 py-1 rounded">Updated 2026</span>
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-800 leading-tight">Kenapa Harus Pakai Data Asli Kalau Cuma Mau "Lihat-Lihat"?</h2>
+                <p class="text-slate-600 leading-relaxed">Di era digital Indonesia yang sering "bocor", memberikan data pribadi secara sukarela ke aplikasi yang tidak jelas kredibilitasnya adalah tindakan berisiko tinggi.</p>
+                <p class="text-slate-600 leading-relaxed">Kita semua tahu betapa seringnya berita kebocoran data terjadi di negeri ini. Mulai dari data <em class="italic">e-commerce</em>, operator seluler, hingga instansi publik. Sebagai generasi Millenial dan Gen Z yang paling sadar akan hal ini, kita adalah generasi yang tumbuh bersama internet, tapi juga generasi yang paling sering diteror oleh spam WhatsApp pinjol, judol, atau penipuan berkedok kurir paket. Semua itu berawal dari satu hal: <strong>Data kita tersebar.</strong></p>
+                <p class="text-slate-600 leading-relaxed"><strong>Generator Identitas Indonesia</strong> ini hadir sebagai solusi praktis (dan etis) untuk melindungi privasi kita. Tools ini bukan alat untuk kriminalitas, melainkan perisai digital untuk aktivitas yang tidak membutuhkan verifikasi hukum (KYC) tingkat tinggi.</p>
+            </div>
+
+            <div class="space-y-6">
+                <h2 class="text-2xl font-bold text-slate-800">3 Alasan Utama Kamu Butuh Tool Ini</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Card 1 -->
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col gap-3">
+                        <div class="text-primary text-2xl mb-2"><i class="fa-solid fa-user-shield"></i></div>
+                        <h3 class="text-lg font-bold text-primary">Self-Defense Digital</h3>
+                        <p class="text-sm text-slate-600 flex-grow">Banyak website meminta registrasi lengkap hanya untuk download ebook, baca artikel, atau trial aplikasi. Menggunakan data asli di sini sama saja "menyerahkan leher" ke database marketing yang tidak aman.</p>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col gap-3">
+                        <div class="text-slate-700 text-2xl mb-2"><i class="fa-solid fa-laptop-code"></i></div>
+                        <h3 class="text-lg font-bold text-slate-700">Surga bagi Developer & QA</h3>
+                        <p class="text-sm text-slate-600 flex-grow">Software Engineer dan QA Tester butuh ratusan data <em class="italic">dummy</em> untuk testing aplikasi. Mengarang nama "Budi 1", "Budi 2" itu melelahkan dan tidak valid secara format. Tool ini menghasilkan data yang lolos validasi regex.</p>
+                    </div>
+                    <!-- Card 3 -->
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col gap-3">
+                        <div class="text-blue-600 text-2xl mb-2"><i class="fa-solid fa-brain"></i></div>
+                        <h3 class="text-lg font-bold text-blue-600">Menghemat Brainware</h3>
+                        <p class="text-sm text-slate-600 flex-grow">Pernah stuck 5 menit cuma buat mikirin nama karakter novel? Atau mikirin alamat palsu yang terdengar logis? Generator ini melakukan pekerjaan kreatif itu dalam 3 detik.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <h2 class="text-2xl font-bold text-slate-800">Anatomi Data: Apa yang Dihasilkan?</h2>
+                <p class="text-slate-600">Tool ini tidak sekadar mengacak huruf. Kami menggunakan algoritma yang memahami struktur demografi Indonesia. Berikut adalah logika di balik data yang kamu lihat:</p>
+                
+                <div class="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
+                    <table class="w-full text-left text-sm text-slate-600 bg-white">
+                        <thead class="bg-slate-50 text-slate-800 uppercase font-semibold border-b border-slate-200">
+                            <tr>
+                                <th scope="col" class="px-6 py-4">Komponen</th>
+                                <th scope="col" class="px-6 py-4 border-l border-slate-200">Logika Generator</th>
+                                <th scope="col" class="px-6 py-4 border-l border-slate-200">Kegunaan / Validasi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200">
+                            <tr>
+                                <td class="px-6 py-4 font-bold text-slate-800 whitespace-nowrap">Nama Lengkap</td>
+                                <td class="px-6 py-4 border-l border-slate-200">Kombinasi database nama populer</td>
+                                <td class="px-6 py-4 border-l border-slate-200">Lolos validasi input nama (min 2 kata, tanpa angka).</td>
+                            </tr>
+                            <tr class="bg-slate-50/50">
+                                <td class="px-6 py-4 font-bold text-slate-800 whitespace-nowrap">Alamat & Kodepos</td>
+                                <td class="px-6 py-4 border-l border-slate-200">Mapping acak Kecamatan + Kota Besar di Indonesia + Logika Kodepos 5 digit.</td>
+                                <td class="px-6 py-4 border-l border-slate-200">Terlihat realistis untuk form pengiriman barang (fiktif).</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 font-bold text-slate-800 whitespace-nowrap">Email & Username</td>
+                                <td class="px-6 py-4 border-l border-slate-200">Turunan dari nama depan + angka acak + domain umum/disposable.</td>
+                                <td class="px-6 py-4 border-l border-slate-200">Format valid email standard (RFC 5322).</td>
+                            </tr>
+                            <tr class="bg-slate-50/50">
+                                <td class="px-6 py-4 font-bold text-slate-800 whitespace-nowrap">Foto Profil</td>
+                                <td class="px-6 py-4 border-l border-slate-200">Menggunakan Avatar Placeholders atau Inisial.</td>
+                                <td class="px-6 py-4 border-l border-slate-200">Menghindari penggunaan foto orang asli (mencegah pelanggaran hak cipta wajah).</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="bg-cyan-50 border-l-4 border-cyan-500 p-6 rounded-r-xl flex gap-4 items-start shadow-sm">
+                <i class="fa-solid fa-circle-info text-cyan-600 text-xl mt-1"></i>
+                <div>
+                    <h4 class="font-bold text-cyan-800 mb-1">Penting: Batasan Penggunaan</h4>
+                    <p class="text-cyan-700 text-sm leading-relaxed">Data yang dihasilkan <strong>100% FIKTIF</strong>. Meskipun identitas termasuk Alamat terlihat valid secara format, data ini tidak terdaftar di Dukcapil. Jangan gunakan untuk layanan pemerintah (BPJS, Pajak), Perbankan, atau tindakan ilegal lainnya.</p>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <h2 class="text-2xl font-bold text-slate-800">Panduan Penggunaan (Step-by-Step)</h2>
+                <p class="text-slate-600">Generator ini dirancang dengan prinsip <em class="italic">sederhana</em> dan <em class="italic">sat set</em>. Kamu gak perlu login.</p>
+                
+                <ol class="space-y-4 list-none pl-0">
+                    <li class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex gap-4 items-start">
+                        <span class="flex-shrink-0 w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center font-bold text-slate-500">1</span>
+                        <p class="text-slate-600 mt-1"><strong>Pilih Preferensi Gender:</strong> Klik tombol <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded font-semibold mx-1">Pria</span>, <span class="inline-block bg-red-100 text-red-700 text-xs px-2 py-1 rounded font-semibold mx-1">Wanita</span>, atau <span class="inline-block bg-slate-200 text-slate-700 text-xs px-2 py-1 rounded font-semibold mx-1">Acak</span> sesuai kebutuhan profil yang ingin kamu buat.</p>
+                    </li>
+                    <li class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex gap-4 items-start">
+                        <span class="flex-shrink-0 w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center font-bold text-slate-500">2</span>
+                        <p class="text-slate-600 mt-1"><strong>Tunggu Proses (Generate):</strong> Sistem akan memproses data dan merancang nya buat kamu seketika.</p>
+                    </li>
+                    <li class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex gap-4 items-start">
+                        <span class="flex-shrink-0 w-8 h-8 bg-slate-100 rounded-full flex items-center justify-center font-bold text-slate-500">3</span>
+                        <p class="text-slate-600 mt-1"><strong>Salin Data:</strong> Gunakan tombol <i class="fa-regular fa-copy mx-1 text-slate-400"></i> di samping setiap kolom input. Tombol ini dirancang agar kamu gak perlu capek menyeleksi teks secara manual (yang seringkali susah dilakukan di layar HP kecil).</p>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="space-y-6">
+                <h2 class="text-2xl font-bold text-slate-800">Studi Kasus: Kapan Menggunakan Tool Ini?</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    
+                    <!-- DO Card -->
+                    <div class="bg-white rounded-2xl shadow-sm border border-green-200 overflow-hidden">
+                        <div class="bg-green-600 text-white p-4 font-bold flex items-center gap-2">
+                            <i class="fa-solid fa-circle-check"></i> DO: Sangat Disarankan
+                        </div>
+                        <ul class="p-6 space-y-3 list-disc pl-5 text-sm text-slate-600 marker:text-green-500">
+                            <li>Mendaftar Wi-Fi publik di kafe/bandara yang meminta data diri lengkap.</li>
+                            <li>Mengisi survei online yang mewajibkan nama & alamat tapi kamu ragu kredibilitasnya.</li>
+                            <li>Register akun game untuk server percobaan (smurf account).</li>
+                            <li>Testing form validasi pada aplikasi yang sedang kamu kembangkan.</li>
+                            <li>Membuat karakter untuk cerita fiksi atau roleplay (RP).</li>
+                        </ul>
+                    </div>
+
+                    <!-- DON'T Card -->
+                    <div class="bg-white rounded-2xl shadow-sm border border-red-200 overflow-hidden">
+                        <div class="bg-red-600 text-white p-4 font-bold flex items-center gap-2">
+                            <i class="fa-solid fa-circle-xmark"></i> DON'T: Dilarang Keras
+                        </div>
+                        <ul class="p-6 space-y-3 list-disc pl-5 text-sm text-slate-600 marker:text-red-500">
+                            <li>Mendaftar Pinjaman Online (Pinjol) atau Paylater. Ini adalah tindak pidana penipuan.</li>
+                            <li>Mendaftar rekening bank digital atau dompet digital (e-wallet).</li>
+                            <li>Verifikasi identitas marketplace untuk berjualan (KYC).</li>
+                            <li>Segala bentuk cyber-bullying atau doxing menggunakan identitas palsu.</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <h2 class="text-2xl font-bold text-slate-800">FAQ: Pertanyaan yang Sering Diajukan</h2>
+                
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 divide-y divide-slate-200">
+                    
+                    <!-- FAQ 1 (Open by default) -->
+                    <details class="group" open>
+                        <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-5 bg-blue-50/50 text-blue-800 hover:bg-blue-50 transition-colors">
+                            <span>Apakah data yang dihasilkan generator ini bisa dipakai?</span>
+                            <span class="transition group-open:rotate-180">
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </span>
+                        </summary>
+                        <div class="text-slate-600 p-5 pt-0 bg-blue-50/50 mt-2 text-sm leading-relaxed">
+                            <strong>Bisa, selama digunakan untuk tujuan yang sah.</strong> Menggunakan nama samaran (pseudonym) untuk menjaga privasi di internet adalah hak digital kita. Tapi, menggunakan data palsu untuk memalsukan dokumen negara, menipu bank, atau merugikan pihak lain adalah tindakan ilegal. Gunakan dengan bijak sesuai etika internet.
+                        </div>
+                    </details>
+
+                    <!-- FAQ 2 -->
+                    <details class="group">
+                        <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-5 text-slate-700 hover:bg-slate-50 transition-colors">
+                            <span>Apakah foto profil yang dihasilkan adalah orang asli?</span>
+                            <span class="transition group-open:rotate-180 text-slate-400">
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </span>
+                        </summary>
+                        <div class="text-slate-600 p-5 pt-0 text-sm leading-relaxed">
+                            Tidak. Kami menggunakan layanan penyedia Avatar atau placeholder gambar acak yang digenerate oleh sistem, bukan mengambil foto orang sungguhan dari internet. Ini untuk menghindari masalah hak cipta dan privasi.
+                        </div>
+                    </details>
+
+                    <!-- FAQ 3 -->
+                    <details class="group">
+                        <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-5 text-slate-700 hover:bg-slate-50 transition-colors">
+                            <span>Kenapa saya tidak bisa login ke email yang dihasilkan?</span>
+                            <span class="transition group-open:rotate-180 text-slate-400">
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </span>
+                        </summary>
+                        <div class="text-slate-600 p-5 pt-0 text-sm leading-relaxed">
+                            Email yang dihasilkan hanyalah teks berformat email (dummy) agar lolos validasi form di sebuah website. Email tersebut tidak benar-benar dibuat di provider manapun, jadi Anda tidak bisa login atau menerima pesan di alamat tersebut.
+                        </div>
+                    </details>
+                    
+                    <!-- FAQ 4 -->
+                    <details class="group">
+                        <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-5 text-slate-700 hover:bg-slate-50 transition-colors">
+                            <span>Apakah website ini menyimpan data yang saya generate?</span>
+                            <span class="transition group-open:rotate-180 text-slate-400">
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </span>
+                        </summary>
+                        <div class="text-slate-600 p-5 pt-0 text-sm leading-relaxed">
+                            Tidak. Seluruh proses pembuatan data dilakukan secara lokal di perangkat Anda (Client-Side) menggunakan JavaScript. Kami tidak menyimpan atau mengirimkan data yang Anda buat ke server kami.
+                        </div>
+                    </details>
+
+                </div>
+            </div>
+
+            <div class="text-center italic text-slate-500 text-sm py-8 border-t border-slate-200 mt-12">
+                "Privasi bukan tentang menyembunyikan sesuatu, tapi tentang melindungi apa yang menjadi hak kita."
+            </div>
+
+        </article>
+    </main>
+
+    <!-- Custom Toast Notification (replaces alert) -->
+    <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white px-6 py-3 rounded-full shadow-lg flex items-center gap-3 toast-notification z-50 pointer-events-none">
+        <i class="fa-solid fa-check-circle text-green-400"></i>
+        <span id="toast-message" class="font-medium text-sm">Berhasil disalin!</span>
+    </div>
+
+    <script>
+        // Data Dictionaries for Indonesia
+        const db = {
+           namaDepanPria: ['Budi', 'Agus', 'Ahmad', 'Reza', 'Hendra', 'Eko', 'Rizky', 'Dwi', 'Bambang', 'Aditya', 'Randi', 'Dimas', 'Ilham', 'Kevin', 'Andi', 'Fajar', 'Rian', 'Bayu', 'Gilang', 'Surya', 'Wahyu', 'Indra', 'Yudi', 'Anton', 'Arif', 'Iwan', 'Joko', 'Hari', 'Rio', 'Dani', 'Lukman', 'Hakim', 'Faisal', 'Iqbal', 'Dedi', 'Ikhsan', 'Taufik', 'Yusuf', 'Maulana', 'Andre', 'Raka', 'Rama', 'Bagas', 'Arya', 'Satria', 'Bagas', 'Farel', 'Galih', 'Hafiz', 'Ivan'],
+            namaDepanWanita: ['Ayu', 'Siti', 'Putri', 'Dewi', 'Sri', 'Dian', 'Sari', 'Indah', 'Rini', 'Lestari', 'Nisa', 'Rizka', 'Dina', 'Nadia', 'Maya', 'Citra', 'Wulan', 'Fitri', 'Nurul', 'Ratna', 'Annisa', 'Aulia', 'Salsabila', 'Zahra', 'Nabila', 'Intan', 'Vina', 'Rina', 'Riska', 'Tiara', 'Dinda', 'Mutiara', 'Novita', 'Mega', 'Eka', 'Ratih', 'Amalia', 'Dita', 'Sisca', 'Rani', 'Susi', 'Laila', 'Mila', 'Salma', 'Tari', 'Vira', 'Yuni', 'Zara', 'Bella', 'Chika'],
+            namaBelakang: ['Pratama', 'Saputra', 'Wijaya', 'Kurniawan', 'Hidayat', 'Santoso', 'Nugroho', 'Wibowo', 'Putra', 'Setiawan', 'Ramadhan', 'Firmansyah', 'Pangestu', 'Kusuma', 'Mahendra', 'Siregar', 'Situmorang', 'Gultom', 'Lubis', 'Hutagalung', 'Sinaga', 'Simanjuntak', 'Halim', 'Gunawan', 'Haryanto', 'Prasetyo', 'Wibisono', 'Suryono', 'Ardiansyah', 'Hakim', 'Purnomo', 'Susanto', 'Widianto', 'Hartono', 'Yulianto', 'Nasution', 'Tanjung', 'Pohan', 'Hasibuan', 'Pasaribu'],
+        kota: ['Jakarta Pusat', 'Jakarta Selatan', 'Surabaya', 'Bandung', 'Medan', 'Semarang', 'Makassar', 'Palembang', 'Depok', 'Tangerang', 'Bekasi', 'Bogor', 'Malang', 'Yogyakarta', 'Denpasar'],
+            jalan: ['Jl. Merdeka', 'Jl. Sudirman', 'Jl. Thamrin', 'Jl. Gatot Subroto', 'Jl. Ahmad Yani', 'Jl. Diponegoro', 'Jl. Pahlawan', 'Jl. Gajah Mada', 'Jl. Hayam Wuruk', 'Jl. Melati', 'Jl. Mawar', 'Jl. Anggrek', 'Jl. Kenanga'],
+            domainEmail: ['robot-mail'],
+            agama: ['Islam', 'Kristen Protestan', 'Katolik', 'Hindu', 'Buddha', 'Konghucu'],
+            pekerjaan: ['Karyawan Swasta', 'Pegawai Negeri Sipil', 'Wiraswasta', 'Mahasiswa', 'Freelancer', 'Dokter', 'Guru', 'Programmer', 'Desainer Grafis', 'Akuntan', 'Lainnya']
+        };
+
+        // Helper Functions
+        const randItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
+        const randInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+        
+        // Generate random NIK (16 digits)
+        const generateNIK = () => {
+            let nik = '';
+            // Basic format: Prov(2) City(2) Kec(2) Tgl(2) Bln(2) Thn(2) Counter(4)
+            for(let i=0; i<16; i++) {
+                nik += Math.floor(Math.random() * 10);
+            }
+            return nik;
+        };
+
+        // Generate Phone Number
+        const generatePhone = () => {
+            const prefixes = ['0812', '0813', '0852', '0853', '0811', '0857', '0856', '0815', '0896', '0895', '0878', '0819'];
+            const prefix = randItem(prefixes);
+            const tail = Array.from({length: randInt(6, 8)}, () => Math.floor(Math.random() * 10)).join('');
+            return `${prefix}-${tail}`;
+        };
+
+        // Generate Date of Birth (between 18 and 60 years ago)
+        const generateDOB = () => {
+            const currentYear = new Date().getFullYear();
+            const year = randInt(currentYear - 60, currentYear - 18);
+            const month = randInt(1, 12);
+            // simplify days logic for dummy data
+            const daysInMonth = new Date(year, month, 0).getDate(); 
+            const day = randInt(1, daysInMonth);
+            
+            // Format DD-MM-YYYY
+            const formattedDay = day.toString().padStart(2, '0');
+            const formattedMonth = month.toString().padStart(2, '0');
+            return `${formattedDay}-${formattedMonth}-${year}`;
+        };
+
+        // Main Generator Function
+        function generateIdentity(gender = 'random') {
+            if (gender === 'random') {
+                gender = Math.random() > 0.5 ? 'male' : 'female';
+            }
+
+            const isMale = gender === 'male';
+            
+            // Generate Name
+            const firstName = isMale ? randItem(db.namaDepanPria) : randItem(db.namaDepanWanita);
+            const lastName = randItem(db.namaBelakang);
+            const fullName = `${firstName} ${lastName}`;
+            
+            // Generate Username & Email
+            const numSuffix = randInt(10, 999);
+            const username = `${firstName.toLowerCase()}${lastName.toLowerCase()}${numSuffix}`.replace(/\s+/g, '');
+            const email = `${username}@${randItem(db.domainEmail)}`;
+            
+            // Generate Address
+            const noRumah = randInt(1, 200);
+            const rt = randInt(1, 15).toString().padStart(2, '0');
+            const rw = randInt(1, 15).toString().padStart(2, '0');
+            const kota = randItem(db.kota);
+            const kodepos = randInt(10000, 99999);
+            const alamat = `${randItem(db.jalan)} No. ${noRumah}, RT ${rt}/RW ${rw}, ${kota} ${kodepos}`;
+
+            // Generate other details
+            const nik = generateNIK();
+            const tempatLahir = randItem(db.kota);
+            const tanggalLahir = generateDOB();
+            const phone = generatePhone();
+            const agama = randItem(db.agama);
+            const pekerjaan = randItem(db.pekerjaan);
+
+            // Avatar URL (Using external free API like robohash or dicebear)
+            // For variety, let's use dicebear initials based on name, or notionists
+            const avatarStyle = isMale ? 'micah' : 'lorelei';
+            const seed = encodeURIComponent(firstName);
+            const avatarUrl = `https://api.dicebear.com/7.x/${avatarStyle}/svg?seed=${seed}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffdfbf`;
+
+            return {
+                gender,
+                fullName,
+                nik,
+                tempatLahir,
+                tanggalLahir,
+                alamat,
+                email,
+                username,
+                phone,
+                agama,
+                pekerjaan,
+                avatarUrl
+            };
+        }
+
+        const container = document.getElementById('result-container');
+        const emptyState = document.getElementById('empty-state');
+
+        function updateUI(data) {
+            // Hide empty state, show container
+            emptyState.classList.add('hidden');
+            container.classList.remove('hidden');
+
+            // Populate inputs
+            document.getElementById('out-nama').value = data.fullName;
+            document.getElementById('out-nik').value = data.nik;
+            document.getElementById('out-tempat-lahir').value = data.tempatLahir;
+            document.getElementById('out-tanggal-lahir').value = data.tanggalLahir;
+            document.getElementById('out-alamat').value = data.alamat;
+            document.getElementById('out-email').value = data.email;
+            document.getElementById('out-phone').value = data.phone;
+            document.getElementById('out-username').value = data.username;
+            document.getElementById('out-agama').value = data.agama;
+            document.getElementById('out-pekerjaan').value = data.pekerjaan;
+
+            const btnCekInbox = document.getElementById('btn-cek-inbox');
+            if (btnCekInbox) {
+                btnCekInbox.href = `https://pubiway.com/service/identitas/mailbox.php?username=${data.username}&domain=robot-mail.com`;
+            }
+            
+            // Update Avatar
+            document.getElementById('avatar-img').src = data.avatarUrl;
+
+            // Update Badge
+            const badge = document.getElementById('gender-badge');
+            if (data.gender === 'male') {
+                badge.textContent = 'PRIA';
+                badge.className = 'inline-block px-4 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-700 tracking-wider';
+            } else {
+                badge.textContent = 'WANITA';
+                badge.className = 'inline-block px-4 py-1 rounded-full text-xs font-bold bg-red-100 text-red-700 tracking-wider';
+            }
+        }
+
+        // Event Listeners for buttons
+        document.getElementById('btn-male').addEventListener('click', () => {
+            const data = generateIdentity('male');
+            updateUI(data);
+        });
+
+        document.getElementById('btn-female').addEventListener('click', () => {
+            const data = generateIdentity('female');
+            updateUI(data);
+        });
+
+        document.getElementById('btn-random').addEventListener('click', () => {
+            const data = generateIdentity('random');
+            updateUI(data);
+        });
+
+        // Copy to clipboard functionality using custom toast
+        let toastTimeout;
+        window.copyToClipboard = function(elementId) {
+            const input = document.getElementById(elementId);
+            
+            // Fallback for document.execCommand if navigator.clipboard is restricted
+            try {
+                input.select();
+                input.setSelectionRange(0, 99999); /* For mobile devices */
+                document.execCommand('copy');
+                
+                // Deselect
+                window.getSelection().removeAllRanges();
+                
+                showToast(`Data tersalin: ${input.value.substring(0, 15)}${input.value.length > 15 ? '...' : ''}`);
+            } catch (err) {
+                console.error('Failed to copy text: ', err);
+                showToast('Gagal menyalin data', true);
+            }
+        };
+
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            const icon = toast.querySelector('i');
+            
+            toastMsg.textContent = message;
+            
+            if(isError) {
+                icon.className = 'fa-solid fa-circle-exclamation text-red-400';
+            } else {
+                icon.className = 'fa-solid fa-check-circle text-green-400';
+            }
+
+            toast.classList.add('show');
+            
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+    </script>
+</body>
+</html>

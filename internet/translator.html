@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CURHATDOK Translator</title>
+    <meta name="description" content="Curhatdok Translator menerjemahkan ke bahasa yang lebih mudah dipahami - Gratis update 2026">
+    <meta name="keywords" content="translate, web translate, situs translator, web penerjemah, situs terjemahan">
+  <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+<link rel="shortcut icon" href="/favicon/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+<link rel="manifest" href="/favicon/site.webmanifest" />
+    <!-- Tailwind CSS -->
+    <script src="/tailwind/tailwind.js"></script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Translator Tool",
+  "url": "https://curhatdok.it.com/internet/translator.html",
+  "description": "Aplikasi berbasis web untuk menerjemahkan bahasa.",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "IDR"
+  }
+}
+</script>
+    <style>
+        /* Custom gradient dan warna mengikuti gambar */
+        .bg-header-gradient {
+            background: linear-gradient(90deg, #f6775f 0%, #f3c457 40%, #5eb59b 75%, #3679af 100%);
+        }
+        .border-green-custom {
+            border-color: #51c48c;
+        }
+        .btn-translate {
+            background-color: #139148;
+        }
+        .btn-translate:hover {
+            background-color: #d15555;
+        }
+        .badge-char {
+            background-color: #428bca;
+        }
+        .btn-copy {
+            background-color: #f5cc60;
+            color: #4a4a4a;
+        }
+        .btn-copy:hover {
+            background-color: #5bc085;
+        }
+        .btn-reset {
+            background-color: #e06060;
+        }
+        .btn-reset:hover {
+            background-color: #dfb957;
+        }
+        
+        /* Mengatur tampilan scrollbar agar lebih rapi */
+        textarea::-webkit-scrollbar {
+            width: 8px;
+        }
+        textarea::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+            border-radius: 4px;
+        }
+        textarea::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        textarea::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+
+        /* Tabs styling */
+        .tab-active {
+            background-color: #f8fafc;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -1px;
+            color: #3b82f6; /* text-blue-500 */
+        }
+
+        .faq-btn {
+            transition: all 1s ease; 
+        }
+        
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen font-sans text-gray-700">
+
+    <!-- Header Section -->
+    <header class="bg-header-gradient py-12 text-center text-white shadow-sm">
+        <h1 class="text-4xl md:text-5xl font-semibold mb-3">CURHATDOK Translator </h1>
+        <p class="text-lg md:text-xl font-light opacity-90">Kini beda bahasa bukan masalah. Belajar makin Mudah!</p>
+        <button id="home" class="badge-char text-md px-3 py-1.5 rounded text-white font-semibold">HOME</button>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-5xl mx-auto px-4 py-8">
+        
+        <!-- Translator Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <!-- Left Card: Input -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                <label for="targetLang" class="text-lg font-bold text-gray-800">Terjemahkan Ke (Translate to) &rarr;</label>
+        <select id="targetLang" class="w-full border border-gray-300 rounded p-2.5 text-gray-700 focus:outline-none focus:border-gray-400 bg-white mb-2">
+                        <option value="id">Indonesia</option>
+                        <option value="en">Inggris</option>
+                        <option value="jv">Jawa</option>
+                        <option value="su">Sunda</option>
+                        <option value="ar">Arab</option>
+                        <option value="ja">Jepang</option>
+                        <option value="it">Italia</option>
+                        <option value="ko">Korea</option>
+                        <option value="ru">Rusia</option>
+                        <option value="bn">Bengali</option>
+                        <option value="de">Jerman</option>
+                        <option value="es">Spanyol</option>
+                        <option value="fr">Prancis</option>
+                        <option value="th">Thailand</option>
+                        <option value="zu">Zulu</option>
+                    </select>
+
+                <textarea 
+                    id="inputText" 
+                    class="w-full h-72 border border-green-custom rounded p-4 text-gray-700 focus:outline-none focus:ring-1 focus:ring-green-400 resize-y"
+                    placeholder="Masukkan teks yang ingin diterjemahkan, terserah bahasa apapun itu..."></textarea>
+                
+                <div class="mt-4 grid grid-cols-2 gap-3 pb-[3.25rem]">
+                        <button id="charCount" class="badge-char text-md px-3 py-1.5 rounded text-white font-semibold">0 karakter</button>
+                    <button id="btnTranslate" class="btn-translate text-white rounded p-3 font-medium transition-colors">
+                        <span class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
+                            Terjemahkan
+                        </span>
+                        </button>
+                </div>
+            </div>
+
+            <!-- Right Card: Output -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                <h3 class="text-lg font-bold text-gray-800 mb-14">Hasil Terjemahan</h3>
+                <textarea 
+                    id="outputText" 
+                    readonly
+                    class="w-full h-72 border border-green-custom rounded p-4 text-gray-700 bg-gray-50 focus:outline-none resize-y"
+                    placeholder="Hasil terjemahan akan muncul disini..."></textarea>
+                
+                <div class="mt-4 grid grid-cols-2 gap-3 pb-[3.25rem]">
+                    <button id="btnCopy" class="btn-copy rounded p-3 font-semibold transition-colors">
+                        Salin Hasil
+                    </button>
+                    <button id="btnReset" class="btn-reset text-white rounded p-3 font-semibold transition-colors">
+                        Reset
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Tabs Section -->
+        <div class="mt-8">
+            <div class="flex flex-wrap border-b border-gray-200">
+                <button class="tab-btn tab-active px-6 py-2.5 bg-gray-100 border border-gray-200 border-b-0 rounded-t-md text-sm font-medium focus:outline-none" data-target="tab-riwayat">Riwayat</button>
+                <button class="tab-btn px-6 py-2.5 bg-gray-100 border border-gray-200 border-b-0 border-l-0 text-sm text-blue-500 font-medium hover:bg-gray-50 focus:outline-none" data-target="tab-faq">FAQ</button>
+                <button class="tab-btn px-6 py-2.5 bg-gray-100 border border-gray-200 border-b-0 border-l-0 text-sm text-blue-500 font-medium hover:bg-gray-50 focus:outline-none" data-target="tab-disclaimer">Disclaimer</button>
+                <button class="tab-btn px-6 py-2.5 bg-gray-100 border border-gray-200 border-b-0 border-l-0 rounded-tr-md text-sm text-blue-500 font-medium hover:bg-gray-50 focus:outline-none" data-target="tab-about">About</button>
+            </div>
+            
+            <div class="bg-white border border-gray-200 rounded-b-md rounded-tr-md p-5 shadow-sm min-h-[150px]">
+                
+                <!-- Tab: Riwayat -->
+                <div id="tab-riwayat" class="tab-content block">
+                    <div class="flex justify-between items-center mb-4 border-b border-gray-200 pb-2">
+                        <h3 class="text-lg font-bold text-gray-800">Riwayat Terjemahan</h3>
+                        <button id="btnClearHistory" class="text-red-400 border border-red-300 px-3 py-1 text-sm rounded hover:bg-red-50 transition-colors">Hapus Semua</button>
+                    </div>
+                    <div id="historyContainer" class="text-center text-gray-500 text-sm py-4">
+                        Belum ada riwayat terjemahan.
+                    </div>
+                </div>
+
+                <!-- Tab: FAQ -->
+                <div id="tab-faq" class="tab-content hidden">
+                    <div class="border border-gray-200 rounded-md overflow-hidden">
+                        
+                        <!-- FAQ Item 1 (Active) -->
+                        <div class="border-b border-gray-200">
+                            <button class="faq-btn w-full text-left px-4 py-3.5 flex justify-between items-center bg-white text-gray-700 transition-colors focus:outline-none" aria-expanded="false">
+                                <span class="text-[15px]">Apakah layanan ini gratis?</span>
+                                <svg class="w-5 h-5 transform transition-transform duration-200 rotate-180 faq-icon text-[#0c63e4]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="faq-content hidden px-4 py-4 bg-white text-gray-700 text-[15px] border-t border-gray-200">
+                                Ya, layanan terjemahan kami saat ini tersedia secara gratis.
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 2 -->
+                        <div class="border-b border-gray-200">
+                            <button class="faq-btn w-full text-left px-4 py-3.5 flex justify-between items-center bg-white hover:bg-gray-50 text-gray-700 transition-colors focus:outline-none" aria-expanded="false">
+                                <span class="text-[15px]">Berapa banyak bahasa yang didukung?</span>
+                                <svg class="w-5 h-5 transform transition-transform duration-200 faq-icon text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="faq-content hidden px-4 py-4 bg-white text-gray-700 text-[15px] border-t border-gray-200">
+                                Saat ini kami mendukung berbagai macam bahasa populer di dunia seperti Inggris, Indonesia, Jawa, Sunda, Arab, dan Jepang.
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 3 -->
+                        <div>
+                            <button class="faq-btn w-full text-left px-4 py-3.5 flex justify-between items-center bg-white hover:bg-gray-50 text-gray-700 transition-colors focus:outline-none" aria-expanded="false">
+                                <span class="text-[15px]">Apakah data saya aman?</span>
+                                <svg class="w-5 h-5 transform transition-transform duration-200 faq-icon text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="faq-content hidden px-4 py-4 bg-white text-gray-700 text-[15px] border-t border-gray-200">
+                                Ya, riwayat terjemahan Anda hanya disimpan secara lokal di browser Anda (Local Storage) dan tidak dikirim untuk disimpan pada server database kami.
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Tab: Disclaimer -->
+                <div id="tab-disclaimer" class="tab-content hidden">
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Disclaimer</h3>
+                    <p class="text-gray-600">Terjemahan yang dihasilkan oleh aplikasi ini didasarkan pada teknologi AI dan mungkin tidak selalu 100% akurat atau sesuai konteks. Gunakanlah hasil terjemahan sebagai referensi awal. Kami tidak bertanggung jawab atas kesalahan atau kerugian yang timbul dari penggunaan terjemahan ini.</p>
+
+<p class="text-gray-600 mt-4">Untuk dokumen penting atau terjemahan yang membutuhkan akurasi tinggi, disarankan untuk menggunakan jasa penerjemah profesional.</p>
+                </div>
+
+                <!-- Tab: About -->
+                <div id="tab-about" class="tab-content hidden">
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">About Us</h3>
+                    <p class="text-gray-600 mb-4">Web CurhatDok Translator ini dibuat untuk membantu teman-teman menerjemahkan teks antar bahasa dengan cepat dan mudah. Kami berupaya menyediakan alat yang sederhana namun powerful, didukung oleh teknologi kecerdasan buatan (AI).</p>
+
+<p class="text-gray-600">Pengembangan aplikasi ini adalah bagian dari proyek pembelajaran dan peningkatan berkelanjutan. Kami senang Anda menggunakannya!</p>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-10 text-gray-500 text-sm mt-4">
+        CurhatDok Translator &copy; 2026.
+    </footer>
+
+    <!-- Logic Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // DOM Elements
+            const inputText = document.getElementById('inputText');
+            const outputText = document.getElementById('outputText');
+            const charCount = document.getElementById('charCount');
+            const targetLang = document.getElementById('targetLang');
+            const btnTranslate = document.getElementById('btnTranslate');
+            const btnCopy = document.getElementById('btnCopy');
+            const btnReset = document.getElementById('btnReset');
+            const home = document.getElementById('home');
+            
+            // History Elements
+            const historyContainer = document.getElementById('historyContainer');
+            const btnClearHistory = document.getElementById('btnClearHistory');
+            let translationHistory = JSON.parse(localStorage.getItem('pubiway_history') || '[]');
+
+            // Event Listeners
+            inputText.addEventListener('input', updateCharCount);
+            btnTranslate.addEventListener('click', performTranslation);
+            btnCopy.addEventListener('click', copyResult);
+            btnReset.addEventListener('click', resetFields);
+            btnClearHistory.addEventListener('click', clearHistory);
+
+            // Init History
+            renderHistory();
+
+            // 1. Character Count Logic
+            function updateCharCount() {
+                const count = inputText.value.length;
+                charCount.textContent = `${count} karakter`;
+            }
+
+            // 2. Translation Logic (Using MyMemory free API)
+            async function performTranslation() {
+                const text = inputText.value.trim();
+                const langTo = targetLang.value;
+                
+                if (!text) {
+                    alert("Silakan masukkan teks terlebih dahulu!");
+                    return;
+                }
+
+                btnTranslate.innerHTML = `<span class="flex items-center gap-2"><svg class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Menerjemahkan...</span>`;
+                
+                try {
+                    // API Endpoint. Note: 'autodetect' works to detect source lang.
+                    const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=autodetect|${langTo}`;
+                    const response = await fetch(url);
+                    const data = await response.json();
+                    
+                    if (data.responseData && data.responseData.translatedText) {
+                        const translated = data.responseData.translatedText;
+                        outputText.value = translated;
+                        saveToHistory(text, translated, langTo);
+                    } else {
+                        outputText.value = "Gagal menerjemahkan teks. Coba lagi nanti.";
+                    }
+                } catch (error) {
+                    console.error("Translation Error:", error);
+                    outputText.value = "Terjadi kesalahan jaringan saat menerjemahkan.";
+                } finally {
+                    btnTranslate.innerHTML = `<span class="flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>Terjemahkan</span>`;
+                }
+            }
+
+            // 3. Copy Logic
+            function copyResult() {
+                const resultText = outputText.value;
+                if (!resultText) return;
+
+                navigator.clipboard.writeText(resultText).then(() => {
+                    const originalText = btnCopy.textContent;
+                    btnCopy.textContent = "Berhasil Disalin!";
+                    btnCopy.style.backgroundColor = "#4caf50";
+                    setTimeout(() => {
+                        btnCopy.textContent = originalText;
+                        btnCopy.style.backgroundColor = ""; // revert to CSS class
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy!', err);
+                    alert("Gagal menyalin teks.");
+                });
+            }
+
+            // 4. Reset Logic
+            function resetFields() {
+                inputText.value = '';
+                outputText.value = '';
+                updateCharCount();
+            }
+
+            // 5. History Logic
+            function saveToHistory(original, translated, lang) {
+                const entry = {
+                    id: Date.now(),
+                    original: original,
+                    translated: translated,
+                    lang: lang,
+                    time: new Date().toLocaleString('id-ID')
+                };
+                
+                // Add to beginning of array
+                translationHistory.unshift(entry);
+                
+                // Keep only last 10
+                if(translationHistory.length > 10) {
+                    translationHistory.pop();
+                }
+                
+                localStorage.setItem('pubiway_history', JSON.stringify(translationHistory));
+                renderHistory();
+            }
+
+            function renderHistory() {
+                if (translationHistory.length === 0) {
+                    historyContainer.innerHTML = 'Belum ada riwayat terjemahan.';
+                    historyContainer.className = "text-center text-gray-500 text-sm py-4";
+                    return;
+                }
+
+                historyContainer.className = "space-y-4 max-h-60 overflow-y-auto pr-2";
+                historyContainer.innerHTML = translationHistory.map(item => `
+                    <div class="bg-gray-50 p-3 rounded border border-gray-200 text-left">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-xs font-semibold text-blue-600 uppercase">Auto &rarr; ${item.lang}</span>
+                            <span class="text-xs text-gray-400">${item.time}</span>
+                        </div>
+                        <p class="text-sm text-gray-700 font-medium truncate mb-1">"${item.original}"</p>
+                        <p class="text-sm text-green-600 truncate">"${item.translated}"</p>
+                    </div>
+                `).join('');
+            }
+
+            function clearHistory() {
+                if(confirm('Apakah Anda yakin ingin menghapus semua riwayat?')) {
+                    translationHistory = [];
+                    localStorage.removeItem('pubiway_history');
+                    renderHistory();
+                }
+            }
+
+            home.addEventListener('click', () => {
+                window.location.href = '/'
+            })
+
+           
+
+        // 6. Tabs Logic
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    tabBtns.forEach(b => {
+                        b.classList.remove('tab-active');
+                        b.classList.add('text-blue-500', 'bg-gray-100');
+                        b.classList.remove('text-gray-700', 'bg-white', 'border-b-white');
+                    });
+                    
+                    btn.classList.add('tab-active', 'bg-white', 'text-gray-700');
+                    btn.classList.remove('text-blue-500', 'bg-gray-100');
+                    btn.style.borderBottomColor = 'white'; 
+                    tabBtns.forEach(b => { if(b !== btn) b.style.borderBottomColor = 'transparent'; });
+
+                    tabContents.forEach(content => {
+                        content.classList.add('hidden');
+                        content.classList.remove('block');
+                    });
+
+                    const targetId = btn.getAttribute('data-target');
+                    const targetContent = document.getElementById(targetId);
+                    if (targetContent) {
+                        targetContent.classList.remove('hidden');
+                        targetContent.classList.add('block');
+                    }
+                });
+            });
+            
+            // Set initial active tab border fix
+            const activeTab = document.querySelector('.tab-active');
+            if (activeTab) {
+                activeTab.style.borderBottomColor = 'white';
+            }
+
+            // 7. FAQ Accordion Logic
+            const faqBtns = document.querySelectorAll('.faq-btn');
+            
+            faqBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                    
+                    // Menutup semua accordion terlebih dahulu
+                    faqBtns.forEach(b => {
+                        b.setAttribute('aria-expanded', 'false');
+                        b.classList.remove('bg-[#e7f1ff]', 'text-[#0c63e4]');
+                        b.classList.add('bg-white', 'text-gray-700');
+                        
+                        const icon = b.querySelector('.faq-icon');
+                        if (icon) {
+                            icon.classList.remove('rotate-180', 'text-[#0c63e4]');
+                            icon.classList.add('text-gray-500');
+                        }
+                        
+                        if (b.nextElementSibling) {
+                            b.nextElementSibling.classList.add('hidden');
+                        }
+                    });
+
+                    // Jika yang diklik sebelumnya tertutup, maka buka
+                    if (!isExpanded) {
+                        this.setAttribute('aria-expanded', 'true');
+                        this.classList.remove('bg-white', 'text-gray-700');
+                        this.classList.add('bg-[#e7f1ff]', 'text-[#0c63e4]');
+                        
+                        const icon = this.querySelector('.faq-icon');
+                        if (icon) {
+                            icon.classList.remove('text-gray-500');
+                            icon.classList.add('rotate-180', 'text-[#0c63e4]');
+                        }
+                        
+                        if (this.nextElementSibling) {
+                            this.nextElementSibling.classList.remove('hidden');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

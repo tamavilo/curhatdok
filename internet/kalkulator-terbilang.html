@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Terbilang Online - curhatdok.it.com</title>
+    <meta name="description" content="Tools kalkulator terbilang online gratis. Ubah angka menjadi kalimat huruf rupiah secara otomatis. Bisa copy-paste, format kapitalisasi, dan akurat hingga triliunan.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+<link rel="shortcut icon" href="/favicon/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+<link rel="manifest" href="/favicon/site.webmanifest" />
+<script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Kalkulator Terbilang Online",
+      "url": "https://curhatdok.it.com",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "IDR"
+      },
+      "featureList": "Konversi angka ke huruf, Format Rupiah, Kapitalisasi Otomatis"
+    }
+    </script>
+    <style>
+        *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: Inter, sans-serif;
+}
+
+body{
+    background:#f4f5f7;
+}
+
+header{
+    height:70px;
+    background:white;
+    border-bottom:1px solid #ddd;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 40px;
+}
+
+.logo{
+    font-size:30px;
+    font-weight:bold;
+}
+
+.logo span{
+    color:#3b5df4;
+}
+
+.version{
+    background:#edf1ff;
+    color:#3b5df4;
+    padding:8px 15px;
+    border-radius:20px;
+}
+
+.container{
+    max-width:36rem;
+    margin:40px auto;
+}
+
+.card{
+    background:white;
+    border-radius:20px;
+    box-shadow:0 5px 20px rgba(0,0,0,.1);
+    overflow:hidden;
+}
+
+.card label{
+    display:block;
+    margin:30px 30px 15px;
+    font-weight:bold;
+}
+
+.input-wrapper{
+    margin:0 30px;
+    border:1px solid #ddd;
+    border-radius:15px;
+    display:flex;
+    align-items:center;
+    padding:20px;
+}
+
+.input-wrapper span{
+    font-size:30px;
+    color:#999;
+}
+
+.input-wrapper input{
+    border:none;
+    outline:none;
+    width:100%;
+    font-size:40px;
+    margin-left:15px;
+}
+
+small{
+    display:block;
+    text-align:right;
+    margin:10px 30px;
+    color:#888;
+}
+
+button{
+    width:calc(100% - 60px);
+    margin:20px 30px;
+    padding:20px;
+    border:none;
+    border-radius:15px;
+    background:#3b5df4;
+    color:white;
+    font-size:24px;
+    cursor:pointer;
+}
+
+.hasil-box{
+    display:none;
+    margin:30px;
+    padding:20px;
+    background:#f7f8fc;
+    border-radius:15px;
+}
+
+.hasil-box p{
+    margin-top:10px;
+    font-size:22px;
+    line-height:1.7;
+}
+
+.copy{
+    margin-top:20px;
+    width:150px;
+    font-size:16px;
+}
+
+.history{
+    background:#f5f5f7;
+    padding:25px;
+}
+
+.history-title{
+    margin-bottom:20px;
+}
+
+.history li{
+    list-style:none;
+    display:flex;
+    justify-content:space-between;
+    padding:10px 0;
+}
+
+.content{
+    margin-top:40px;
+    background:white;
+    padding:40px;
+    margin:40px auto;
+    border-radius:20px;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+    max-width: 900px;
+}
+
+.content h2,
+.content h3{
+    margin-bottom:20px;
+}
+
+.content p,
+.content li{
+    line-height:1.8;
+    color:#444;
+}
+
+footer{
+    text-align:center;
+    padding:30px;
+    color:#666;
+}
+
+@media(max-width:768px){
+
+    header{
+        padding:20px;
+    }
+
+    .input-wrapper input{
+        font-size:30px;
+    }
+
+    button{
+        font-size:20px;
+    }
+}
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        🧮 <span>Terbilang</span> Online
+    </div>
+
+    <div class="version">
+        v2.5
+    </div>
+</header>
+
+<div class="container">
+
+    <div class="card">
+
+        <label>Masukkan Jumlah Angka (IDR)</label>
+
+        <div class="input-wrapper">
+            <span>Rp</span>
+            <input type="text" id="nominal" placeholder="0">
+        </div>
+
+        <small>Maksimal 15 digit (Triliun)</small>
+
+        <button onclick="convert()">
+            Konversi Sekarang
+        </button>
+
+        <div id="hasilBox" class="hasil-box">
+            <h3>Hasil Terbilang</h3>
+            <p id="hasil"></p>
+
+            <button class="copy" onclick="copyText()">
+                Copy
+            </button>
+        </div>
+
+        <div class="history">
+            <div class="history-title">
+                🟢 Digunakan <span id="counter">0</span> kali
+            </div>
+
+            <ul id="historyList"></ul>
+        </div>
+
+    </div>
+    </div>
+
+    <div class="content">
+        <h2>Cara Menggunakan Kalkulator Terbilang Online</h2>
+<p>Menulis kuitansi, cek, atau laporan keuangan seringkali membutuhkan ketelitian tinggi. Kesalahan satu digit saja dalam penulisan angka menjadi kalimat (terbilang) bisa berakibat fatal pada validitas dokumen. Kalkulator Terbilang Online hadir untuk memecahkan masalah tersebut secara instan.</p>
+
+<p>Alat ini menggunakan algoritma khusus bahasa Indonesia yang sesuai dengan EYD (Ejaan Yang Disempurnakan). Cukup masukkan angka nominal, dan sistem kami akan mengonversinya menjadi teks lengkap dengan akhiran "rupiah".</p>
+
+<h3>Fitur Unggulan Konversi Angka ke Rupiah</h3>
+<ul>
+<li><b>Format Kapitalisasi Fleksibel</b>: Sesuaikan output teks menjadi Huruf Besar Semua (Uppercase), Huruf Kecil (Lowercase), atau Judul (Title Case) sesuai kebutuhan dokumen Anda.</li>
+
+<li><b>Copy-Paste Instan</b>: Tombol salin satu klik memudahkan Anda memindahkan hasil ke Microsoft Word atau Excel.</li>
+<li><b>Mendukung Angka Besar</b>: Mampu memproses nominal hingga 15 digit (Triliunan), cocok untuk transaksi properti atau korporat.</li>
+</ul>
+
+<h3>Tips Menulis Kuitansi yang Benar</h3>
+<p>Pastikan nominal angka dan kalimat terbilang sinkron. Jangan lupa mencoret bagian kosong pada baris terbilang untuk menghindari penambahan kata yang tidak sah oleh pihak lain. Gunakan alat ini sebagai validasi akhir sebelum Anda menandatangani dokumen keuangan apapun.</p>
+    </div>
+
+
+
+<footer>
+    curhatdok.it.com © 2025 - Kalkulator Terbilang Online
+</footer>
+
+<script>
+    const historyList = document.getElementById("historyList");
+const counter = document.getElementById("counter");
+
+function formatRupiah(angka){
+    return Number(angka).toLocaleString("id-ID");
+}
+
+function convert(){
+
+    let angka = document.getElementById("nominal")
+        .value.replace(/\D/g,'');
+
+    if(!angka) return;
+
+    document.getElementById("hasilBox").style.display="block";
+
+    let hasil = terbilang(parseInt(angka)) + " rupiah";
+
+    document.getElementById("hasil").innerHTML =
+        hasil.charAt(0).toUpperCase() + hasil.slice(1);
+
+    addHistory(angka);
+}
+
+function addHistory(angka){
+
+    let li = document.createElement("li");
+
+    li.innerHTML = `
+        <span>Rp ${formatRupiah(angka)}</span>
+        <span>Baru saja</span>
+    `;
+
+    historyList.prepend(li);
+
+    counter.innerText = historyList.children.length;
+}
+
+function copyText(){
+    navigator.clipboard.writeText(
+        document.getElementById("hasil").innerText
+    );
+
+    alert("Berhasil disalin");
+}
+
+const angka = [
+    "",
+    "satu",
+    "dua",
+    "tiga",
+    "empat",
+    "lima",
+    "enam",
+    "tujuh",
+    "delapan",
+    "sembilan",
+    "sepuluh",
+    "sebelas"
+];
+
+function terbilang(n){
+
+    n = parseInt(n);
+
+    if(n < 12)
+        return angka[n];
+
+    if(n < 20)
+        return terbilang(n - 10) + " belas";
+
+    if(n < 100)
+        return terbilang(n / 10) + " puluh " +
+               terbilang(n % 10);
+
+    if(n < 200)
+        return "seratus " + terbilang(n - 100);
+
+    if(n < 1000)
+        return terbilang(n / 100) + " ratus " +
+               terbilang(n % 100);
+
+    if(n < 2000)
+        return "seribu " + terbilang(n - 1000);
+
+    if(n < 1000000)
+        return terbilang(n / 1000) + " ribu " +
+               terbilang(n % 1000);
+
+    if(n < 1000000000)
+        return terbilang(n / 1000000) + " juta " +
+               terbilang(n % 1000000);
+
+    if(n < 1000000000000)
+        return terbilang(n / 1000000000) + " miliar " +
+               terbilang(n % 1000000000);
+
+    return terbilang(n / 1000000000000) +
+           " triliun " +
+           terbilang(n % 1000000000000);
+}
+
+document.getElementById("nominal")
+.addEventListener("input", function(){
+
+    let value = this.value.replace(/\D/g,'');
+
+    this.value = formatRupiah(value);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CurhatDok - Temukan & Salin Emoji Favoritmu</title>
+    <meta name="description" content="Cari dan salin emoji favoritmu dengan cepat menggunakan bahasa Indonesia. Tool gratis, cepat, dan ringan untuk semua kebutuhan chat dan kontenmu.">
+<meta name="keywords" content="cari emoji, copy emoji, emoji indonesia, emoji keyboard, shortcut emoji">
+<link rel="canonical" href="/internet/emoji.html" />
+    
+    <!-- Load Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+<link rel="shortcut icon" href="/favicon/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+<link rel="manifest" href="/favicon/site.webmanifest" />
+    
+    <!-- Load Tailwind CSS -->
+    <script src="/tailwind/tailwind.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eff0ff',
+                            100: '#e1e3ff',
+                            500: '#6366f1', // Indigo primary
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "CariEmoji Tool",
+  "url": "https://curhatdok.it.com/internet/emoji.html",
+  "description": "Aplikasi berbasis web untuk mencari dan menyalin emoji berdasarkan kata kunci bahasa Indonesia.",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "IDR"
+  }
+}
+</script>
+
+    <style>
+        /* Custom Styles for FAQ Accordion and Utilities */
+        details > summary {
+            list-style: none;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+        details[open] summary .faq-icon {
+            transform: rotate(180deg);
+        }
+        
+        /* Custom Scrollbar for results */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c1c1c1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8; 
+        }
+
+        /* Toast Animation */
+        @keyframes slideUp {
+            from { opacity: 0; transform: translate(-50%, 20px); }
+            to { opacity: 1; transform: translate(-50%, 0); }
+        }
+        .toast-enter {
+            animation: slideUp 0.3s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-[#F9FAFB] text-gray-800 font-sans antialiased selection:bg-brand-100 selection:text-brand-700">
+
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-gray-100 sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2 text-xl font-bold text-gray-900">
+                <span class="text-2xl">🔎</span>
+                CariEmoji
+            </a>
+            <a href="#panduan" class="text-brand-600 hover:text-brand-700 font-medium text-sm transition-colors">
+                Lihat Panduan
+            </a>
+        </div>
+    </nav>
+
+    <main class="min-h-screen">
+        <!-- Hero Section -->
+        <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8 text-center">
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900 mb-4">
+                Temukan & Salin <span class="text-brand-600">Emoji</span> Favoritmu
+            </h1>
+            <p class="text-gray-500 text-base md:text-lg max-w-2xl mx-auto">
+                Database lengkap emoji dengan kata kunci Bahasa Indonesia. Cukup ketik, cari, dan klik untuk menyalin.
+            </p>
+        </section>
+
+        <!-- Search Box Section -->
+        <section class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="bg-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 p-4 sm:p-6 lg:p-8">
+                
+                <!-- Search Input Row -->
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <div class="relative flex-grow">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </div>
+                        <input type="text" id="searchInput" 
+                            class="block w-full pl-11 pr-4 py-3.5 border border-gray-200 rounded-xl leading-5 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-all text-base" 
+                            placeholder="Ketik: 'senyum', 'love', 'nangis'...">
+                    </div>
+                    
+                    <div class="flex gap-2">
+                        <button id="btnSearch" class="bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3.5 px-8 rounded-xl transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 w-full sm:w-auto">
+                            Cari
+                        </button>
+                        <button id="btnReset" class="bg-gray-50 hover:bg-gray-100 text-gray-500 border border-gray-200 py-3.5 px-4 rounded-xl transition-colors flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-gray-300" title="Reset">
+                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Meta Info -->
+                <div class="flex flex-wrap items-center justify-center gap-4 mt-6 text-xs sm:text-sm text-gray-500 font-medium">
+                    <span class="flex items-center gap-1.5 text-green-600">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                        Privasi Aman
+                    </span>
+                    <span class="flex items-center gap-1.5 text-blue-500">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        Hasil Instan
+                    </span>
+                    <span class="bg-gray-100 px-2.5 py-1 rounded-md text-gray-600">
+                        <strong id="usageCount" class="font-semibold text-gray-800">0</strong> penggunaan (72h)
+                    </span>
+                </div>
+
+                <!-- Tags / Terakhir dicari -->
+                <div class="mt-6 flex flex-wrap items-center justify-center gap-2 text-sm">
+                    <span class="text-gray-400 mr-1">Terakhir dicari:</span>
+                    <button class="tag-btn bg-gray-50 border border-gray-200 text-gray-600 hover:bg-gray-100 hover:text-gray-900 px-3 py-1 rounded-full transition-colors">madu</button>
+                    <button class="tag-btn bg-gray-50 border border-gray-200 text-gray-600 hover:bg-gray-100 hover:text-gray-900 px-3 py-1 rounded-full transition-colors">lebah</button>
+                    <button class="tag-btn bg-gray-50 border border-gray-200 text-gray-600 hover:bg-gray-100 hover:text-gray-900 px-3 py-1 rounded-full transition-colors">pasir</button>
+                    <button class="tag-btn bg-gray-50 border border-gray-200 text-gray-600 hover:bg-gray-100 hover:text-gray-900 px-3 py-1 rounded-full transition-colors">jam</button>
+                    <button class="tag-btn bg-gray-50 border border-gray-200 text-gray-600 hover:bg-gray-100 hover:text-gray-900 px-3 py-1 rounded-full transition-colors">waktu</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Area -->
+        <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 mb-24 min-h-[150px]">
+            <!-- Empty State -->
+            <div id="emptyState" class="flex flex-col items-center justify-center text-center py-10 opacity-100 transition-opacity duration-300">
+                <div class="text-4xl mb-3">✨</div>
+                <p class="text-gray-400 text-sm">Area bersih. Silakan cari lagi.</p>
+            </div>
+
+            <!-- Results Grid -->
+            <div id="resultsGrid" class="hidden grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-3">
+                <!-- Emojis will be injected here via JS -->
+            </div>
+            
+            <!-- Not Found State -->
+            <div id="notFoundState" class="hidden flex flex-col items-center justify-center text-center py-10">
+                <div class="text-4xl mb-3">🥺</div>
+                <p class="text-gray-500">Yah, emoji tidak ditemukan.</p>
+                <p class="text-sm text-gray-400 mt-1">Coba gunakan kata kunci lain (misal: 'senang', 'hewan', 'makanan').</p>
+            </div>
+        </section>
+
+        <!-- Content / Article Section -->
+        <article id="panduan" class="bg-white border-t border-gray-100">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+                
+                <!-- Intro -->
+                <h2 class="text-3xl font-bold text-gray-900 mb-6">Panduan Sat-Set: Cari & Salin Emoji Tanpa Drama</h2>
+                <p class="text-gray-600 text-lg leading-relaxed mb-8">
+                    Welcome to <strong>CariEmoji!</strong> Jujurly, kita semua tahu betapa ribetnya nyari satu emoji spesifik di keyboard bawaan HP, apalagi di Laptop. Harus scroll manual, eh mata malah siwer. Di sini, lo tinggal ketik kata kunci dalam Bahasa Indonesia, klik, dan kelar. <em>Valid</em> banget buat yang butuh cepet.
+                </p>
+
+                <!-- Callout -->
+                <div class="bg-brand-50 border-l-4 border-brand-600 rounded-r-xl p-6 mb-12">
+                    <h3 class="text-brand-700 font-bold text-lg mb-2">Kenapa harus tool ini?</h3>
+                    <p class="text-brand-600/80 leading-relaxed">
+                        Karena keyboard bawaan seringkali gak paham bahasa lokal. Lo ngetik "Meninggoy" atau "Ngakak" kadang gak muncul apa-apa. Di sini, database kita dioptimalkan biar <em>relate</em> sama kata kunci yang sering dipake netizen +62.
+                    </p>
+                </div>
+
+                <!-- How to use -->
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">Cara Pakai (Gak Pake Mikir)</h3>
+                <div class="space-y-5 text-gray-600 mb-16">
+                    <p><strong class="text-brand-600">1. Ketik Kata Kunci:</strong> Pake bahasa sehari-hari aja. <br><span class="text-sm text-gray-400 ml-4">Contoh: "nangis", "love", "kucing", "bintang".</span></p>
+                    <p><strong class="text-brand-600">2. Pilih Emoji:</strong> Hasil pencarian bakal langsung muncul. Gak perlu loading lama.</p>
+                    <p><strong class="text-brand-600">3. Klik buat Salin:</strong> Gak perlu blok teks manual. Cukup <strong>klik kotaknya</strong>, otomatis ke-copy.</p>
+                    <p><strong class="text-brand-600">4. Paste (Tempel):</strong> Tinggal CTRL + V (Windows) atau CMD + V (Mac) di caption IG, chat WA, atau tugas kuliah lo.</p>
+                </div>
+
+                <!-- Dictionary Table -->
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">Kamus Emoji Gaul: Biar Gak Salah Vibe</h3>
+                <p class="text-gray-600 mb-6">Jangan sampe salah kirim emoji pas lagi <em>deep talk</em> atau nge-chat dosen/bos. Nih contekan singkatnya biar tetep sopan tapi asik.</p>
+                
+                <div class="overflow-x-auto mb-16 rounded-xl border border-gray-200">
+                    <table class="w-full text-left border-collapse min-w-[600px]">
+                        <thead>
+                            <tr class="bg-gray-50 border-b border-gray-200">
+                                <th class="py-4 px-6 text-xs font-semibold text-gray-500 uppercase tracking-wider w-1/4">Mood / Vibe</th>
+                                <th class="py-4 px-6 text-xs font-semibold text-gray-500 uppercase tracking-wider w-1/4">Emoji Andalan</th>
+                                <th class="py-4 px-6 text-xs font-semibold text-gray-500 uppercase tracking-wider w-1/2">Konteks Pemakaian</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 bg-white text-gray-600">
+                            <tr>
+                                <td class="py-5 px-6 font-semibold text-gray-900">Ngakak Brutal</td>
+                                <td class="py-5 px-6 text-2xl tracking-widest">💀 😭 🤣</td>
+                                <td class="py-5 px-6 text-sm">Gen Z jarang pake 😂. Pake 💀 (tengkorak) atau 😭 (nangis) justru buat ketawa yang pecah banget.</td>
+                            </tr>
+                            <tr>
+                                <td class="py-5 px-6 font-semibold text-gray-900">Soft / Wholesome</td>
+                                <td class="py-5 px-6 text-2xl tracking-widest">🥺 🫶 🥰</td>
+                                <td class="py-5 px-6 text-sm">Buat komenin foto kucing lucu, temen yang lagi curhat, atau sesuatu yang bikin hati luluh.</td>
+                            </tr>
+                            <tr>
+                                <td class="py-5 px-6 font-semibold text-gray-900">Kerja / Formal</td>
+                                <td class="py-5 px-6 text-2xl tracking-widest">✅ 🤝 📋</td>
+                                <td class="py-5 px-6 text-sm">Pake 📋 (hormat) buat bilang "siap laksanakan" ke atasan tanpa keliatan kaku banget.</td>
+                            </tr>
+                            <tr>
+                                <td class="py-5 px-6 font-semibold text-gray-900">Kode Keras</td>
+                                <td class="py-5 px-6 text-2xl tracking-widest">👀 🚩 ✨</td>
+                                <td class="py-5 px-6 text-sm">👀 buat nyimak drama, 🚩 (red flag) buat peringatan, ✨ (sparkles) buat nambah penekanan estetik.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- OS Differences -->
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">Drama Emoji: Kok Tampilan Beda di iPhone vs Android?</h3>
+                <p class="text-gray-600 mb-6">Pernah gak sih lo ngirim emoji "pistol air" tapi di HP temen lo munculnya "pistol beneran"? Atau ngirim "cookie" tapi bentuknya beda?</p>
+                
+                <ul class="list-disc list-inside space-y-3 text-gray-600 mb-8 ml-2">
+                    <li><strong>Apple (iOS):</strong> Desainnya lebih realistis, 3D, dan detail.</li>
+                    <li><strong>Google (Android):</strong> Desainnya lebih flat, kartunis, dan imut.</li>
+                    <li><strong>Windows:</strong> Punya outline tebal khas Microsoft.</li>
+                </ul>
+
+                <div class="bg-[#FFF8E6] border border-[#FBE09B] rounded-xl p-5 mb-16 text-sm text-[#8A6A1C]">
+                    <strong>Poin Penting:</strong> Tenang aja, kodenya tetep sama (Unicode). Jadi makna pesannya gak bakal berubah total kok. Kalau muncul kotak silang <em>(tofu)</em>, itu berarti HP lo minta di-update OS-nya.
+                </div>
+
+                <!-- FAQ Section -->
+                <h3 class="text-2xl font-bold text-gray-900 mb-8">FAQ (Yang Sering Ditanyain)</h3>
+                
+                <div class="space-y-4">
+                    <!-- FAQ Item 1 -->
+                    <details class="group bg-gray-50 border border-gray-100 rounded-xl">
+                        <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-5 text-gray-800 hover:text-brand-600 transition-colors">
+                            <span>Tool ini bayar gak sih?</span>
+                            <span class="transition group-open:rotate-180">
+                                <svg fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24"><path d="M6 9l6 6 6-6"></path></svg>
+                            </span>
+                        </summary>
+                        <div class="text-gray-600 mt-1 px-5 pb-5 text-sm leading-relaxed">
+                            100% Gratis! Lo bebas cari dan copy emoji sebanyak apapun tanpa harus bayar atau daftar akun.
+                        </div>
+                    </details>
+                    
+                    <!-- FAQ Item 2 -->
+                    <details class="group bg-gray-50 border border-gray-100 rounded-xl">
+                        <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-5 text-gray-800 hover:text-brand-600 transition-colors">
+                            <span>Aman gak privasi gue?</span>
+                            <span class="transition group-open:rotate-180">
+                                <svg fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24"><path d="M6 9l6 6 6-6"></path></svg>
+                            </span>
+                        </summary>
+                        <div class="text-gray-600 mt-1 px-5 pb-5 text-sm leading-relaxed">
+                            Sangat aman. Semua proses pencarian terjadi di perangkat (browser) kamu sendiri. Kami tidak menyimpan riwayat pencarian atau data pribadi kamu di server kami.
+                        </div>
+                    </details>
+
+                    <!-- FAQ Item 3 -->
+                    <details class="group bg-gray-50 border border-gray-100 rounded-xl">
+                        <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-5 text-gray-800 hover:text-brand-600 transition-colors">
+                            <span>Kenapa hasilnya kadang gak muncul?</span>
+                            <span class="transition group-open:rotate-180">
+                                <svg fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24"><path d="M6 9l6 6 6-6"></path></svg>
+                            </span>
+                        </summary>
+                        <div class="text-gray-600 mt-1 px-5 pb-5 text-sm leading-relaxed">
+                            Mungkin kata kunci yang kamu masukkan belum ada di database kami, atau ejaannya kurang tepat. Coba gunakan sinonim atau kata dasar yang lebih umum. Kami terus mengupdate database kamus bahasa gaul/sehari-hari.
+                        </div>
+                    </details>
+                </div>
+
+            </div>
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#0F172A] text-gray-400 py-10 text-center text-sm">
+        <p class="mb-2">Curhatdok.it.com © 2024 CariEmoji Indonesia.</p>
+        <p>Dibuat dengan <span class="text-red-500">❤️</span> untuk komunikasi.</p>
+    </footer>
+
+    <!-- Toast Notification (Hidden by default) -->
+    <div id="toast" class="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-6 py-3 rounded-full shadow-lg text-sm font-medium hidden z-50 flex items-center gap-2">
+        <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+        <span id="toastText">Emoji disalin!</span>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // --- 1. Database Emoji (Kamus Mini) ---
+        // Anda bisa menambahkan ribuan data di sini. Ini adalah sampel yang mencakup keyword di gambar.
+        const emojiDatabase = [
+            // Emoticons / Smileys
+            { e: '😀', k: ['senyum', 'bahagia', 'gembira', 'smile', 'senang'] },
+            { e: '😂', k: ['ngakak', 'ketawa', 'lucu', 'haha', 'wkwk'] },
+            { e: '🤣', k: ['ngakak', 'ketawa', 'rofl', 'lucu banget', 'guling'] },
+            { e: '😭', k: ['nangis', 'sedih', 'cry', 'mewek', 'terharu', 'ngakak brutal'] },
+            { e: '🥺', k: ['soft', 'memohon', 'lucu', 'gemes', 'please', 'wholesome'] },
+            { e: '🥰', k: ['cinta', 'sayang', 'love', 'gemes', 'wholesome'] },
+            { e: '😎', k: ['keren', 'cool', 'kacamata', 'sombong', 'kece'] },
+            { e: '😡', k: ['marah', 'kesal', 'ngamuk', 'emosi'] },
+            { e: '😴', k: ['tidur', 'ngantuk', 'bosen', 'capek'] },
+            { e: '💀', k: ['tengkorak', 'mati', 'ngakak brutal', 'capek', 'meninggoy'] },
+            { e: '👀', k: ['mata', 'nyimak', 'lihat', 'kepo', 'kode keras'] },
+            { e: '😇', k: ['malaikat', 'baik', 'suci', 'alim', 'angel'] },
+            { e: '🙃', k: ['terbalik', 'pusing', 'sarkas', 'senyum palsu'] },
+            { e: '😉', k: ['kedip', 'genit', 'wink', 'rahasia'] },
+            { e: '😋', k: ['enak', 'lezat', 'lidah', 'lapar', 'yummy'] },
+            { e: '😜', k: ['melet', 'bercanda', 'wle', 'lucu'] },
+            { e: '🤐', k: ['diam', 'rahasia', 'zip', 'tutup mulut'] },
+            { e: '🤢', k: ['mual', 'jijik', 'muntah', 'huek'] },
+            { e: '🤧', k: ['bersin', 'sakit', 'flu', 'pilek'] },
+            { e: '🥵', k: ['panas', 'gerah', 'hot', 'kepanasan'] },
+            { e: '🥶', k: ['dingin', 'beku', 'menggigil', 'kedinginan'] },
+            { e: '🤯', k: ['mindblown', 'kaget', 'pusing', 'meledak', 'wow'] },
+            { e: '🥳', k: ['pesta', 'perayaan', 'ultah', 'selamat', 'party'] },
+            { e: '🤡', k: ['badut', 'lawak', 'aneh', 'clown', 'konyol'] },
+            { e: '💩', k: ['tai', 'kotoran', 'poop', 'ampas', 'jelek'] },
+            { e: '👻', k: ['hantu', 'ghost', 'seram', 'ilang', 'ghosting'] },
+            
+            // People & Gestures
+            { e: '🤦‍♂️', k: ['tepok jidat', 'heran', 'aduh', 'facepalm', 'capek'] },
+            { e: '🤷‍♀️', k: ['entah', 'gatau', 'shrug', 'bodo amat'] },
+            { e: '💆‍♀️', k: ['pijat', 'santai', 'rileks', 'spa', 'pusing'] },
+            { e: '🏃‍♂️', k: ['lari', 'kabur', 'buru-buru', 'olahraga'] },
+            { e: '🕺', k: ['joget', 'tari', 'dance', 'pesta', 'asik'] },
+            { e: '👍', k: ['oke', 'bagus', 'jempol', 'sip', 'mantap'] },
+            { e: '🙏', k: ['maaf', 'tolong', 'terima kasih', 'doa', 'mohon'] },
+            { e: '🤝', k: ['salaman', 'deal', 'sepakat', 'setuju', 'kerja', 'formal'] },
+            { e: '🫶', k: ['saranghae', 'love', 'cinta', 'tangan', 'korea', 'wholesome'] },
+            { e: '✌️', k: ['peace', 'damai', 'dua', 'victory', 'piss'] },
+            { e: '🤌', k: ['italia', 'chef', 'sempurna', 'chef kiss', 'enak'] },
+            { e: '🖕', k: ['jari tengah', 'kasar', 'marah', 'fak'] },
+
+            // Symbols / Objects
+            { e: '❤️', k: ['love', 'cinta', 'hati', 'suka', 'merah'] },
+            { e: '💔', k: ['patah hati', 'putus', 'sedih', 'broken', 'galau'] },
+            { e: '✨', k: ['sparkles', 'estetik', 'bersinar', 'berkilau', 'bintang', 'ajaib'] },
+            { e: '🚩', k: ['bendera', 'merah', 'red flag', 'bahaya', 'warning', 'kode keras'] },
+            { e: '✅', k: ['ceklis', 'oke', 'benar', 'kerja', 'formal', 'selesai', 'centang'] },
+            { e: '❌', k: ['salah', 'silang', 'batal', 'tolak', 'no'] },
+            { e: '⌚', k: ['jam', 'waktu', 'arloji', 'tunggu', 'lama'] },
+            { e: '⏰', k: ['jam', 'waktu', 'beker', 'alarm', 'pagi'] },
+            { e: '⌛', k: ['jam pasir', 'waktu', 'tunggu', 'sabar'] },
+            { e: '📱', k: ['hp', 'ponsel', 'gadget', 'telepon', 'chat'] },
+            { e: '💻', k: ['laptop', 'komputer', 'kerja', 'ngoding', 'tugas'] },
+            { e: '💸', k: ['uang', 'duit', 'terbang', 'miskin', 'kaya', 'gajian', 'payday'] },
+            { e: '🎁', k: ['kado', 'hadiah', 'kejutan', 'ulang tahun', 'gift'] },
+            { e: '🎈', k: ['balon', 'pesta', 'perayaan', 'merah'] },
+            
+            // Food & Drink
+            { e: '🍯', k: ['madu', 'manis', 'lebah', 'honey'] },
+            { e: '☕', k: ['kopi', 'pagi', 'ngopi', 'cafe', 'hangat'] },
+            { e: '🍰', k: ['kue', 'manis', 'ulang tahun', 'cake', 'dessert'] },
+            { e: '🍔', k: ['burger', 'makanan', 'lapar', 'fast food', 'junk food'] },
+            { e: '🍕', k: ['pizza', 'makanan', 'lapar', 'keju', 'italia'] },
+            { e: '🍜', k: ['mie', 'ramen', 'kuah', 'makanan', 'lapar', 'indomie'] },
+            { e: '🍣', k: ['sushi', 'ikan', 'jepang', 'makanan'] },
+            { e: '🍎', k: ['apel', 'buah', 'sehat', 'merah'] },
+            { e: '🍉', k: ['semangka', 'segar', 'buah', 'air'] },
+            
+            // Nature & Animals & Weather
+            { e: '🐝', k: ['lebah', 'tawon', 'madu', 'serangga'] },
+            { e: '🐈', k: ['kucing', 'meong', 'hewan', 'peliharaan', 'cat', 'meng'] },
+            { e: '🐕', k: ['anjing', 'guguk', 'hewan', 'peliharaan', 'dog'] },
+            { e: '🐒', k: ['monyet', 'kera', 'hewan', 'nakal'] },
+            { e: '🦋', k: ['kupu-kupu', 'cantik', 'serangga', 'estetik'] },
+            { e: '🐍', k: ['ular', 'berbisa', 'toxic', 'jahat', 'licik'] },
+            { e: '🦖', k: ['dinosaurus', 't-rex', 'purba', 'hewan'] },
+            { e: '🦄', k: ['unicorn', 'ajaib', 'kuda', 'mitos'] },
+            { e: '🏖️', k: ['pasir', 'pantai', 'liburan', 'laut', 'panas', 'healing'] },
+            { e: '⭐', k: ['bintang', 'malam', 'terang', 'langit', 'favorit'] },
+            { e: '🔥', k: ['api', 'panas', 'lit', 'keren', 'semangat', 'menyala'] },
+            { e: '🌧️', k: ['hujan', 'mendung', 'air', 'sedih', 'galau'] },
+            { e: '☀️', k: ['matahari', 'cerah', 'pagi', 'panas', 'terang'] },
+            { e: '🌙', k: ['bulan', 'malam', 'tidur', 'gelap', 'mimpi'] },
+            { e: '🌈', k: ['pelangi', 'warna', 'indah', 'cerah', 'sehabis hujan'] }
+        ];
+
+
+        // --- 2. DOM Elements ---
+        const searchInput = document.getElementById('searchInput');
+        const btnSearch = document.getElementById('btnSearch');
+        const btnReset = document.getElementById('btnReset');
+        const emptyState = document.getElementById('emptyState');
+        const resultsGrid = document.getElementById('resultsGrid');
+        const notFoundState = document.getElementById('notFoundState');
+        const toast = document.getElementById('toast');
+        const toastText = document.getElementById('toastText');
+        const tagButtons = document.querySelectorAll('.tag-btn');
+        const usageCountEl = document.getElementById('usageCount');
+
+        // State variables
+        let usageCount = parseInt(localStorage.getItem('cariEmojiUsageCount') || '0');
+        updateUsageCountDisplay();
+
+         // Setup Audio Notifikasi MP3
+        const notificationSound = new Audio('https://pubiway.com/berbagi/microservice/mp3/simple-notification.mp3');
+
+        // --- 3. Core Functions ---
+        
+        // Fungsi Pencarian
+        function performSearch(query) {
+            query = query.toLowerCase().trim();
+            
+            // Jika kosong, tampilkan empty state
+            if (!query) {
+                resetView();
+                return;
+            }
+
+            // Filter data
+            const results = emojiDatabase.filter(item => {
+                return item.k.some(keyword => keyword.includes(query));
+            });
+
+            // Update UI
+            emptyState.classList.add('hidden');
+            
+            if (results.length > 0) {
+                notFoundState.classList.add('hidden');
+                resultsGrid.classList.remove('hidden');
+                renderResults(results);
+            } else {
+                resultsGrid.classList.add('hidden');
+                notFoundState.classList.remove('hidden');
+            }
+        }
+
+        // Render hasil ke grid
+        function renderResults(data) {
+            resultsGrid.innerHTML = ''; // Kosongkan grid
+            
+            data.forEach(item => {
+                const btn = document.createElement('button');
+                btn.className = 'group relative flex items-center justify-center text-4xl sm:text-5xl p-4 bg-white border border-gray-100 rounded-2xl hover:bg-brand-50 hover:border-brand-200 transition-all shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-brand-500 hover:-translate-y-1';
+                btn.innerHTML = `
+                    <span>${item.e}</span>
+                    <div class="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-lg">
+                        Klik utk Salin
+                    </div>
+                `;
+                
+                // Event listener klik untuk copy
+                btn.addEventListener('click', () => {
+                    copyToClipboard(item.e);
+                    incrementUsageCount();
+                });
+                
+                resultsGrid.appendChild(btn);
+            });
+        }
+
+        // Fungsi Salin (Copy) yang aman untuk berbagai browser / iframe
+        function copyToClipboard(text) {
+            // Metode utama
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast(`Tersalin: ${text}`);
+                    playSuccessSound(); // Bunyikan notifikasi
+                });
+            } else {
+                // Fallback (seperti yang diminta instruksi untuk iframe)
+                let textArea = document.createElement("textarea");
+                textArea.value = text;
+                textArea.style.position = "fixed";
+                textArea.style.left = "-999999px";
+                textArea.style.top = "-999999px";
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    showToast(`Tersalin: ${text}`);
+                    playSuccessSound(); // Bunyikan notifikasi
+                } catch (err) {
+                    console.error('Gagal menyalin', err);
+                    showToast('Gagal menyalin', true);
+                }
+                textArea.remove();
+            }
+        }
+
+        // Fungsi untuk membunyikan notifikasi "pop" saat berhasil disalin
+        function playSuccessSound() {
+            try {
+                notificationSound.currentTime = 0; // Kembalikan audio ke awal jika diklik cepat berulang kali
+                notificationSound.play().catch(error => {
+                    console.error("Gagal memutar suara notifikasi:", error);
+                });
+            } catch (error) {
+                console.error("Error saat memutar file mp3:", error);
+            }
+        }
+
+        // Menampilkan Toast Notification
+        let toastTimeout;
+        function showToast(message, isError = false) {
+            toastText.textContent = message;
+            toast.classList.remove('hidden');
+            toast.classList.add('toast-enter');
+            
+            if (isError) {
+                toast.querySelector('svg').outerHTML = `<svg class="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>`;
+            } else {
+                 toast.querySelector('svg').outerHTML = `<svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
+            }
+
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('toast-enter');
+                toast.classList.add('hidden');
+            }, 2500); // Sembunyikan setelah 2.5 detik
+        }
+
+        // Update counter penggunaan (disimpan di LocalStorage)
+        function incrementUsageCount() {
+            usageCount++;
+            localStorage.setItem('cariEmojiUsageCount', usageCount.toString());
+            updateUsageCountDisplay();
+        }
+
+        function updateUsageCountDisplay() {
+            usageCountEl.textContent = usageCount.toLocaleString('id-ID');
+        }
+
+        // Reset tampilan ke awal
+        function resetView() {
+            searchInput.value = '';
+            resultsGrid.classList.add('hidden');
+            notFoundState.classList.add('hidden');
+            emptyState.classList.remove('hidden');
+            searchInput.focus();
+        }
+
+        // --- 4. Event Listeners ---
+
+        // Realtime Search saat mengetik
+        searchInput.addEventListener('input', (e) => {
+            performSearch(e.target.value);
+        });
+
+        // Tombol Cari (Manual click)
+        btnSearch.addEventListener('click', () => {
+            performSearch(searchInput.value);
+        });
+
+        // Tombol Reset
+        btnReset.addEventListener('click', resetView);
+
+        // Tags click ("Terakhir dicari")
+        tagButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const keyword = e.target.textContent;
+                searchInput.value = keyword;
+                performSearch(keyword);
+            });
+        });
+
+        // Fokus ke input saat halaman load
+        window.addEventListener('DOMContentLoaded', () => {
+            searchInput.focus();
+        });
+
+    </script>
+</body>
+</html>
