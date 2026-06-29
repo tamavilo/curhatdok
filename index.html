@@ -56,6 +56,7 @@
             --red-50: #fef2f2;
             --red-200: #fecaca;
             --red-700: #b91c1c;
+            --body: #ececec;
         }
         /* Custom scrollbar for better look */
         ::-webkit-scrollbar {
@@ -134,7 +135,7 @@
         }
     </style>
 </head>
-<body class="bg-white text-slate-700 font-sans antialiased overflow-x-hidden">
+<body class="bg-[var(--body)] text-slate-700 font-sans antialiased overflow-x-hidden">
 
     <!-- Header Section -->
     <header class="pt-16 pb-8 text-center px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
@@ -264,6 +265,26 @@
             </a>
 
         </div>
+
+        <div class="text-center my-10">
+            <h2 class="text-2xl font-bold text-slate-800 inline-block relative">
+                Topik Pilihan Editor
+                <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-12 h-1 bg-blue-500 rounded-full"></div>
+            </h2>
+        </div>
+
+         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+            
+            <!-- Tool 1 -->
+            <a href="/social/tiktok-downloader.html" class="tool-card bg-white border border-slate-200 rounded-xl p-6 flex flex-col items-center justify-center text-center group">
+                <div class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center mb-4 text-blue-500 group-hover:bg-blue-500 group-hover:text-white transition-colors duration-300">
+                    <i class="fa-brands fa-tiktok fa-2x"></i>
+                </div>
+                <h3 class="text-base font-semibold text-slate-800 mb-1">TikTok Downloader</h3>
+                <p class="text-sm text-slate-500">Download video Tiktok Tanpa Watermark.</p>
+            </a>
+
+            </div>
     </section>
 
     <!-- Newsletter Section (Full width background) -->
