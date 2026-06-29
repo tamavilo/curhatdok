@@ -76,9 +76,9 @@
         const buttoni = document.getElementById("start-button");
 
         // Mengambil Info ISP
-        fetch('https://ipapi.co/json/').then(res => res.json()).then(data => {
-            ispEl.textContent = data.org || "ISP Tidak Terdeteksi";
-            ipEl.textContent = data.ip || "IP Tidak Terdeteksi";
+        fetch('https://ipwho.is/').then(res => res.json()).then(data => {
+            ispEl.textContent = `${data.connection.isp} || "ISP Tidak Terdeteksi"`;
+            ipEl.textContent = `${data.ip} || "IP Tidak Terdeteksi"`;
             locEl.textContent = `${data.city} | ${data.country}`;
         });
  // Menyimpan data riwayat secara otomatis setiap kali halaman dimuat
