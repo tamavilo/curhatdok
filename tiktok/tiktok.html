@@ -504,7 +504,7 @@
 
             try {
                 // Menggunakan Header x-tikwmapi-key sesuai dokumentasi gambar
-                const response = await fetch(`https://api.tikwmapi.com/user/info?unique_id=${username}`, {
+                const response = await fetch(`https://api.tikwmapi.com/user/info?unique_id=${link}`, {
                     method: 'GET',
                     headers: {
                         'x-tikwmapi-key': TIKWM_API_KEY
