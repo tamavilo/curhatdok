@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kirim WhatsApp Tanpa Simpan Nomor</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="/tailwind/tailwind.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+<link rel="shortcut icon" href="/favicon/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+<link rel="manifest" href="/favicon/site.webmanifest" />
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        wa: {
+                            light: '#25D366',
+                            DEFAULT: '#128C7E',
+                            dark: '#075E54'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom subtle pattern background */
+        body {
+            background-color: #f3f4f6;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='#e5e7eb' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <i class="ph-fill ph-whatsapp-logo text-wa text-3xl"></i>
+                <span class="font-bold text-xl tracking-tight text-gray-900">CurhatDok<span class="text-wa">WA</span></span>
+            </div>
+            <nav class="hidden md:flex gap-6 text-sm font-medium text-gray-600">
+                <a href="/" class="hover:text-wa transition-colors">Beranda</a>
+                <a href="wa.html" class="hover:text-wa transition-colors">Fitur</a>
+                <a href="/" class="hover:text-wa transition-colors">Tools Lainnya</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex flex-col items-center justify-center py-12 px-4 sm:px-6">
+        
+        <div class="text-center mb-10 max-w-2xl">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Kirim Pesan WhatsApp<br/>Tanpa Simpan Nomor</h1>
+            <p class="text-gray-600 text-sm md:text-base">Gunakan alat ini untuk memulai obrolan WhatsApp dengan nomor baru dengan cepat, aman, dan tanpa perlu repot menyimpan kontak ke buku telepon Anda.</p>
+        </div>
+
+        <!-- Form Card -->
+        <div class="bg-white p-6 md:p-8 rounded-2xl shadow-xl border border-gray-100 w-full max-w-md relative overflow-hidden">
+            <!-- Decorative accent -->
+            <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-wa-light to-wa"></div>
+
+            <form id="waForm" class="space-y-5">
+                
+                <!-- Input Nomor -->
+                <div>
+                    <label for="phone" class="block text-sm font-semibold text-gray-700 mb-1">
+                        Nomor WhatsApp Tujuan <span class="text-red-500">*</span>
+                    </label>
+                    <div class="relative mt-1 rounded-md shadow-sm">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="ph ph-phone text-gray-400 text-lg"></i>
+                        </div>
+                        <input type="tel" name="phone" id="phone" 
+                            class="focus:ring-wa focus:border-wa block w-full pl-10 pr-3 py-3 sm:text-sm border-gray-300 rounded-lg border bg-gray-50 transition-colors" 
+                            placeholder="Contoh: 08123456789" 
+                            autocomplete="off">
+                    </div>
+                    <p class="mt-2 text-xs text-gray-500">Awalan 0 atau 62 akan diproses secara otomatis.</p>
+                </div>
+
+                <!-- Input Pesan -->
+                <div>
+                    <label for="message" class="block text-sm font-semibold text-gray-700 mb-1">
+                        Pesan <span class="text-gray-400 font-normal">(Opsional)</span>
+                    </label>
+                    <div class="mt-1">
+                        <textarea id="message" name="message" rows="3" 
+                            class="shadow-sm focus:ring-wa focus:border-wa block w-full sm:text-sm border-gray-300 rounded-lg border p-3 bg-gray-50 transition-colors" 
+                            placeholder="Tulis pesan Anda di sini..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Error Message -->
+                <div id="error-msg" class="hidden bg-red-50 border-l-4 border-red-500 p-3 rounded-md">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <i class="ph-fill ph-warning-circle text-red-500 text-lg"></i>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm text-red-700 font-medium" id="error-text">
+                                Pesan error akan muncul di sini.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" 
+                    class="w-full flex items-center justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-base font-medium text-white bg-wa hover:bg-wa-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-wa transition-all transform hover:-translate-y-0.5">
+                    <i class="ph-bold ph-paper-plane-tilt mr-2 text-xl"></i>
+                    Kirim Pesan Sekarang
+                </button>
+            </form>
+        </div>
+
+        <!-- Features Info -->
+        <div id="fitur" class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl w-full">
+            <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center text-center">
+                <div class="h-12 w-12 rounded-full bg-green-100 flex items-center justify-center mb-4 text-wa">
+                    <i class="ph-fill ph-shield-check text-2xl"></i>
+                </div>
+                <h3 class="text-lg font-bold text-gray-900 mb-2">Aman & Privasi</h3>
+                <p class="text-sm text-gray-600">Kami tidak menyimpan nomor atau pesan Anda di server. Semua diproses langsung di browser Anda.</p>
+            </div>
+            
+            <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center text-center">
+                <div class="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center mb-4 text-blue-600">
+                    <i class="ph-fill ph-lightning text-2xl"></i>
+                </div>
+                <h3 class="text-lg font-bold text-gray-900 mb-2">Sangat Cepat</h3>
+                <p class="text-sm text-gray-600">Cukup masukkan nomor dan langsung diarahkan ke aplikasi WhatsApp tanpa proses loading yang lama.</p>
+            </div>
+
+            <div class="bg-white p-5 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center text-center">
+                <div class="h-12 w-12 rounded-full bg-purple-100 flex items-center justify-center mb-4 text-purple-600">
+                    <i class="ph-fill ph-devices text-2xl"></i>
+                </div>
+                <h3 class="text-lg font-bold text-gray-900 mb-2">Lintas Platform</h3>
+                <p class="text-sm text-gray-600">Berfungsi dengan baik di Smartphone (Android/iOS) menggunakan aplikasi, dan di PC menggunakan WhatsApp Web.</p>
+            </div>
+        </div>
+
+         <div class="mt-10 max-w-2xl bg-white p-6">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Panduan Lengkap & Teknis</h1>
+            <p class="mb-5 text-gray-600 text-md md:text-base"><b>Direct WhatsApp</b> adalah solusi efisiensi bagi Anda yang sering berinteraksi dengan nomor baru untuk keperluan sesaat. Dalam era transaksi digital, kita sering kali perlu menghubungi kurir paket (COD), pelanggan OLX/Marketplace, atau driver ojek online tanpa ingin mengotori daftar kontak pribadi dengan ratusan nomor "sekali pakai".</p>
+
+            <p class="text-gray-600 text-md md:text-base mb-5">Tool ini memanfaatkan API Public WhatsApp (Click-to-Chat) untuk menjembatani browser dengan aplikasi WhatsApp yang terinstal di perangkat Anda.</p>
+            <hr>
+
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 my-4">Mengapa Menggunakan Tool Ini?</h2>
+            <p class="mb-5 text-gray-600 text-md md:text-base">Selain alasan kepraktisan, ada aspek privasi dan performa perangkat yang sering diabaikan:</p>
+            <ul class="list-disc list-outside pl-10">
+                <li class="text-gray-600 text-md md:text-base mb-5"><b>Privasi Status & Foto Profil</b>: Dengan tidak menyimpan nomor orang asing, Anda bisa membatasi siapa yang bisa melihat Status WA <em>(Story)</em> dan Foto Profil Anda (tergantung pengaturan privasi WhatsApp Anda: <em>My Contacts Only</em>).</li>
+                <li class="text-gray-600 text-md md:text-base mb-5"><b>Database Kontak Bersih</b>: Mencegah penumpukan "kontak sampah" (misal: "Abang Paket JNE", "Pembeli COD 1", dll) yang membuat sinkronisasi akun Google Contact menjadi berat.</li>
+                <li class="text-gray-600 text-md md:text-base mb-5"><b>Kecepatan Bisnis</b>: Bagi Admin Olshop/CS, menyalin nomor dari chat marketplace dan langsung mengirim pesan jauh lebih cepat daripada proses <em>Save > Nunggu Sync WA > Cari Nama > Chat</em>.</li>
+            </ul>
+            
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 mt-auto">
+        <div class="max-w-5xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-center text-sm text-gray-500">
+                &copy; 2026 CurhatDok. All Right Reserved.
+            </p>
+            <div class="flex gap-4">
+                <a href="/" class="text-gray-400 hover:text-gray-500"><i class="ph-fill ph-facebook-logo text-xl"></i></a>
+                <a href="/" class="text-gray-400 hover:text-gray-500"><i class="ph-fill ph-twitter-logo text-xl"></i></a>
+                <a href="/" class="text-gray-400 hover:text-gray-500"><i class="ph-fill ph-instagram-logo text-xl"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('waForm');
+            const phoneInput = document.getElementById('phone');
+            const messageInput = document.getElementById('message');
+            const errorContainer = document.getElementById('error-msg');
+            const errorText = document.getElementById('error-text');
+
+            // Format nomor secara real-time saat user mengetik (opsional, tapi memperbagus UX)
+            phoneInput.addEventListener('input', function(e) {
+                // Hanya izinkan angka dan tanda tambah (+) di awal
+                let val = this.value;
+                val = val.replace(/[^\d+]/g, '');
+                
+                // Pastikan '+' hanya ada di karakter pertama
+                if (val.indexOf('+') > 0) {
+                    val = val.replace(/\+/g, '');
+                    val = '+' + val;
+                }
+                
+                this.value = val;
+            });
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault(); // Mencegah reload halaman
+
+                let phone = phoneInput.value.trim();
+                const message = messageInput.value.trim();
+
+                // Sembunyikan error message di awal
+                errorContainer.classList.add('hidden');
+
+                // Validasi input kosong
+                if (!phone) {
+                    showError('Nomor WhatsApp tujuan tidak boleh kosong.');
+                    phoneInput.focus();
+                    return;
+                }
+
+                // Bersihkan nomor dari karakter non-numerik (kecuali jika ada +, kita hapus juga untuk logika API)
+                phone = phone.replace(/\D/g, '');
+
+                // Validasi panjang minimum nomor telepon (misal: minimal 9 digit)
+                if (phone.length < 9) {
+                    showError('Nomor telepon terlalu pendek. Silakan periksa kembali.');
+                    phoneInput.focus();
+                    return;
+                }
+
+                // LOGIKA FORMAT NOMOR TELEPON
+                // Jika diawali dengan angka '0' (Format lokal Indonesia), ubah menjadi '62'
+                if (phone.startsWith('0')) {
+                    phone = '62' + phone.substring(1);
+                } 
+                // Jika diawali dengan angka '8' (Sering terjadi jika user lupa menulis 0), tambahkan '62'
+                else if (phone.startsWith('8')) {
+                    phone = '62' + phone;
+                }
+                // Jika sudah diawali 62 atau kode negara lain, biarkan saja.
+
+                // URL Construction untuk API WhatsApp
+                // Format: https://api.whatsapp.com/send?phone=NOMOR&text=PESAN
+                let waApiUrl = `https://api.whatsapp.com/send?phone=${phone}`;
+                
+                if (message !== '') {
+                    // Encode pesan agar aman dikirim via URL (mengubah spasi menjadi %20, dll)
+                    waApiUrl += `&text=${encodeURIComponent(message)}`;
+                }
+
+                // Buka di tab/jendela baru
+                window.open(waApiUrl, '_blank');
+                
+                // Opsional: Kosongkan form setelah diklik
+                // form.reset();
+            });
+
+            function showError(msg) {
+                errorText.textContent = msg;
+                errorContainer.classList.remove('hidden');
+                
+                // Animasi goyang (shake) ringan pada input
+                phoneInput.classList.add('animate-pulse', 'border-red-500');
+                setTimeout(() => {
+                    phoneInput.classList.remove('animate-pulse', 'border-red-500');
+                }, 1000);
+            }
+        });
+    </script>
+</body>
+</html>
