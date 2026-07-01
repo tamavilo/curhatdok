@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CurhatDok TT Eksperimen</title>
+    <meta name="description" content="Pusat eksperimen TikTok: Riset algoritma FYP, Leaderboard Top 10 Global, Tools Downloader &amp; Kalkulator, serta analisa tren konten video pendek terbaru.">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta property="og:description" content="Manfaatkan Tools TikTok gratis, cek Top 10 Creator Global real-time, dan pelajari algoritma FYP di Curhatdok.">
+    
+    <!-- Tailwind CSS -->
+    <script src="/tailwind/tailwind.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons (for modern icons similar to the screenshot) -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            cyan: '#40c4c4',
+                            pink: '#f8719d',
+                            orange: '#fba973',
+                            bg: '#f8f9fa'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://curhatdok.it.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "TikTok Eksperimen",
+              "item": "https://curhatdok.it.com/tiktok/tiktok.html"
+            }
+          ]
+        },
+        {
+          "@type": "CollectionPage",
+          "@id": "https://curhatdok.it.com/tiktok/tiktok.html",
+          "url": "https://curhatdok.it.com/tiktok/tiktok.html",
+          "name": "CurhatDok TikTok Eksperimen: Tools, Analisa & Tren Data",
+          "description": "Riset algoritma FYP, kalkulator pendapatan TikTok, dan analisa tren konten video pendek terbaru.",
+          "inLanguage": "id-ID",
+          "dateModified": "2026-07-01T03:23:02+00:00", 
+          "publisher": {
+            "@type": "Organization",
+            "name": "Curhatdok",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://curhatdok.it.com/favicon/apple-touch-icon.png"
+            }
+          },
+          "primaryImageOfPage": {
+            "@type": "ImageObject",
+            "url": "https://curhatdok.it.com/favicon/apple-touch-icon.png",
+            "width": 1200,
+            "height": 630
+          }
+        }
+      ]
+    }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-text {
+            background: linear-gradient(to right, #f8719d, #fba973);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .top-bg-gradient {
+            background: linear-gradient(180deg, #c0c0c0 0%, #fff0f5 50%, #969696 100%);
+        }
+
+        .tiktok-tutorial {
+            font-size: 13px;
+            color: #4b5563;
+            margin-bottom: 15px;
+            background: #f9fafb;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased overflow-x-hidden bg-blue-50">
+
+    <header class="bg-[#1a1a2e] text-white sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold tracking-wider">CurhatDok</div>
+            <nav class="hidden md:flex items-center gap-6 text-sm">
+                <a href="/" class="hover:text-gray-300">Home</a>
+                <a href="/" class="hover:text-gray-300">Tools</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- TOP SECTION WITH GRADIENT BACKGROUND -->
+    <div class="top-bg-gradient pt-16 pb-32 px-4 sm:px-6 relative">
+        <div class="max-w-4xl mx-auto text-center">
+            
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
+                CurhatDok <span class="text-brand-cyan">TikTok</span> <span class="gradient-text">Eksperimen</span>
+            </h1>
+            
+            <p class="text-slate-500 text-sm md:text-base mb-8 max-w-xl mx-auto">
+                Manfaatkan Akun Tiktok kamu untuk berkreasi, bereksperimen hingga jadi naik kelas📈.
+            </p>
+
+           
+
+            <!-- Features Grid -->
+            <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto relative z-10">
+                <!-- Card 1 -->
+                <a href="tiktok-downloader.html" class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow flex flex-col items-center text-center gap-2 group">
+                    <div class="w-10 h-10 rounded-full bg-blue-50 text-blue-400 flex items-center justify-center text-xl mb-1 group-hover:scale-150 transition-transform">
+                        <i class="ph ph-download-simple"></i>
+                    </div>
+                    <h3 class="font-semibold text-slate-800 text-sm group-hover:scale-150 transition-transform">TT Downloader</h3>
+                    <p class="text-xs text-slate-500">Cara simpan video TikTok tanpa watermark.</p>
+                </a>
+                
+                <!-- Card 2 -->
+                <a href="#tiktokId" onclick="tiktokid()" class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow flex flex-col items-center text-center gap-2 group">
+                    <div class="w-10 h-10 rounded-full bg-cyan-50 text-brand-cyan flex items-center justify-center text-xl mb-1 group-hover:scale-150 transition-transform">
+                        <i class="ph ph-identification-card"></i>
+                    </div>
+                    <h3 class="font-semibold text-slate-800 text-sm group-hover:scale-150 transition-transform">ID Tiktok</h3>
+                    <p class="text-xs text-slate-500">Cek ID Numerik tiktok dari username.</p>
+                </a>
+
+                <!-- Card 3 -->
+                <a href="#captt" onclick="tiktokcaption()" class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow flex flex-col items-center text-center gap-2 group">
+                    <div class="w-10 h-10 rounded-full bg-purple-50 text-purple-400 flex items-center justify-center text-xl mb-1 group-hover:scale-150 transition-transform">
+                        <i class="ph ph-closed-captioning"></i>
+                    </div>
+                    <h3 class="font-semibold text-slate-800 text-sm group-hover:scale-150 transition-transform">Copy Caption</h3>
+                    <p class="text-xs text-slate-500">Salin Caption dari VT dengan cepat.</p>
+                </a>
+
+                <!-- Card 4 -->
+                <a onclick="openFollowModal()" class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow flex flex-col items-center text-center gap-2 group">
+                    <div class="w-10 h-10 rounded-full bg-pink-50 text-brand-pink flex items-center justify-center text-xl mb-1 group-hover:scale-150 transition-transform">
+                        <i class="ph ph-user"></i>
+                    </div>
+                    <h3 class="font-semibold text-slate-800 text-sm group-hover:scale-150 transition-transform">Cek Followers Akun Tiktok</h3>
+                    <p class="text-xs text-slate-500">Lihat Followers Akun Tiktok Tanpa Di ketahui.</p>
+                </a>
+
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT AREA -->
+    <div id="top10" class="max-w-3xl mx-auto px-4 sm:px-6 -mt-16 pb-20 relative z-20">
+        
+        <!-- Compare Section -->
+        <div class="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-slate-200 mb-8">
+            <h2 class="text-2xl font-bold text-slate-800">Top 10 TikTok Creators</h2>
+        </div>
+
+        <!-- Top 10 List Section -->
+        <div class="mb-4 flex justify-between items-end">
+            <span class="bg-teal-50 text-teal-600 text-xs font-semibold px-3 py-1 rounded-full border border-teal-100">Global Top 10</span>
+        </div>
+
+        <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
+            <!-- Container untuk List Items -->
+            <div id="topListContainer" class="divide-y divide-slate-100">
+                <!-- Data akan dimuat disini oleh JavaScript -->
+                <div class="p-8 text-center text-slate-400">
+                    <i class="ph ph-spinner animate-spin text-2xl mb-2"></i>
+                    <p class="text-sm">Memuat data dari database...</p>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 p-3 text-center text-xs text-slate-400 border-t border-slate-100">
+                <span id="updateTime">Update: 24 Jun 2026, 16:55 WIB</span>
+            </div>
+        </div>
+
+        <!-- Tags Bottom -->
+        <div class="flex justify-end gap-2 mt-4">
+            <button class="bg-white border border-slate-300 rounded-full px-4 py-1.5 text-xs font-semibold text-slate-600 hover:bg-slate-50 transition-colors flex items-center gap-1">
+                Sumber <span class="text-sm">Tiktok</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Tiktok Cek Id Section -->
+     <div id="tiktokId" class="max-w-3xl mx-auto px-4 sm:px-6 -mt-16 pb-20 relative z-20 hidden">
+       <div class="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-slate-200 mb-8">
+            <h2 class="text-2xl font-bold text-slate-800">Cek ID Tiktok</h2>
+        </div>
+        <div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-4 sm:p-6">
+            <div>
+                        <div class="absolute inset-y-1 left-12 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-solid fa-envelope text-slate-400"></i>
+                        </div>
+                        <input type="text" id="usernameInput" required
+                            class="block w-full pl-10 pr-3 py-3 border border-slate-600 rounded-xl bg-slate-900 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all mb-3"
+                            placeholder="Masukkan usernameTiktok (Tanpa @)">
+                </div>
+               
+                <button onclick="checkTikTokId()" id="btnCheck"
+                    class="w-full flex items-center justify-center gap-2 bg-pink-500 hover:bg-pink-600 text-white font-semibold py-3 px-4 rounded-xl transition-all active:scale-95">
+                    <i class="fa-solid fa-download"></i>
+                    <span>Cek ID</span>
+                </button>
+
+                <div id="resultArea" class="mt-4 hidden p-3 bg-emerald-50 rounded-lg text-sm break-all"></div>
+                </div>
+     </div>
+
+      <!-- Tiktok caption Section -->
+     <div id="captt" class="max-w-3xl mx-auto px-4 sm:px-6 -mt-16 pb-20 relative z-20 hidden">
+       <div class="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-slate-200 mb-8">
+            <h2 class="text-2xl font-bold text-slate-800">Copy Caption Tiktok</h2>
+        </div>
+        <div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-4 sm:p-6">
+            <div class="tiktok-tutorial">
+<strong><img draggable="false" role="img" style="width: 1em;height: 1em;" alt="⭐" src="https://s.w.org/images/core/emoji/17.0.2/svg/2b50.svg"> Cara Pakai:</strong><ol><li>1. Salin tautan (link) dari postingan TikTok.</li><li>2. Tempel (paste) di kolom bawah ini dan tekan <b>Ekstrak Caption</b>.</li><li>3. Tekan tombol <b>Salin Caption</b> untuk mengambil hasilnya.</li></ol></div>
+            <div>
+                        
+                        <input type="text" id="linkInput" required
+                            class="block w-full pl-10 pr-3 py-3 border border-slate-600 rounded-xl bg-slate-900 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all mb-3"
+                            placeholder="Contoh : https://vt.tiktok.com/abgdfr4er"/>
+                </div>
+               
+                <button onclick="copyCaption()" id="btnCaption"
+                    class="w-full flex items-center justify-center gap-2 bg-pink-500 hover:bg-pink-600 text-white font-semibold py-3 px-4 rounded-xl transition-all active:scale-95">
+                    <i class="fa-solid fa-download"></i>
+                    <span>Ekstrak Caption</span>
+                </button>
+
+                <div id="resultCaption" class="mt-4 hidden p-3 bg-emerald-50 rounded-lg text-sm break-all"></div>
+                </div>
+                <button onclick="copy()" id="btnCopyAction"
+                    class="hidden w-full flex items-center justify-center gap-2 bg-pink-500 hover:bg-pink-600 text-white font-semibold py-3 px-4 rounded-xl transition-all active:scale-95">
+                    <i class="fa-solid fa-copy"></i>
+                    <span>Copy</span>
+                </button>
+     </div>
+
+    <!-- EDITOR's CHOICE SECTION -->
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 py-12">
+        <h2 class="text-2xl font-bold text-center text-slate-800 mb-8 relative inline-block left-1/2 -translate-x-1/2">
+            Editor's Choice
+            <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-1/2 h-1 rounded-full bg-gradient-to-r from-pink-400 to-cyan-400"></div>
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Col 1 -->
+            <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm relative pt-10">
+                <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-red-50 text-red-500 text-xs font-bold px-3 py-1 rounded-full border border-red-100 flex items-center gap-1">
+                    <i class="ph-fill ph-warning"></i> TROUBLESHOOTING
+                </div>
+                <ul class="space-y-4">
+                    <li class="flex items-start gap-3 text-sm">
+                        <span class="text-slate-300 font-semibold">1.</span>
+                        <a href="#" class="text-slate-600 hover:text-brand-pink transition-colors leading-tight">FYP Tapi Followers Ga Bertambah?</a>
+                    </li>
+                    <li class="border-t border-dashed border-slate-200 pt-4 flex items-start gap-3 text-sm">
+                        <span class="text-slate-300 font-semibold">2.</span>
+                        <a href="#" class="text-slate-600 hover:text-brand-pink transition-colors leading-tight">Mengaktifkan fitur LIVE Tiktok</a>
+                    </li>
+                    <li class="border-t border-dashed border-slate-200 pt-4 flex items-start gap-3 text-sm">
+                        <span class="text-slate-300 font-semibold">3.</span>
+                        <a href="#" class="text-slate-600 hover:text-brand-pink transition-colors leading-tight">"Reducing inauthentic Likes" di Tiktok Artinya?</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Col 2 -->
+            <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm relative pt-10">
+                <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-emerald-50 text-emerald-500 text-xs font-bold px-3 py-1 rounded-full border border-emerald-100 flex items-center gap-1">
+                    <i class="ph-fill ph-magic-wand"></i> TIPS & TRIK
+                </div>
+                <ul class="space-y-4">
+                    <li class="flex items-start gap-3 text-sm">
+                        <span class="text-slate-300 font-semibold">1.</span>
+                        <a href="#" class="text-slate-600 hover:text-emerald-500 transition-colors leading-tight">Salin Link baru bisa Komentar?</a>
+                    </li>
+                    <li class="border-t border-dashed border-slate-200 pt-4 flex items-start gap-3 text-sm">
+                        <span class="text-slate-300 font-semibold">2.</span>
+                        <a href="#" class="text-slate-600 hover:text-emerald-500 transition-colors leading-tight">Tambah Views Tiktok (Gratis)</a>
+                    </li>
+                    <li class="border-t border-dashed border-slate-200 pt-4 flex items-start gap-3 text-sm">
+                        <span class="text-slate-300 font-semibold">3.</span>
+                        <a href="#" class="text-slate-600 hover:text-emerald-500 transition-colors leading-tight">Cara Pasang Link di Bio Tiktok</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Col 3 -->
+            <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm relative pt-10">
+                <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-100 text-slate-700 text-xs font-bold px-3 py-1 rounded-full border border-slate-200 flex items-center gap-1">
+                    <i class="ph-fill ph-lightbulb"></i> WAWASAN
+                </div>
+                <ul class="space-y-4">
+                    <li class="flex items-start gap-3 text-sm">
+                        <span class="text-slate-300 font-semibold">1.</span>
+                        <a href="#" class="text-slate-600 hover:text-blue-500 transition-colors leading-tight">7 Negara Tiktokers Terbesar?</a>
+                    </li>
+                    <li class="border-t border-dashed border-slate-200 pt-4 flex items-start gap-3 text-sm">
+                        <span class="text-slate-300 font-semibold">2.</span>
+                        <a href="#" class="text-slate-600 hover:text-blue-500 transition-colors leading-tight">Kalimat Notifikasi Tiktok Menghipnotis?</a>
+                    </li>
+                    <li class="border-t border-dashed border-slate-200 pt-4 flex items-start gap-3 text-sm">
+                        <span class="text-slate-300 font-semibold">3.</span>
+                        <a href="#" class="text-slate-600 hover:text-blue-500 transition-colors leading-tight">Darimana Asal TikTok?</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+   
+
+    <!-- FOOTER -->
+    <footer class="py-8 text-center text-xs text-slate-500 border-t border-slate-200 mt-10">
+        © 2026 Curhatdok.it.com - Seru-seruan dan Belajar Tiktok.
+    </footer>
+
+    <!-- Modal Copy Caption -->
+    <div id="captionModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl p-6 w-full max-w-md">
+            <h3 class="font-bold text-lg mb-4">Copy Caption TikTok</h3>
+            <input id="linkAkun" type="text" placeholder="Masukkan username (tanpa @)" class="w-full border rounded-xl p-3 mb-4 outline-none">
+            <button onclick="cekFollow()" id="btnFollowers" class="w-full bg-black text-white py-3 rounded-xl font-bold">Cek Sekarang</button>
+            <div id="resultFollow" class="mt-4 hidden p-3 bg-gray-50 rounded-lg text-sm h-full overflow-y-auto"></div>
+            
+            <button onclick="closeFollowModal()" class="mt-4 w-full bg-red-500 text-white py-3 rounded-xl font-bold">Tutup</button>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // KONFIGURASI API
+        // ==========================================
+        // PASTE URL WEB APP DARI GOOGLE APPS SCRIPT ANDA DI BAWAH INI:
+        const API_URL = 'https://script.google.com/macros/s/AKfycbxIgTEvbjs4u5usxWoOcW67lFn58Y4WHo6xkasg8ghPvnHooWr4zcN3R9Z_KW374kbK/exec'; 
+        
+        // ==========================================
+        // FUNGSI UNTUK MENGAMBIL DATA (FETCH)
+        // ==========================================
+        async function fetchDataTikTok(sheetName, displayTitle) {
+            const listContainer = document.getElementById('topListContainer');
+            
+            // Ubah UI menjadi status loading
+            listContainer.innerHTML = `
+                <div class="p-12 text-center text-gray-500 flex flex-col items-center">
+                    <i class="fas fa-circle-notch fa-spin text-3xl mb-3 text-blue-500"></i>
+                    <p>Mengambil data : <b>Top 10 Global</b>...</p>
+                </div>
+            `;
+
+            try {
+                // Melakukan Fetch ke API Apps Script dengan parameter ?sheet=
+                // Ingat! pastikan nama sheet di Spreadsheet Anda persis dengan yang dikirim
+                const response = await fetch(`${API_URL}?sheet=${sheetName}`);
+                const data = await response.json();
+
+                // Cek jika API mengembalikan pesan error
+                if (data.error) {
+                    listContainer.innerHTML = `<div class="p-8 text-center text-red-500 font-medium"><i class="fas fa-exclamation-triangle mb-2 text-2xl"></i><br>${data.error}</div>`;
+                    return;
+                }
+
+                // Jika sukses, render ke layar
+                renderTopCreators(data);
+
+            } catch (error) {
+                console.error('Fetch Error:', error);
+                listContainer.innerHTML = `<div class="p-8 text-center text-red-500 font-medium">Gagal memuat data. Periksa URL Apps Script Anda atau koneksi internet.</div>`;
+            }
+        }
+
+        // ==========================================
+        // FUNGSI UNTUK MERENDER HTML DAFTAR CREATOR
+        // ==========================================
+        function renderTopCreators(data) {
+            const container = document.getElementById('topListContainer');
+            container.innerHTML = ''; // Kosongkan container
+
+            if (data.length === 0) {
+                container.innerHTML = `<div class="p-8 text-center text-gray-500">Data masih kosong.</div>`;
+                return;
+            }
+
+            data.forEach((creator, index) => {
+                // Memformat angka besar menjadi format comma (misal 1000000 -> 1,000,000)
+                const formattedLikes = Number(creator.Likes).toLocaleString('en-US');
+                const formattedFollowers = Number(creator.Followers).toLocaleString('en-US');
+                
+                // Memberikan warna khusus untuk rank 1, 2, 3
+                let rankBg = 'bg-gray-100 text-gray-600';
+                if (creator.Rank == 1) rankBg = 'bg-red-500 text-white shadow-md z-10 scale-110';
+                else if (creator.Rank == 2) rankBg = 'bg-teal-300 text-teal-900 z-10 scale-105';
+                else if (creator.Rank == 3) rankBg = 'bg-gray-900 text-white z-10 scale-105';
+
+                const html = `
+                    <div class="flex items-center justify-between p-6 hover:bg-gray-50 transition-colors ${index !== data.length - 1 ? 'border-b border-gray-100' : ''}">
+                        <div class="flex items-center gap-4">
+                            <div class="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm ${rankBg}">
+                                ${creator.Rank}
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-gray-900">${creator.Name}</h3>
+                                <div class="text-sm text-gray-500 flex items-center gap-2">
+                                    <span>${creator.Username}</span>
+                                    <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
+                                    <span class="text-gray-400 text-xs">${formattedLikes} Likes</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-xs text-gray-400 mb-1">Followers:</div>
+                            <div class="font-bold text-gray-900 text-lg">${formattedFollowers}</div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += html;
+            });
+        }
+
+        // ==========================================
+        // EVENT LISTENER
+        // ==========================================
+        window.addEventListener('DOMContentLoaded', () => {
+            // Set Update Time
+            const dateOptions = { day: 'numeric', month: 'short', year: 'numeric' };
+            const today = new Date().toLocaleDateString('id-ID', dateOptions);
+            const time = new Date().toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'});
+            document.getElementById('updateTime').innerText = `Update: ${today}, ${time} WIB`;
+
+            // === AWAL HALAMAN DIMUAT ===
+            // Ganti 'TopGlobal' dengan nama sheet asli Anda
+            fetchDataTikTok('top'); 
+
+        });
+
+
+
+        // Initialize App
+        
+        function tiktokid() { 
+            document.getElementById('tiktokId').classList.remove('hidden');
+            document.getElementById('top10').classList.add('hidden'); 
+        }
+
+        function tiktokcaption() { 
+            document.getElementById('captt').classList.remove('hidden');
+            document.getElementById('top10').classList.add('hidden'); 
+        }
+
+        function openFollowModal() { 
+            document.getElementById('captionModal').classList.remove('hidden'); 
+            document.getElementById('top10').classList.add('hidden'); 
+        }
+
+        function closeCaptionModal() { 
+            document.getElementById('captionModal').classList.add('hidden'); 
+            document.getElementById('top10').classList.remove('hidden'); 
+        }
+
+        const TIKWM_API_KEY = '99821fdc3830f328f43b0d1c22a69bd7';
+       async function checkTikTokId() {
+            const link = document.getElementById('linkInput').value;
+            const resultArea = document.getElementById('resultArea');
+            const btn = document.getElementById('btnCheck');
+            
+            if (!username) return alert("Masukkan username!");
+            
+            btn.innerText = "Mencari...";
+            resultArea.classList.remove('hidden');
+            resultArea.innerHTML = "Menghubungkan ke server...";
+
+            try {
+                // Menggunakan Header x-tikwmapi-key sesuai dokumentasi gambar
+                const response = await fetch(`https://api.tikwmapi.com/user/info?unique_id=${username}`, {
+                    method: 'GET',
+                    headers: {
+                        'x-tikwmapi-key': TIKWM_API_KEY
+                    }
+                });
+                
+                if (!response.ok) throw new Error("Gagal terhubung ke API (Status: " + response.status + ")");
+                
+                let text = await response.text();
+                
+                if (!text || text.trim() === "") throw new Error("Server mengembalikan respon kosong");
+                
+                // Membersihkan respon dari karakter sampah
+                text = text.replace(/^[^{]*/, '');
+                
+                const res = JSON.parse(text);
+                
+                if (res.code === 0) {
+                    const userId = res.data.user.id;
+                    resultArea.innerHTML = `
+                    <div><img src="${res.data.user.avatarThumb}" class="rounded-full"></div>
+                    <div><strong>Nama:</strong><br><span class="text-red-500 font-bold text-lg">${res.data.user.nickname}</span></div>
+                    <div><strong>Username:</strong> <span class="text-red-500 font-bold text-lg">@${res.data.user.uniqueId}</span></div>
+                    <div><strong>ID Numerik:</strong><br><span class="text-red-500 font-bold text-lg">${userId}</span></div>
+                    `;
+                } else {
+                    resultArea.innerHTML = "Gagal: " + (res.msg || "User tidak ditemukan.");
+                }
+            } catch (err) {
+                console.error("Error Detail:", err);
+                resultArea.innerHTML = "Kesalahan: " + err.message;
+            } finally {
+                btn.innerText = "Cek ID";
+            }
+        }
+
+        // Fungsi baru untuk mengambil Caption Video
+        async function copyCaption() {
+            const linkInput = document.getElementById('linkInput').value;
+            const resultCaption = document.getElementById('resultCaption');
+            const btnCaption = document.getElementById('btnCaption');
+            const btnCopy = document.getElementById('btnCopyAction');
+            
+            if (!linkInput) return alert("Masukkan URL Video!");
+            
+            btnCaption.innerText = "Mencari...";
+            resultCaption.classList.remove('hidden');
+            btnCopy.classList.add('hidden');
+            resultCaption.innerHTML = "Menghubungkan ke server...";
+
+            try {
+                // Sesuai endpoint root video dari dokumentasi TikWMApi
+                const response = await fetch(`https://api.tikwmapi.com/?url=${encodeURIComponent(linkInput)}`, {
+                    method: 'GET',
+                    headers: {
+                        'x-tikwmapi-key': TIKWM_API_KEY
+                    }
+                });
+                
+                if (!response.ok) throw new Error("Gagal terhubung ke API (Status: " + response.status + ")");
+                
+                let text = await response.text();
+                
+                if (!text || text.trim() === "") throw new Error("Server mengembalikan respon kosong");
+                
+                text = text.replace(/^[^{]*/, '');
+                const res = JSON.parse(text);
+                
+                if (res.code === 0) {
+                    // Caption video biasanya ada di res.data.title berdasarkan respons standar TikWM
+                    const caption = res.data.title || res.data.desc || "Tidak ada caption di video ini.";
+                    resultCaption.innerHTML = `
+                    <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto relative z-10">
+                        <img src="${res.data.cover}" class="w-[15rem]" />
+                        <div class="text-gray-500 text-md">${caption}</div>
+                        </div>
+                        `;
+                    
+                    // Menampilkan tombol salin teks jika berhasil
+                    btnCopy.classList.remove('hidden');
+                } else {
+                    resultCaption.innerHTML = "Gagal: " + (res.msg || "Video tidak ditemukan atau URL salah.");
+                }
+            } catch (err) {
+                console.error("Error Detail:", err);
+                resultCaption.innerHTML = "Kesalahan: " + err.message;
+            } finally {
+                btnCaption.innerText = "Ambil Caption";
+            }
+        }
+
+        // Fungsi menyalin teks caption ke clipboard
+        function copy() {
+            const textToCopy = document.getElementById('resultCaption').innerText;
+            
+            // Membuat elemen textarea sementara untuk menjalankan perintah copy (lebih kompatibel dari clipboard API)
+            const textArea = document.createElement("textarea");
+            textArea.value = textToCopy;
+            document.body.appendChild(textArea);
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                alert("Caption berhasil disalin ke Clipboard!");
+            } catch (err) {
+                alert("Gagal menyalin teks. Anda bisa menyalinnya secara manual.");
+            }
+            
+            document.body.removeChild(textArea);
+        }
+    
+        async function cekFollow() {
+            const akun = document.getElementById('linkAkun').value;
+            const resultFollow = document.getElementById('resultFollow');
+            const btnFollowers = document.getElementById('btnFollowers');
+            
+            if (!akun) return alert("Masukkan username!");
+            
+            btnFollowers.innerText = "Mencari...";
+            resultFollow.classList.remove('hidden');
+            resultFollow.innerHTML = "Menghubungkan ke server...";
+
+            try {
+                // Menggunakan Header x-tikwmapi-key sesuai dokumentasi gambar
+                const response = await fetch(`https://api.tikwmapi.com/user/info?unique_id=${akun}`, {
+                    method: 'GET',
+                    headers: {
+                        'x-tikwmapi-key': TIKWM_API_KEY
+                    }
+                });
+                
+                if (!response.ok) throw new Error("Gagal terhubung ke API (Status: " + response.status + ")");
+                
+                let text = await response.text();
+                
+                if (!text || text.trim() === "") throw new Error("Server mengembalikan respon kosong");
+                
+                // Membersihkan respon dari karakter sampah
+                text = text.replace(/^[^{]*/, '');
+                
+                const res = JSON.parse(text);
+                
+                if (res.code === 0) {
+                    const rawFollowers = res.data.stats.followerCount;
+                    
+                    // MENGUBAH FORMAT ANGKA MENJADI ADA TITIKNYA (Format Indonesia)
+                    const formattedFollowers = Number(rawFollowers).toLocaleString('id-ID');
+                    resultFollow.innerHTML = `
+                    
+                   <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto relative z-10">
+                        <img src="${res.data.user.avatarThumb}" class="w-[15rem]" />
+                        <div class="text-gray-500 text-md">Followers : <span class="text-red"><b> ${formattedFollowers}</b></span></div>
+                        <div class="text-gray-500 text-md"><span class="text-red"><b> ${res.data.user.nickname}(@${res.data.user.uniqueId})</b></span></div>
+                        </div>
+                    
+                    `;
+                } else {
+                    resultFollow.innerHTML = "Gagal: " + (res.msg || "User tidak ditemukan.");
+                }
+            } catch (err) {
+                console.error("Error Detail:", err);
+                resultFollow.innerHTML = "Kesalahan: " + err.message;
+            } finally {
+                btnFollowers.innerText = "Cek Sekarang";
+            }
+        }
+    
+    </script>
+</body>
+</html>
