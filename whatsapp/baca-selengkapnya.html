@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Prank Baca Selengkapnya (Read More) Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        wa: {
+                            light: '#E8F5E9',
+                            main: '#25D366',
+                            dark: '#128C7E',
+                            bubble: '#E1FFC7'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #F8FAFC; 
+            color: #1E293B; 
+        }
+        
+        textarea::-webkit-scrollbar { width: 8px; }
+        textarea::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        textarea::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        textarea::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        .wa-bubble {
+            position: relative;
+            background: #E1FFC7;
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            box-shadow: 0 1px 0.5px rgba(0,0,0,0.13);
+            max-width: 90%;
+            float: right;
+            clear: both;
+            word-wrap: break-word;
+        }
+        .wa-bubble::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -8px;
+            width: 0;
+            height: 0;
+            border: 8px solid transparent;
+            border-top-color: #E1FFC7;
+            border-right: 0;
+            border-bottom: 0;
+            margin-top: 0;
+            margin-right: -4px;
+        }
+        
+        /* Result Modal Fade In */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translate3d(0, -20px, 0); }
+            to { opacity: 1; transform: translate3d(0, 0, 0); }
+        }
+        .animate-fade-in-down {
+            animation: fadeInDown 0.3s ease-out forwards;
+        }
+
+        .read-more-link {
+            color: #0369a1; /* Biru khas link WA */
+            cursor: pointer;
+        }
+        .read-more-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col font-sans bg-slate-200">
+
+    <header class="bg-white shadow-sm sticky top-0 z-50 mt-10">
+
+        <!-- Navbar Container -->
+    <nav class="bg-white shadow-md w-full fixed top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+
+                <!-- Logo Bagian Kiri -->
+                <div class="flex-shrink-0 flex items-center">
+                   <i class="fa-brands fa-whatsapp text-3xl"></i>
+                <span class="font-bold text-xl tracking-tight text-gray-900">CurhatDok<span class="text-wa">WA</span></span>
+                </div>
+
+                <!-- Menu Desktop (Disembunyikan di Mobile) -->
+                <!-- Class 'hidden md:flex' berarti sembunyi secara default, namun tampil bersampingan pada layar medium ke atas -->
+                <div class="hidden md:flex space-x-8 items-center">
+                   <a href="/" class="hover:text-green-500 transition-colors">Beranda</a>
+                <a href="wa.html" class="hover:text-green-500 transition-colors">Fitur</a>
+                <a href="/" class="hover:text-green-500 transition-colors">Tools Lainnya</a>
+                </div>
+
+                <!-- Tombol Hamburger Mobile (Disembunyikan di Desktop) -->
+                <!-- Class 'md:hidden' berarti tombol ini akan hilang di layar medium ke atas -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-gray-600 hover:text-green-600 focus:outline-none p-2 rounded-md focus:bg-gray-100 transition">
+                        <!-- Ikon Hamburger (Menggunakan SVG) -->
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu Mobile (Tersembunyi secara default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 shadow-lg absolute w-full">
+            <div class="px-4 pt-2 pb-4 space-y-1 sm:px-3">
+               <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-gray-50 transition">Beranda</a>
+                <a href="wa.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-gray-50 transition">Fitur</a>
+                <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-gray-50 transition">Tools Lainnya</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    </header>
+
+    <div class="pt-12 pb-6 px-4 text-center">
+        <h1 class="text-3xl md:text-4xl font-extrabold text-slate-800 tracking-tight mb-3">Pembuat Teks "Baca Selengkapnya"</h1>
+        <p class="text-slate-600 text-sm md:text-base max-w-xl mx-auto">
+            Buat pesan usil (prank) WhatsApp. Sembunyikan pesan inti di balik tombol <strong>... Baca selengkapnya</strong> tanpa perlu mengetik panjang lebar.
+        </p>
+        
+        <div class="mt-4 inline-flex items-center bg-green-50 border border-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">
+            <span class="w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse"></span>
+            Digunakan <span class="font-bold mx-1" id="usage-count">100</span> kali hari ini
+        </div>
+    </div>
+
+    <main class="flex-grow flex flex-col items-center px-4 pb-12">
+        
+        <div class="w-full max-w-xl bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] p-6 md:p-8 relative z-10 border border-slate-100">
+            
+            <form id="prank-form" onsubmit="generatePrank(event)">
+                
+                <!-- Teks Awalan (Terlihat) -->
+                <div class="mb-5">
+                    <label for="text-front" class="block text-sm font-semibold text-slate-700 mb-1.5 flex justify-between items-end">
+                        Kalimat Pancingan (Terlihat)
+                        <span class="text-[10px] font-normal text-slate-400">Muncul di awal</span>
+                    </label>
+                    <div class="relative rounded-lg border border-slate-300 shadow-sm focus-within:ring-2 focus-within:ring-wa-main focus-within:border-wa-main transition-colors">
+                        <textarea id="text-front" required rows="3" class="block w-full border-0 bg-transparent py-2.5 px-3 text-sm focus:ring-0 resize-none outline-none text-slate-700" placeholder="Aku mau ngasih tahu sesuatu..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Teks Sembunyi (Kejutan) -->
+                <div class="mb-6">
+                    <label for="text-back" class="block text-sm font-semibold text-slate-700 mb-1.5 flex justify-between items-end">
+                        Pesan Rahasia (Tersembunyi)
+                        <span class="text-[10px] font-normal text-slate-400">Setelah diklik</span>
+                    </label>
+                    <div class="relative rounded-lg border border-slate-300 shadow-sm focus-within:ring-2 focus-within:ring-wa-main focus-within:border-wa-main transition-colors">
+                        <textarea id="text-back" required rows="3" class="block w-full border-0 bg-transparent py-2.5 px-3 text-sm focus:ring-0 resize-none outline-none text-slate-700" placeholder="Misal: ...ternyata becanda Wkwkwk!"></textarea>
+                    </div>
+                </div>
+
+                <!-- Live Preview -->
+                <div class="mt-4 mb-6">
+                    <p class="text-md text-center text-slate-400 font-semibold tracking-wider uppercase mb-2">Preview</p>
+                    <div class="bg-[#E5DDD5] rounded-lg p-3 h-auto min-h-[80px] overflow-hidden bg-[url('https://pubiway.com/wp-content/themes/pubiway/assets/images/wa-bg.png')] bg-cover bg-center border border-slate-200">
+                        <div class="wa-bubble text-sm text-[#111B21]">
+                            <span id="preview-front" class="whitespace-pre-wrap">Ketik pesan di atas...</span>
+                            <span id="preview-readmore" class="hidden"> <span class="read-more-link font-medium">Baca selengkapnya</span></span>
+                            <span id="preview-back" class="hidden whitespace-pre-wrap mt-2 block border-l-2 border-slate-300 pl-2 text-slate-500 italic">...</span>
+                            
+                            <div class="text-[10px] text-right text-slate-500 mt-1 flex justify-end items-center space-x-1">
+                                <span>12:00</span>
+                                <i class="fa-solid fa-check-double text-[#53bdeb]"></i>
+                            </div>
+                        </div>
+                        <div class="clear-both"></div>
+                    </div>
+                </div>
+
+                <!-- Action Button -->
+                <button type="submit" id="generate-btn" class="w-full flex justify-center items-center py-3.5 px-4 border border-transparent rounded-lg shadow-md text-sm font-bold text-white bg-[#25D366] hover:bg-[#128C7E] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#25D366] transition-all transform hover:-translate-y-0.5">
+                    <i class="fa-solid fa-wand-magic-sparkles mr-2 text-lg"></i> Buat Teks Sekarang
+                </button>
+            </form>
+            
+            <div id="result-area" class="hidden mt-6 pt-6 border-t border-slate-200">
+                <h3 class="text-sm font-bold text-slate-800 mb-2 flex items-center">
+                    <i class="fa-solid fa-circle-check text-green-500 mr-2"></i> Teks Berhasil Dibuat!
+                </h3>
+                
+                <p class="text-[11px] text-slate-500 mb-3">Teks di bawah ini terlihat biasa, tapi sebenarnya mengandung ribuan karakter tersembunyi. Silakan disalin.</p>
+                
+                <!-- Hidden textarea to store the actual raw text -->
+                <textarea id="final-result-hidden" class="hidden"></textarea>
+
+                <button type="button" onclick="copyResult()" id="copy-btn" class="w-full flex justify-center items-center py-3 px-4 border border-slate-300 rounded-lg shadow-sm text-sm font-bold text-slate-700 bg-white hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-wa-main transition-colors">
+                    <i class="fa-regular fa-copy mr-2 text-lg"></i> <span id="copy-text">Salin (Copy) Teks Prank</span>
+                </button>
+                
+                <button type="button" onclick="resetForm()" class="w-full mt-3 text-xs text-slate-400 hover:text-slate-600 transition-colors">
+                    Buat Baru (Reset)
+                </button>
+            </div>
+
+        </div>
+
+        <a href="#panduan" class="mt-10 text-sm text-slate-500 hover:text-slate-800 flex flex-col items-center transition-colors">
+            <i class="fa-solid fa-arrow-down mb-1 animate-bounce"></i>
+            Cara Kerja Script Ini
+        </a>
+    </main>
+
+    <article id="panduan" class="bg-white py-16 px-4 md:px-8 border-t border-slate-100">
+        <div class="max-w-3xl mx-auto">
+            
+            <h2 class="text-2xl md:text-3xl font-extrabold text-slate-800 mb-4 leading-tight">Panduan: Prank "Baca Selengkapnya" WhatsApp</h2>
+            <p class="text-slate-600 mb-10 text-lg leading-relaxed">
+                Pernahkah Anda menerima pesan WhatsApp yang awalnya terlihat singkat, namun memiliki tombol "Baca selengkapnya" padahal isinya tidak panjang? Alat ini adalah rahasia di balik trik tersebut.
+            </p>
+
+            <div class="mb-10">
+                <h3 class="text-xl font-bold text-slate-800 mb-4 border-l-4 border-wa-main pl-3">Bagaimana Cara Kerjanya?</h3>
+                <div class="text-slate-600 space-y-4">
+                    <p>Secara default, aplikasi WhatsApp (baik di Android maupun iOS) akan memotong sebuah pesan dan memunculkan tautan <span class="text-[#0369a1] cursor-pointer hover:underline">... Baca selengkapnya</span> secara otomatis jika sebuah pesan melewati batas karakter tertentu (biasanya lebih dari 3000-4000 karakter, atau banyak baris kosong).</p>
+                    <p>Namun, jika kita menggunakan spasi atau enter biasa, trik ini sangat mudah ditebak karena balon *chat* akan terlihat sangat panjang dan kosong ke bawah.</p>
+                    
+                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-5 my-5">
+                        <h4 class="font-bold text-slate-800 mb-2"><i class="fa-solid fa-user-secret mr-2"></i> Rahasia: Zero-Width Character</h4>
+                        <p class="text-sm">Alat ini menggunakan manipulasi karakter Unicode yang disebut <strong>Zero-Width Space (U+200B)</strong> atau <strong>Zero-Width Joiner</strong>. Karakter ini terdaftar sah di sistem teks digital, namun ia "tidak memiliki dimensi lebar" (invisible).</p>
+                        <p class="text-sm mt-2">Script kami menyelipkan ribuan karakter tak kasat mata ini di antara "Teks Pancingan" dan "Teks Kejutan". Sehingga sistem WhatsApp mengira itu adalah pesan yang sangat panjang dan memicu tombol <em>Read More</em>, padahal secara visual di layar, ukurannya terlihat pendek.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-10">
+                <h3 class="text-xl font-bold text-slate-800 mb-4 border-l-4 border-wa-main pl-3">Ide Prank Menarik</h3>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-blue-50 border border-blue-100 p-4 rounded-lg">
+                        <p class="text-sm font-semibold text-blue-800 mb-1">Prank Hutang</p>
+                        <p class="text-xs text-blue-600 mb-2"><strong>Depan:</strong> Bro, sorry banget nih bulan ini aku mau bayar hutangku yang kemaren...</p>
+                        <p class="text-xs text-blue-600"><strong>Belakang:</strong> ...tapi sayangnya uangnya masih kepake, hehe. Bulan depan ya!</p>
+                    </div>
+                    <div class="bg-purple-50 border border-purple-100 p-4 rounded-lg">
+                        <p class="text-sm font-semibold text-purple-800 mb-1">Prank Rahasia</p>
+                        <p class="text-xs text-purple-600 mb-2"><strong>Depan:</strong> Selama ini aku perhatiin kamu, dan sebenernya aku mau jujur kalau...</p>
+                        <p class="text-xs text-purple-600"><strong>Belakang:</strong> ...kamu itu mirip banget sama tukang cilok depan SD. 😂</p>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="border-slate-200 my-12">
+
+            <h2 class="text-2xl font-bold text-slate-800 mb-6">Pertanyaan Sering Diajukan (FAQ)</h2>
+            <div class="space-y-4">
+                <div class="bg-white border border-slate-200 rounded-lg p-5">
+                    <h4 class="font-bold text-slate-800 mb-2">Apakah ini aman (bukan virus)?</h4>
+                    <p class="text-sm text-slate-600">100% aman. Ini hanyalah trik tipografi teks standar (Unicode). Tidak ada script, link jebakan, atau file yang di-download. Ini hanya tulisan biasa yang berisi karakter spasi yang tidak terlihat.</p>
+                </div>
+                
+                <div class="bg-white border border-slate-200 rounded-lg p-5">
+                    <h4 class="font-bold text-slate-800 mb-2">Kenapa di HP teman saya tidak muncul "Baca Selengkapnya"?</h4>
+                    <p class="text-sm text-slate-600">WhatsApp terus memperbarui aplikasinya. Trik <em>Zero-Width Character</em> bekerja optimal di sebagian besar HP Android dan WhatsApp Web. Namun, terkadang pengguna iPhone (iOS) versi terbaru memiliki sistem render font yang otomatis mengabaikan karakter tak terlihat ini, sehingga prank mungkin tidak berfungsi dan pesan langsung digabung.</p>
+                </div>
+
+                <div class="bg-white border border-slate-200 rounded-lg p-5">
+                    <h4 class="font-bold text-slate-800 mb-2">Apakah karakter ini memakan kuota/memori?</h4>
+                    <p class="text-sm text-slate-600">Sangat kecil. Meskipun kami menyisipkan ribuan karakter, ukuran datanya hanya beberapa Kilobyte (KB). Sama sekali tidak membebani memori HP atau kuota internet pengirim dan penerima.</p>
+                </div>
+            </div>
+
+        </div>
+    </article>
+
+    <footer class="bg-[#F8FAFC] py-8 text-center text-slate-500 text-sm border-t border-slate-200">
+        <p>&copy; <script>document.write(new Date().getFullYear())</script> Curhatdok.it.com Clone - All Right Reserved</p>
+    </footer>
+
+    <script>
+        const textFront = document.getElementById('text-front');
+        const textBack = document.getElementById('text-back');
+        
+        const previewFront = document.getElementById('preview-front');
+        const previewReadmore = document.getElementById('preview-readmore');
+        const previewBack = document.getElementById('preview-back');
+        
+        const resultArea = document.getElementById('result-area');
+        const finalResultHidden = document.getElementById('final-result-hidden');
+        const copyBtn = document.getElementById('copy-btn');
+        const copyText = document.getElementById('copy-text');
+        const generateBtn = document.getElementById('generate-btn');
+
+        // Karakter rahasia Zero-Width Separator (U+200B) dan Left-to-Right Mark
+        // Diperlukan jumlah yang banyak agar algoritma WA memotong teks
+        const invisibleChar = '\u200B\u200E\u200F'; 
+        const repeatCount = 4000; // Jumlah repetisi yang aman memicu read more di WA Android/Web
+
+        // Event listener untuk update preview secara Live
+        textFront.addEventListener('input', updatePreview);
+        textBack.addEventListener('input', updatePreview);
+
+        function updatePreview() {
+            const frontVal = textFront.value;
+            const backVal = textBack.value;
+
+            if (frontVal === '' && backVal === '') {
+                previewFront.textContent = 'Ketik pesan di atas...';
+                previewFront.classList.add('italic', 'text-slate-500');
+                previewReadmore.classList.add('hidden');
+                previewBack.classList.add('hidden');
+            } else {
+                previewFront.classList.remove('italic', 'text-slate-500');
+                previewFront.textContent = frontVal;
+                
+                if (backVal.trim() !== '') {
+                    // Munculkan simulasi "Baca selengkapnya"
+                    previewReadmore.classList.remove('hidden');
+                    previewBack.classList.remove('hidden');
+                    previewBack.textContent = backVal;
+                } else {
+                    previewReadmore.classList.add('hidden');
+                    previewBack.classList.add('hidden');
+                }
+            }
+        }
+
+        // Fungsi Simulasi Klik Read More di Preview
+        previewReadmore.addEventListener('click', function() {
+            this.classList.add('hidden');
+            previewBack.classList.remove('text-slate-500', 'border-l-2', 'italic', 'pl-2', 'border-slate-300');
+            // Menyatukan teks seperti di WA saat tombol di klik
+        });
+
+        function generatePrank(e) {
+            e.preventDefault(); // Cegah reload halaman
+
+            const front = textFront.value.trim();
+            const back = textBack.value.trim();
+            const cara = "\n\nCara buatnya di https://curhatdok.it.com/whatsapp/baca-selengkapnya.html";
+
+            if(!front || !back) return;
+
+            // Proses pembuatannya
+            // Teks Depan + (Karakter Tak Terlihat x 4000) + Teks Belakang
+            const separatorString = invisibleChar.repeat(repeatCount);
+            const finalPayload = front + separatorString + back + cara;
+
+            // Simpan di textarea tersembunyi
+            finalResultHidden.value = finalPayload;
+
+            // Ubah tombol generate menjadi state loading sebentar untuk efek
+            const oriBtnText = generateBtn.innerHTML;
+            generateBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Memproses...';
+            
+            setTimeout(() => {
+                generateBtn.innerHTML = oriBtnText;
+                
+                // Tampilkan hasil
+                resultArea.classList.remove('hidden');
+                resultArea.classList.add('animate-fade-in-down');
+                
+                // Animasi auto-scroll ke bawah
+                resultArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+                // Update counter usage
+                updateCounter();
+            }, 500);
+        }
+
+        function copyResult() {
+            // Ambil teks dari hidden textarea
+            const textToCopy = finalResultHidden.value;
+            
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                showCopySuccess();
+            }).catch(err => {
+                // Fallback command copy untuk browser lama
+                finalResultHidden.classList.remove('hidden');
+                finalResultHidden.select();
+                document.execCommand("copy");
+                finalResultHidden.classList.add('hidden');
+                showCopySuccess();
+            });
+        }
+
+        function showCopySuccess() {
+            const icon = copyBtn.querySelector('i');
+            
+            copyText.textContent = 'Berhasil Disalin! Paste di WA';
+            copyBtn.classList.remove('bg-white', 'text-slate-700', 'hover:bg-slate-50', 'border-slate-300');
+            copyBtn.classList.add('bg-green-600', 'text-white', 'hover:bg-green-700', 'border-green-600');
+            icon.className = 'fa-solid fa-check mr-2 text-lg';
+            
+            // Kembalikan tombol setelah 3 detik
+            setTimeout(() => {
+                copyText.textContent = 'Salin (Copy) Teks Prank';
+                copyBtn.classList.add('bg-white', 'text-slate-700', 'hover:bg-slate-50', 'border-slate-300');
+                copyBtn.classList.remove('bg-green-600', 'text-white', 'hover:bg-green-700', 'border-green-600');
+                icon.className = 'fa-regular fa-copy mr-2 text-lg';
+            }, 3000);
+        }
+
+        function resetForm() {
+            document.getElementById('prank-form').reset();
+            resultArea.classList.add('hidden');
+            resultArea.classList.remove('animate-fade-in-down');
+            
+            // Reset Preview
+            previewReadmore.classList.add('hidden');
+            previewBack.classList.add('hidden');
+            previewBack.classList.add('text-slate-500', 'border-l-2', 'italic', 'pl-2', 'border-slate-300');
+            updatePreview();
+            
+            textFront.focus();
+        }
+
+        function updateCounter() {
+            const usageCounter = document.getElementById('usage-count');
+            let count = parseInt(usageCounter.textContent.replace(/\./g, ''));
+            usageCounter.textContent = (count + 132).toLocaleString('id-ID');
+        }
+
+        // Init counter mock
+        document.addEventListener('DOMContentLoaded', () => {
+            const initialCount = Math.floor(Math.random() * (10000 - 300 + 11) + 42);
+            document.getElementById('usage-count').textContent = initialCount.toLocaleString('id-ID');
+        });
+    </script>
+</body>
+</html>

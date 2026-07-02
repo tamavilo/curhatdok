@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Link Generator Otomatis (Format &amp; Preview Live)</title>
+    <meta name="description" content="Buat link WhatsApp otomatis dengan pesan custom, tebal, miring, dan preview live. Tanpa simpan nomor, aman, dan gratis. Coba sekarang!">
+    <script src="/tailwind/tailwind.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+<link rel="shortcut icon" href="/favicon/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+<link rel="manifest" href="/favicon/site.webmanifest" />
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        wa: {
+                            light: '#E8F5E9',
+                            main: '#25D366',
+                            dark: '#128C7E',
+                            bubble: '#E1FFC7'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "WhatsApp URL Generator",
+      "url": "https://curhatdok.it.com/whatsapp/link-generator.html",
+      "applicationCategory": "Utility",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "IDR"
+      }
+    }
+    </script>
+    <style>
+        body {
+            background-color: #F8FAFC; /* Slate 50 */
+            color: #1E293B; /* Slate 800 */
+        }
+        
+        /* Custom scrollbar for textarea */
+        textarea::-webkit-scrollbar {
+            width: 8px;
+        }
+        textarea::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+            border-radius: 4px;
+        }
+        textarea::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        textarea::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+
+        /* Toggle Switch Styling */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #68D391;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #237244;
+        }
+        
+        /* Tooltip style */
+        .tooltip {
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .has-tooltip:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* WA Bubble preview styling */
+        .wa-bubble {
+            position: relative;
+            background: #E1FFC7;
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            box-shadow: 0 1px 0.5px rgba(0,0,0,0.13);
+            max-width: 90%;
+            float: right;
+            clear: both;
+            word-wrap: break-word;
+        }
+        .wa-bubble::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -8px;
+            width: 0;
+            height: 0;
+            border: 8px solid transparent;
+            border-top-color: #E1FFC7;
+            border-right: 0;
+            border-bottom: 0;
+            margin-top: 0;
+            margin-right: -4px;
+        }
+        
+        /* Formatting buttons */
+        .format-btn {
+            padding: 2px 8px;
+            border: 1px solid #E2E8F0;
+            border-radius: 4px;
+            background-color: #F8FAFC;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .format-btn:hover {
+            background-color: #E2E8F0;
+        }
+
+        /* Result Modal Fade In */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translate3d(0, -20px, 0);
+            }
+            to {
+                opacity: 1;
+                transform: translate3d(0, 0, 0);
+            }
+        }
+        .animate-fade-in-down {
+            animation: fadeInDown 0.3s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col font-sans">
+
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+
+        <!-- Navbar Container -->
+    <nav class="bg-white shadow-md w-full fixed top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+
+                <!-- Logo Bagian Kiri -->
+                <div class="flex-shrink-0 flex items-center">
+                   <i class="fa-brands fa-whatsapp text-3xl"></i>
+                <span class="font-bold text-xl tracking-tight text-gray-900">CurhatDok<span class="text-wa">WA</span></span>
+                </div>
+
+                <!-- Menu Desktop (Disembunyikan di Mobile) -->
+                <!-- Class 'hidden md:flex' berarti sembunyi secara default, namun tampil bersampingan pada layar medium ke atas -->
+                <div class="hidden md:flex space-x-8 items-center">
+                   <a href="/" class="hover:text-wa transition-colors">Beranda</a>
+                <a href="wa.html" class="hover:text-wa transition-colors">Fitur</a>
+                <a href="/" class="hover:text-wa transition-colors">Tools Lainnya</a>
+                </div>
+
+                <!-- Tombol Hamburger Mobile (Disembunyikan di Desktop) -->
+                <!-- Class 'md:hidden' berarti tombol ini akan hilang di layar medium ke atas -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-gray-600 hover:text-green-600 focus:outline-none p-2 rounded-md focus:bg-gray-100 transition">
+                        <!-- Ikon Hamburger (Menggunakan SVG) -->
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu Mobile (Tersembunyi secara default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 shadow-lg absolute w-full">
+            <div class="px-4 pt-2 pb-4 space-y-1 sm:px-3">
+               <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-gray-50 transition">Beranda</a>
+                <a href="wa.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-gray-50 transition">Fitur</a>
+                <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-gray-50 transition">Tools Lainnya</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    </header>
+
+    <div class="pt-12 pb-6 px-4 text-center mt-10">
+        <h1 class="text-3xl md:text-4xl font-extrabold text-slate-800 tracking-tight mb-3">WhatsApp URL Generator</h1>
+        <p class="text-slate-600 text-sm md:text-base max-w-xl mx-auto">
+            Buat link <code class="bg-slate-200 px-1 py-0.5 rounded text-sm">wa.me</code> instan untuk CS, jualan, atau bio IG. Mendukung format teks tebal & miring otomatis.
+        </p>
+        
+        <div class="mt-4 inline-flex items-center bg-green-50 border border-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">
+            <span class="w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse"></span>
+            Digunakan <span class="font-bold mx-1" id="usage-count">1</span> kali dalam 3 hari terakhir
+        </div>
+    </div>
+
+    <main class="flex-grow flex flex-col items-center px-4 pb-12">
+        
+        <div class="w-full max-w-md bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] p-6 md:p-8 relative z-10 border border-slate-100">
+            
+            <form id="wa-form" onsubmit="generateLink(event)">
+                <!-- Input Nomor WA -->
+                <div class="mb-5">
+                    <label for="phone" class="block text-sm font-semibold text-slate-700 mb-1.5">Nomor WhatsApp</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fa-brands fa-whatsapp text-slate-400"></i>
+                        </div>
+                        <input type="tel" id="phone" name="phone" 
+                            class="block w-full pl-10 pr-3 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-wa-main focus:border-wa-main sm:text-sm transition-colors" 
+                            placeholder="0812345XXXX" required>
+                    </div>
+                    <p class="mt-1.5 text-[11px] text-slate-500">Otomatis ubah 08/62/8xx menjadi format internasional.</p>
+                </div>
+
+                <!-- Toggle Pesan -->
+                <div class="flex items-center justify-between py-3 mb-2 border-t border-slate-100">
+                    <span class="text-sm font-semibold text-slate-700">Sertakan Teks Pesan?</span>
+                    <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                        <input type="checkbox" name="toggle" id="message-toggle" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer z-10 transition-transform duration-200 ease-in-out left-0 top-0 translate-x-0 checked:translate-x-full checked:border-green-500" checked/>
+                        <label for="message-toggle" class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-300 cursor-pointer"></label>
+                    </div>
+                </div>
+
+                <!-- Area Pesan (Tergantung Toggle) -->
+                <div id="message-area" class="transition-all duration-300 ease-in-out opacity-100 max-h-96">
+                    <label for="message" class="block text-sm font-semibold text-slate-700 mb-1.5">Isi Pesan</label>
+                    <div class="relative rounded-lg border border-slate-300 shadow-sm focus-within:ring-2 focus-within:ring-wa-main focus-within:border-wa-main transition-colors">
+                        <textarea id="message" name="message" rows="4" 
+                            class="block w-full border-0 bg-transparent py-2.5 px-3 text-sm focus:ring-0 resize-none outline-none" 
+                            placeholder="Halo kak, saya mau tanya produk ini..."></textarea>
+                        
+                        <!-- Format Buttons & Char Count -->
+                        <div class="flex items-center justify-between px-3 py-2 bg-slate-50 border-t border-slate-200 rounded-b-lg">
+                            <div class="flex space-x-1">
+                                <button type="button" onclick="formatText('*')" class="format-btn font-bold has-tooltip" title="Tebal">B
+                                    <span class="tooltip bg-slate-800 text-white text-[10px] py-1 px-2 rounded absolute -top-8 left-0 whitespace-nowrap">Tebal (*teks*)</span>
+                                </button>
+                                <button type="button" onclick="formatText('_')" class="format-btn italic has-tooltip" title="Miring">I
+                                    <span class="tooltip bg-slate-800 text-white text-[10px] py-1 px-2 rounded absolute -top-8 left-10 whitespace-nowrap">Miring (_teks_)</span>
+                                </button>
+                                <button type="button" onclick="formatText('~')" class="format-btn line-through has-tooltip" title="Coret">S
+                                    <span class="tooltip bg-slate-800 text-white text-[10px] py-1 px-2 rounded absolute -top-8 left-20 whitespace-nowrap">Coret (~teks~)</span>
+                                </button>
+                            </div>
+                            <span id="char-count" class="text-[11px] text-slate-400">0 karakter</span>
+                        </div>
+                    </div>
+
+                    <!-- Live Preview -->
+                    <div class="mt-4 mb-5">
+                        <p class="text-[10px] text-center text-slate-400 font-semibold tracking-wider uppercase mb-2">Preview Tampilan WA</p>
+                        <div class="bg-[#E5DDD5] rounded-lg p-3 h-auto min-h-[80px] overflow-hidden bg-[url('https://pubiway.com/wp-content/themes/pubiway/assets/images/wa-bg.png')] bg-cover bg-center">
+                            <div class="wa-bubble text-sm text-[#54d685]">
+                                <span id="preview-text" class="whitespace-pre-wrap italic text-gray-700">Pesan akan muncul di sini...</span>
+                                <div class="text-[10px] text-right text-slate-500 mt-1 flex justify-end items-center space-x-1">
+                                    <span>12:00</span>
+                                    <i class="fa-solid fa-check-double text-[#53bdeb]"></i>
+                                </div>
+                            </div>
+                            <div class="clear-both"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <button type="submit" class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-[#249e52] hover:bg-[#128C7E] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#25D366] transition-colors">
+                    <i class="fa-solid fa-rocket mr-2"></i> Buat Link WhatsApp
+                </button>
+                
+                <button type="button" onclick="resetForm()" class="w-full mt-3 text-xs text-slate-400 hover:text-slate-600 transition-colors">
+                    Reset Form
+                </button>
+
+                <div class="mt-5 pt-4 border-t border-slate-100 flex justify-center space-x-4 text-[11px] text-slate-500 font-medium">
+                    <span class="flex items-center"><i class="fa-solid fa-shield-halved mr-1.5 text-slate-400"></i> Privasi Terjaga</span>
+                    <span class="flex items-center"><i class="fa-solid fa-bolt mr-1.5 text-slate-400"></i> Cepat Kilat</span>
+                </div>
+            </form>
+            
+            <div id="result-area" class="hidden mt-6 pt-6 border-t border-slate-200">
+                <h3 class="text-sm font-bold text-slate-800 mb-2">Link Berhasil Dibuat! 🎉</h3>
+                
+                <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 break-all mb-3 text-sm text-slate-700 font-mono" id="generated-link">
+                    https://wa.me/6281234567890
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <button type="button" onclick="copyLink()" class="flex justify-center items-center py-2 px-4 border border-slate-300 rounded-md shadow-sm text-sm font-medium text-slate-700 bg-white hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-wa-main transition-colors">
+                        <i class="fa-regular fa-copy mr-2"></i> <span id="copy-text">Copy Link</span>
+                    </button>
+                    <a id="open-link-btn" href="#" target="_blank" class="flex justify-center items-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-slate-800 hover:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900 transition-colors">
+                        <i class="fa-solid fa-external-link-alt mr-2"></i> Test Buka
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Scroll Down Indicator -->
+        <a href="#panduan" class="mt-8 text-sm text-slate-500 hover:text-slate-800 flex flex-col items-center transition-colors">
+            <i class="fa-solid fa-arrow-down mb-1 animate-bounce"></i>
+            Lihat Panduan Lengkap
+        </a>
+    </main>
+
+    <article id="panduan" class="bg-white py-16 px-4 md:px-8">
+        <div class="max-w-3xl mx-auto">
+            
+            <h2 class="text-2xl md:text-3xl font-extrabold text-slate-800 mb-4 leading-tight">Panduan Teknis: Mengoptimalkan WhatsApp Link untuk Bisnis</h2>
+            <p class="text-slate-600 mb-10 text-lg leading-relaxed">
+                Fitur "<em>Click to Chat</em>" WhatsApp adalah jembatan vital antara trafik website dan konversi penjualan. Artikel ini membahas secara mendalam cara kerja teknis URL WhatsApp, strategi penggunaan, hingga penanganan <em>edge cases</em> (kasus khusus) yang sering membuat tautan gagal dibuka.
+            </p>
+
+            <!-- Section 1 -->
+            <div class="mb-10">
+                <div class="flex items-center mb-4">
+                    <span class="bg-green-100 text-green-700 font-bold w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm">01</span>
+                    <h3 class="text-xl font-bold text-slate-800">Anatomi Teknis URL WhatsApp</h3>
+                </div>
+                <div class="text-slate-600 space-y-4">
+                    <p>Secara mendasar, WhatsApp menyediakan API publik melalui domain <code>wa.me</code> dan <code>api.whatsapp.com</code>. Tautan ini bekerja dengan protokol HTTP yang memicu <em>intent</em> aplikasi di Android/iOS atau membuka web wrapper di desktop.</p>
+                    <p>Tantangan terbesar dalam pembuatan manual adalah <strong>URL Encoding</strong>. Browser tidak dapat memproses spasi atau karakter spesial (seperti enter, simbol &, atau emoji) secara langsung di dalam address bar.</p>
+                    
+                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-5 my-5">
+                        <ul class="list-disc pl-5 space-y-2 text-sm">
+                            <li><strong>Spasi:</strong> Harus diubah menjadi <code>%20</code>.</li>
+                            <li><strong>Baris Baru (Enter):</strong> Harus diubah menjadi <code>%0A</code>.</li>
+                            <li><strong>Simbol (&):</strong> Harus diubah menjadi <code>%26</code> agar tidak memutus parameter query.</li>
+                        </ul>
+                    </div>
+                    <p>Alat ini menangani proses <em>sanitasi</em> dan <em>encoding</em> tersebut secara otomatis di sisi klien (browser Anda), memastikan link yang dihasilkan 100% valid tanpa risiko <em>broken link</em>.</p>
+                </div>
+            </div>
+
+            <!-- Section 2 -->
+            <div class="mb-10">
+                <div class="flex items-center mb-4">
+                    <span class="bg-green-100 text-green-700 font-bold w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm">02</span>
+                    <h3 class="text-xl font-bold text-slate-800">Aturan Format & Input</h3>
+                </div>
+                <div class="text-slate-600 space-y-4">
+                    <p>Kesalahan paling umum terjadi pada input nomor telepon. WhatsApp menggunakan standar internasional tanpa awalan simbol plus (+), spasi, atau tanda strip (-).</p>
+                    
+                    <div class="overflow-x-auto my-4">
+                        <table class="min-w-full divide-y divide-slate-200 text-sm">
+                            <thead class="bg-slate-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left font-bold text-slate-700 uppercase tracking-wider">Komponen</th>
+                                    <th scope="col" class="px-6 py-3 text-left font-bold text-slate-700 uppercase tracking-wider">Format Valid (DO)</th>
+                                    <th scope="col" class="px-6 py-3 text-left font-bold text-red-500 uppercase tracking-wider">Format Salah (DON'T)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-slate-200">
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap font-medium text-slate-800">Nomor HP</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">62812345678</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-red-500 line-through">0812-3456 / +62 812</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap font-medium text-slate-800">Format Teks</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">*Tebal*, _Miring_</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-slate-500">HTML Tags (&lt;b&gt;)</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap font-medium text-slate-800">Emoji</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">Didukung (👍, 🚀)</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-slate-500">Emoticon teks lama (:D )</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="text-[11px] text-slate-400 italic">*Generator ini otomatis mengubah 08xx menjadi 628xx untuk kenyamanan Anda.</p>
+                </div>
+            </div>
+
+            <!-- Section 3 -->
+            <div class="mb-10">
+                <div class="flex items-center mb-4">
+                    <span class="bg-green-100 text-green-700 font-bold w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm">03</span>
+                    <h3 class="text-xl font-bold text-slate-800">Strategi Teks & "Magic Words"</h3>
+                </div>
+                <div class="text-slate-600 space-y-4">
+                    <p>Link WhatsApp bukan sekadar alat kontak, melainkan alat <strong>Lead Generation</strong>. Mengisi pesan <em>pre-filled</em> (otomatis terisi) membantu pengguna untuk memulai percakapan tanpa harus mengetik dari nol. Ini mengurangi friksi psikologis.</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-4 my-6">
+                        <!-- Template 1 -->
+                        <div class="bg-blue-50 border border-blue-100 rounded-lg p-4">
+                            <h4 class="font-bold text-blue-800 text-sm mb-2 uppercase tracking-wider">Untuk Toko Online</h4>
+                            <div class="bg-white p-3 rounded border border-blue-100 text-sm font-mono text-slate-700 mb-2">
+                                Halo Admin, saya mau pesan *Paket Hemat A* seharga Rp50.000. Apakah stok ready?
+                            </div>
+                            <p class="text-xs text-blue-600">Memberikan konteks produk langsung ke admin.</p>
+                        </div>
+                        <!-- Template 2 -->
+                        <div class="bg-purple-50 border border-purple-100 rounded-lg p-4">
+                            <h4 class="font-bold text-purple-800 text-sm mb-2 uppercase tracking-wider">Untuk Layanan Jasa</h4>
+                            <div class="bg-white p-3 rounded border border-purple-100 text-sm font-mono text-slate-700 mb-2">
+                                Halo, saya ingin konsultasi mengenai _Jasa Renovasi Rumah_. Kapan bisa survei?
+                            </div>
+                            <p class="text-xs text-purple-600">Langsung ke inti kebutuhan klien.</p>
+                        </div>
+                    </div>
+
+                    <h4 class="font-bold text-slate-800 mt-6 mb-2">Tips Format Teks WhatsApp:</h4>
+                    <ul class="space-y-2 text-sm text-slate-600">
+                        <li><code class="bg-slate-100 px-1 py-0.5 rounded text-slate-800">*Teks*</code> menjadi <strong>Tebal</strong> (Penting untuk harga/nama produk).</li>
+                        <li><code class="bg-slate-100 px-1 py-0.5 rounded text-slate-800">_Teks_</code> menjadi <em>Miring</em> (Untuk istilah asing atau penekanan halus).</li>
+                        <li><code class="bg-slate-100 px-1 py-0.5 rounded text-slate-800 line-through decoration-slate-400">~Teks~</code> menjadi <span class="line-through">Coret</span> (Efektif untuk diskon: ~Rp100rb~ jadi Rp50rb).</li>
+                        <li><code class="bg-slate-100 px-1 py-0.5 rounded text-slate-800">```Teks```</code> menjadi <span class="font-mono">Monospace</span> (Untuk kode voucher atau nomor resi).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 4 (Alert) -->
+            <div class="mb-12">
+                <div class="flex items-center mb-4">
+                    <span class="bg-red-100 text-red-600 font-bold w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm">!</span>
+                    <h3 class="text-xl font-bold text-slate-800">Troubleshooting & Cara Verifikasi</h3>
+                </div>
+                <div class="text-slate-600 space-y-4">
+                    <p>Jika link yang Anda buat tidak bekerja saat diklik, periksa kemungkinan berikut:</p>
+                    <ol class="list-decimal pl-5 space-y-3">
+                        <li><strong>Nomor Tujuan Salah Format:</strong> Pastikan tidak ada angka `0` di depan `62`. Contoh salah: `620812...`. Sistem kami sudah mencegah ini, namun periksa kembali jika Anda mengedit manual.</li>
+                        <li><strong>Link Terpotong:</strong> Jika Anda menyalin link manual tanpa encoding (misal ada spasi asli), link akan putus. Selalu gunakan tombol "Copy" di alat ini.</li>
+                        <li><strong>Desktop vs Mobile:</strong> Di desktop, link ini akan mencoba membuka `web.whatsapp.com`. Jika user belum login WA Web, mereka akan diminta login QR Code terlebih dahulu.</li>
+                    </ol>
+
+                    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-6">
+                        <h4 class="font-bold text-yellow-800 text-sm mb-1">Cara Tes Validitas Link</h4>
+                        <p class="text-sm text-yellow-700">Sebelum dipasang di Iklan atau Bio Instagram, klik tombol <strong>"Tes Buka Link"</strong> yang muncul setelah generate. Kirim pesan ke diri sendiri (Self-Message) untuk melihat apakah format tebal/miring sudah rapi.</p>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="border-slate-200 my-12">
+
+            <h2 class="text-2xl font-bold text-slate-800 mb-6">Pertanyaan Sering Diajukan (FAQ)</h2>
+            <div class="space-y-6">
+                <!-- FAQ 1 -->
+                <div>
+                    <h4 class="font-bold text-slate-800 mb-2">Apakah alat ini menyimpan nomor HP saya?</h4>
+                    <p class="text-sm text-slate-600 bg-slate-50 p-4 rounded-lg border border-slate-100">Tidak. Generator ini bekerja 100% di browser Anda (Client-side JavaScript). Data nomor dan pesan tidak dikirim ke database kami. Statistik yang kami tampilkan di atas hanya menghitung "jumlah klik tombol" tanpa menyimpan detail isi pesannya. Privasi Anda adalah prioritas.</p>
+                </div>
+                <!-- FAQ 2 -->
+                <div>
+                    <h4 class="font-bold text-slate-800 mb-2">Mengapa link WA saya tidak bisa diklik di Instagram Bio?</h4>
+                    <p class="text-sm text-slate-600 bg-slate-50 p-4 rounded-lg border border-slate-100">Instagram terkadang memblokir link yang terlalu panjang atau terlihat spam. Solusinya: Gunakan link yang dihasilkan alat ini, lalu pendekkan menggunakan layanan URL Shortener (seperti Bitly/S.id) agar terlihat lebih rapi dan "bersahabat" dengan algoritma Instagram.</p>
+                </div>
+                <!-- FAQ 3 -->
+                <div>
+                    <h4 class="font-bold text-slate-800 mb-2">Bisakah digunakan untuk WhatsApp Business?</h4>
+                    <p class="text-sm text-slate-600 bg-slate-50 p-4 rounded-lg border border-slate-100">Sangat bisa. Link `wa.me` bersifat universal. Baik Anda menggunakan WhatsApp Messenger biasa (Personal) atau WhatsApp Business API, link akan membuka aplikasi mana pun yang terinstal sebagai default di HP pengguna.</p>
+                </div>
+                <!-- FAQ 4 -->
+                <div>
+                    <h4 class="font-bold text-slate-800 mb-2">Apakah link ini ada masa berlakunya (kadaluarsa)?</h4>
+                    <p class="text-sm text-slate-600 bg-slate-50 p-4 rounded-lg border border-slate-100">Tidak ada kadaluarsa. Link yang Anda buat bersifat permanen selama nomor WhatsApp tujuan masih aktif. Anda bisa menyimpannya di Notes HP untuk digunakan berulang kali.</p>
+                </div>
+            </div>
+
+        </div>
+    </article>
+
+    <footer class="bg-[#F8FAFC] py-8 text-center text-slate-500 text-sm border-t border-slate-200">
+        <p>&copy; <script>document.write(new Date().getFullYear())</script> Curhatdok.it.com All Right Reserved</p>
+    </footer>
+
+    <script>
+        // Elemen-elemen DOM
+        const phoneInput = document.getElementById('phone');
+        const messageToggle = document.getElementById('message-toggle');
+        const messageArea = document.getElementById('message-area');
+        const messageInput = document.getElementById('message');
+        const charCount = document.getElementById('char-count');
+        const previewText = document.getElementById('preview-text');
+        
+        const resultArea = document.getElementById('result-area');
+        const generatedLinkEl = document.getElementById('generated-link');
+        const copyText = document.getElementById('copy-text');
+        const openLinkBtn = document.getElementById('open-link-btn');
+
+        // Toggle visibility area pesan
+        messageToggle.addEventListener('change', function() {
+            if (this.checked) {
+                messageArea.style.opacity = '1';
+                messageArea.style.maxHeight = '500px';
+                setTimeout(() => { messageArea.style.overflow = 'visible'; }, 300);
+            } else {
+                messageArea.style.opacity = '0';
+                messageArea.style.maxHeight = '0';
+                messageArea.style.overflow = 'hidden';
+                messageInput.value = ''; // Clear message when disabled
+                updatePreview();
+            }
+        });
+
+        // Event listener untuk menghitung karakter dan update preview
+        messageInput.addEventListener('input', function() {
+            updatePreview();
+        });
+
+        // Fungsi format text WhatsApp (Bold, Italic, Strikethrough) ke HTML untuk preview
+        function formatWAtoHTML(text) {
+            if (!text) return '<span class="italic text-slate-400">Pesan akan muncul di sini...</span>';
+            
+            // Escape HTML untuk mencegah XSS
+            let safeText = text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            
+            // Format Bold *text*
+            safeText = safeText.replace(/\*(.*?)\*/g, "<strong>$1</strong>");
+            // Format Italic _text_
+            safeText = safeText.replace(/_(.*?)_/g, "<em>$1</em>");
+            // Format Strikethrough ~text~
+            safeText = safeText.replace(/~(.*?)~/g, "<del>$1</del>");
+            
+            return safeText;
+        }
+
+        function updatePreview() {
+            const val = messageInput.value;
+            charCount.textContent = val.length + ' karakter';
+            previewText.innerHTML = formatWAtoHTML(val);
+        }
+
+        // Fungsi untuk menambahkan karakter format (*, _, ~) di textarea
+        function formatText(char) {
+            const start = messageInput.selectionStart;
+            const end = messageInput.selectionEnd;
+            const text = messageInput.value;
+            
+            if (start !== end) {
+                // Teks diblok (selected)
+                const selectedText = text.substring(start, end);
+                const before = text.substring(0, start);
+                const after = text.substring(end);
+                
+                messageInput.value = before + char + selectedText + char + after;
+                // Kembalikan kursor ke posisi yang tepat
+                messageInput.selectionStart = start + 1;
+                messageInput.selectionEnd = end + 1 + selectedText.length;
+            } else {
+                // Tidak ada teks diblok, tambahkan di posisi kursor
+                const before = text.substring(0, start);
+                const after = text.substring(end);
+                
+                messageInput.value = before + char + char + after;
+                // Taruh kursor di tengah karakter format
+                messageInput.selectionStart = messageInput.selectionEnd = start + 1;
+            }
+            
+            messageInput.focus();
+            updatePreview();
+        }
+
+        // Fungsi membersihkan nomor HP
+        function cleanPhoneNumber(number) {
+            // Hapus semua karakter selain angka
+            let cleaned = number.replace(/\D/g, '');
+            
+            // Jika diawali 0, ganti dengan 62
+            if (cleaned.startsWith('0')) {
+                cleaned = '62' + cleaned.substring(1);
+            }
+            // Jika diawali 8, tambahkan 62 di depan (asumsi nomor Indo)
+            else if (cleaned.startsWith('8')) {
+                cleaned = '62' + cleaned;
+            }
+            // Jika diawali +62 (plus sudah dihapus di regex pertama), pastikan tidak ada 0 lagi setelahnya
+            else if (cleaned.startsWith('620')) {
+                cleaned = '62' + cleaned.substring(3);
+            }
+
+            return cleaned;
+        }
+
+        // Fungsi utama membuat link
+        function generateLink(e) {
+            e.preventDefault(); // Mencegah form reload page
+            
+            const rawPhone = phoneInput.value;
+            if(!rawPhone) return;
+
+            const cleanPhone = cleanPhoneNumber(rawPhone);
+            
+            // Ubah value di input agar user tahu nomornya dikonversi
+            phoneInput.value = cleanPhone;
+
+            let waLink = `https://wa.me/${cleanPhone}`;
+            
+            // Jika toggle pesan aktif dan ada isinya
+            if (messageToggle.checked && messageInput.value.trim() !== '') {
+                // Encode URL (mengubah spasi jadi %20, enter jadi %0A, dll)
+                const encodedMessage = encodeURIComponent(messageInput.value.trim());
+                waLink += `?text=${encodedMessage}`;
+            }
+
+            // Tampilkan hasil
+            generatedLinkEl.textContent = waLink;
+            openLinkBtn.href = waLink;
+            
+            // Tampilkan area result dengan animasi
+            resultArea.classList.remove('hidden');
+            resultArea.classList.add('animate-fade-in-down');
+            
+            // Reset text tombol copy
+            copyText.textContent = 'Copy Link';
+            copyText.parentElement.classList.remove('text-green-600', 'border-green-300');
+            copyText.previousElementSibling.className = 'fa-regular fa-copy mr-2';
+            
+            // Update stat counter bohongan untuk efek visual
+            const usageCounter = document.getElementById('usage-count');
+            let count = parseInt(usageCounter.textContent.replace(/\./g, '')) || 4321;
+            usageCounter.textContent = (count + 1).toLocaleString('id-ID');
+
+            // Scroll sedikit ke area hasil
+            resultArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function copyLink() {
+            const linkToCopy = generatedLinkEl.textContent;
+            
+            // Metode modern menyalin teks
+            navigator.clipboard.writeText(linkToCopy).then(() => {
+                // Ubah UI tombol sukses
+                copyText.textContent = 'Tersalin!';
+                const btn = copyText.parentElement;
+                btn.classList.add('text-green-600', 'border-green-300');
+                copyText.previousElementSibling.className = 'fa-solid fa-check mr-2';
+                
+                // Kembalikan UI setelah 2 detik
+                setTimeout(() => {
+                    copyText.textContent = 'Copy Link';
+                    btn.classList.remove('text-green-600', 'border-green-300');
+                    copyText.previousElementSibling.className = 'fa-regular fa-copy mr-2';
+                }, 2000);
+            }).catch(err => {
+                // Fallback jika clipboard API gagal
+                const tempInput = document.createElement("input");
+                tempInput.value = linkToCopy;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand("copy");
+                document.body.removeChild(tempInput);
+                
+                copyText.textContent = 'Tersalin!';
+                setTimeout(() => { copyText.textContent = 'Copy Link'; }, 2000);
+            });
+        }
+
+        function resetForm() {
+            document.getElementById('wa-form').reset();
+            // Reset state
+            if(!messageToggle.checked) {
+                messageToggle.checked = true; // Set default on
+                messageArea.style.opacity = '1';
+                messageArea.style.maxHeight = '500px';
+                messageArea.style.overflow = 'visible';
+            }
+            updatePreview();
+            resultArea.classList.add('hidden');
+            resultArea.classList.remove('animate-fade-in-down');
+            phoneInput.focus();
+        }
+
+        // Inisialisasi awal (simulate usage count)
+        document.addEventListener('DOMContentLoaded', () => {
+            // Generate random count for visual
+            const initialCount = Math.floor(Math.random() * (9000 - 1000 + 1) + 1000);
+            document.getElementById('usage-count').textContent = initialCount.toLocaleString('id-ID');
+        });
+    </script>
+</body>
+</html>

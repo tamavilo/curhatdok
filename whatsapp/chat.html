@@ -46,21 +46,64 @@
 
     <!-- Navbar -->
     <header class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <!-- <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center gap-2">
                 <i class="ph-fill ph-whatsapp-logo text-wa text-3xl"></i>
                 <span class="font-bold text-xl tracking-tight text-gray-900">CurhatDok<span class="text-wa">WA</span></span>
             </div>
-            <nav class="hidden md:flex gap-6 text-sm font-medium text-gray-600">
+            <nav class="hidden xs:block md:flex gap-6 text-sm font-medium text-gray-600">
                 <a href="/" class="hover:text-wa transition-colors">Beranda</a>
                 <a href="wa.html" class="hover:text-wa transition-colors">Fitur</a>
                 <a href="/" class="hover:text-wa transition-colors">Tools Lainnya</a>
             </nav>
+        </div> -->
+
+        <!-- Navbar Container -->
+    <nav class="bg-white shadow-md w-full fixed top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+
+                <!-- Logo Bagian Kiri -->
+                <div class="flex-shrink-0 flex items-center">
+                   <i class="ph-fill ph-whatsapp-logo text-wa text-3xl"></i>
+                <span class="font-bold text-xl tracking-tight text-gray-900">CurhatDok<span class="text-wa">WA</span></span>
+                </div>
+
+                <!-- Menu Desktop (Disembunyikan di Mobile) -->
+                <!-- Class 'hidden md:flex' berarti sembunyi secara default, namun tampil bersampingan pada layar medium ke atas -->
+                <div class="hidden md:flex space-x-8 items-center">
+                   <a href="/" class="hover:text-wa transition-colors">Beranda</a>
+                <a href="wa.html" class="hover:text-wa transition-colors">Fitur</a>
+                <a href="/" class="hover:text-wa transition-colors">Tools Lainnya</a>
+                </div>
+
+                <!-- Tombol Hamburger Mobile (Disembunyikan di Desktop) -->
+                <!-- Class 'md:hidden' berarti tombol ini akan hilang di layar medium ke atas -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-gray-600 hover:text-green-600 focus:outline-none p-2 rounded-md focus:bg-gray-100 transition">
+                        <!-- Ikon Hamburger (Menggunakan SVG) -->
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
         </div>
+
+        <!-- Menu Mobile (Tersembunyi secara default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 shadow-lg absolute w-full">
+            <div class="px-4 pt-2 pb-4 space-y-1 sm:px-3">
+               <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-gray-50 transition">Beranda</a>
+                <a href="wa.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-gray-50 transition">Fitur</a>
+                <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-green-600 hover:bg-gray-50 transition">Tools Lainnya</a>
+                </div>
+            </div>
+        </div>
+    </nav>
     </header>
 
     <!-- Main Content -->
-    <main class="flex-grow flex flex-col items-center justify-center py-12 px-4 sm:px-6">
+    <main class="flex-grow flex flex-col items-center justify-center py-12 px-4 sm:px-6 mt-10">
         
         <div class="text-center mb-10 max-w-2xl">
             <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Kirim Pesan WhatsApp<br/>Tanpa Simpan Nomor</h1>
@@ -273,6 +316,17 @@
                     phoneInput.classList.remove('animate-pulse', 'border-red-500');
                 }, 1000);
             }
+        });
+    </script>
+<script>
+        // Mengambil elemen tombol dan menu
+        const btn = document.getElementById('mobile-menu-button');
+        const menu = document.getElementById('mobile-menu');
+
+        // Menambahkan event listener saat tombol diklik
+        btn.addEventListener('click', () => {
+            // Menambah/menghapus class 'hidden' pada menu mobile
+            menu.classList.toggle('hidden');
         });
     </script>
 </body>
